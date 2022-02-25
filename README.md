@@ -23,7 +23,6 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 - [Homework 4-5: Install a Text Editor](./chapter-4/homework-4-5.md)
 - [Homework 4-6: Your First Shell Script](./chapter-4/homework-4-6.md)
 - [Homework 4-7: Clone the Book's Git Repository](./chapter-4/homework-4-7.md)
-- [Homework 4-8: Unzip BlueLeaks](./chapter-4/homework-4-7.md)
 - [Homework 4-8: Unzip BlueLeaks](./chapter-4/homework-4-8.md)
 - [Homework 4-9: Explore BlueLeaks With the Terminal](./chapter-4/homework-4-9.md)
 - [Homework 4-10: Dip Your Toes Into the BlueLeaks Documents](./chapter-4/homework-4-10.md)
