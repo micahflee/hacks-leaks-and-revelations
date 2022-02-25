@@ -248,7 +248,7 @@ homework-5-3-wordpress-1  | 127.0.0.1 - - [25/Feb/2022:17:02:15 +0000] "OPTIONS 
 homework-5-3-wordpress-1  | 127.0.0.1 - - [25/Feb/2022:17:02:16 +0000] "OPTIONS * HTTP/1.0" 200 126 "-" "Apache/2.4.52 (Debian) PHP/7.4.28 (internal dummy connection)"
 ```
 
-![Screenshot of Wordpress](./chapter-5-wordpress.png)
+![Screenshot of Wordpress](./chapter-5-3-wordpress.png)
 
 ## Open a Shell in a Running Container
 

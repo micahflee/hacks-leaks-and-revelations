@@ -34,6 +34,7 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 - Homework 5-2 for Linux users: Install Docker CE
 - [Homework 5-3: Quickly Run a WordPress Server With Docker Compose](./chapter-5/homework-5-3.md)
 - [Homework 5-4: Run Aleph Locally in Linux Containers](./chapter-5/homework-5-4.md)
+- [Homework 5-5: Index Part of BlueLeaks in Aleph](./chapter-5/homework-5-5.md)
 
 ## Chapter 6: A Brief Introduction to the Python Programming Language
 
