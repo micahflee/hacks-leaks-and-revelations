@@ -1,4 +1,4 @@
-# Homework 5-5: Index Part of BlueLeaks in Aleph
+# Homework 6-5: Index Part of BlueLeaks in Aleph
 
 You can see example files in the [aleph](./aleph/) folder.
 

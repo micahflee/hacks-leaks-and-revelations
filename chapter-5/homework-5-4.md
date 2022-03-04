@@ -1,426 +1,487 @@
-# Homework 5-4: Run Aleph Locally in Linux Containers
+# Homework 5-4: Play With a VPS
 
-Make a new homework folder just for this assignment. Follow the [production deployment instructions](https://docs.alephdata.org/developers/installation#production-deployment) in the [Aleph documentation](https://docs.alephdata.org/).
+You can use whatever cloud provider you'd like. In this example I'm using [DigitalOcean](https://www.digitalocean.com/).
 
-You can see example files in the [aleph](./aleph/) folder.
+I've created an SSH key on my computer and uploaded the public key to my DigitalOcean account. Logging into the DigitalOcean console, I created a new VPS with these settings:
 
-## Configure Aleph and Start the Containers
+- Operating system: Ubuntu
+- Plan: 1GB memory, 1 Intel CPU, 25GB disk space, 1000GB bandwidth ($6/month)
+- Data center: Singapore
+- Authentication: I chose the SSH key for my computer
+- Hostname: `hacksleaksrev-example`
 
-In short, you'll need to:
+When DigitalOcean is done provisioning my VPS, it tells me the IP address is `159.223.86.215`.
 
-Save a copy of Aleph's [docker-compose.yml](https://github.com/alephdata/aleph/blob/main/docker-compose.yml) and [aleph.env.tmpl](https://github.com/alephdata/aleph/blob/main/aleph.env.tmpl) from Aleph’s git repo into your `aleph` folder. After you do this you should have these two files:
+## SSH into the server
 
-```
-micah@trapdoor aleph % ls -l
-total 16
--rw-r--r--  1 micah  staff  2931 Feb 10 20:31 aleph.env.tmpl
--rw-r--r--  1 micah  staff  2247 Feb 10 20:31 docker-compose.yml
-```
-
-Make a copy of `aleph.env.tmpl` called `aleph.env`. You can do this by running:
+Because I'm using DigitalOcean, I will SSH using the root user like this:
 
 ```sh
-cp aleph.env.tmpl aleph.env
+ssh root@159.223.86.215
 ```
 
 Example:
 
 ```
-micah@trapdoor aleph % cp aleph.env.tmpl aleph.env      
-micah@trapdoor aleph % ls -l 
-total 24
--rw-r--r--  1 micah  staff  2931 Feb 25 09:20 aleph.env
--rw-r--r--  1 micah  staff  2931 Feb 10 20:31 aleph.env.tmpl
--rw-r--r--  1 micah  staff  2247 Feb 10 20:31 docker-compose.yml
+micah@rogue:~$ ssh root@159.223.86.215
+The authenticity of host '159.223.86.215 (159.223.86.215)' can't be established.
+ECDSA key fingerprint is SHA256:i8pKXiZKoy8O1/GKVa5H05SIQ4sSGPWo6IDAJ6pIEmI.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '159.223.86.215' (ECDSA) to the list of known hosts.
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-97-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Thu Feb 24 21:36:30 UTC 2022
+
+  System load:  0.53              Users logged in:       0
+  Usage of /:   6.1% of 24.06GB   IPv4 address for eth0: 159.223.86.215
+  Memory usage: 19%               IPv4 address for eth0: 10.15.0.5
+  Swap usage:   0%                IPv4 address for eth1: 10.104.0.2
+  Processes:    108
+
+1 update can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+root@hacksleaksrev-example:~# 
 ```
 
-Open `aleph.env` in your text editor. Set a random value for `ALEPH_SECRET_KEY`. You can generate this value by running:
+## Start a Byobu session
 
 ```sh
-openssl rand -hex 24
+byobu
+```
+
+Example:
+
+![Screenshot of Byoby session](./homework-5-4-vps-byobu.png)
+
+## Install updates
+
+I don't need to use `sudo` because I'm logged in directly as the root user.
+
+```sh
+apt update
+apt upgrade
 ```
 
 Example:
 
 ```
-micah@trapdoor aleph % openssl rand -hex 24
-f8b1afa480cec3574750d0d2a0f19b9484ea49d42a58c236
-```
-
-![Editing aleph.env](./homework-5-4-aleph-env.png)
-
-Save the file.
-
-## Allow Elasticsearch to Map Its Own Memory
-
-For Aleph to work properly, you must change the `vm.max_map_count` Linux kernel setting.
-
-If you're using Linux or Windows with WSL, you can do this just by running this command:
-
-```sh
-sudo sysctl -w vm.max_map_count=262144
-```
-
-### Docker Desktop for macOS Instructions
-
-**Increase the amount of memory Docker Desktop is allowed to use.**
-
-Click the Docker icon in the system tray and go to Preferences. Switch to the Resource tab. By default, the Docker is allowed to allocate 2GB of memory, but Aleph requires more. Increase this to at least 6GB, and more if you have more available on your Mac. Then click **Apply & Restart**.
-
-![Increase Docker Desktop memory](./homework-5-4-macos-docker-settings.png)
-
-**If you're using macOS with Docker Desktop, you'll need to run this command inside of Docker Desktop's virtual machine instead. And when you restart Docker Desktop, this change gets undone. So make sure to do this step before starting Aleph containers.**
-
-Run this command to get a shell inside Docker's VM:
-
-```sh
-docker run -it --rm --privileged --pid=host alpine:edge nsenter -t 1 -m -u -n -i sh
-```
-
-Then you can run the command:
-
-```sh
-sysctl -w vm.max_map_count=262144
-```
-
-Then run `exit` to exit out of the Docker VM.
-
-Example:
-
-```
-micah@trapdoor aleph % docker run -it --rm --privileged --pid=host alpine:edge nsenter -t 1 -m -u -n -i sh
-Unable to find image 'alpine:edge' locally
-edge: Pulling from library/alpine
-41dcc117e123: Pull complete 
-Digest: sha256:1a4c2018cfbab67566904e18fde9bf6a5c190605bf7da0e1d181b26746a15188
-Status: Downloaded newer image for alpine:edge
-/ # sysctl -w vm.max_map_count=262144
-vm.max_map_count = 262144
-/ # exit
-```
-
-## Start Aleph
-
-```sh
-docker-compose up
-```
-
-The first time you run this it will download several gigabytes of Linux container images.
-
-Example:
-
-```
-micah@trapdoor aleph % docker-compose up
-[+] Running 75/75
- ⠿ redis Pulled                                                            142.9s
-   ⠿ 719adce26c52 Pull complete                                            137.0s
-   ⠿ b8f35e378c31 Pull complete                                            137.8s
-   ⠿ d034517f789c Pull complete                                            138.7s
-   ⠿ 3772d4d76753 Pull complete                                            138.8s
-   ⠿ 211a7f52febb Pull complete                                            138.9s
- ⠿ postgres Pulled                                                         143.4s
-   ⠿ 3e17c6eae66c Pull complete                                            133.3s
-   ⠿ edb9dc1cfcb8 Pull complete                                            133.8s
-   ⠿ 7a344e5b3663 Pull complete                                            133.8s
-   ⠿ d619f9c5def6 Pull complete                                            134.1s
-   ⠿ 225b82de1e67 Pull complete                                            134.7s
-   ⠿ 10daa23c1d9a Pull complete                                            134.8s
-   ⠿ 4ba4a4b2d69b Pull complete                                            134.9s
-   ⠿ 3fc3e282a06c Pull complete                                            139.4s
-   ⠿ db8508199c1a Pull complete                                            139.5s
-   ⠿ 99445470b9b6 Pull complete                                            139.5s
-   ⠿ dd01bf2076d4 Pull complete                                            139.6s
-   ⠿ 292c6e56e62f Pull complete                                            139.7s
-   ⠿ 7a07813393c7 Pull complete                                            139.8s
- ⠿ worker Pulled                                                           129.8s
-   ⠿ 8fd1d8c5af6a Pull complete                                            113.0s
-   ⠿ bc9b21090f47 Pull complete                                            124.2s
- ⠿ convert-document Pulled                                                 108.9s
-   ⠿ ffb17fa303bd Pull complete                                            105.2s
-   ⠿ 9d736a7ea3fb Pull complete                                            105.4s
-   ⠿ 0a4c5a5bf69b Pull complete                                            105.5s
-   ⠿ a48c18e72288 Pull complete                                            105.8s
-   ⠿ 5bf07daa5c47 Pull complete                                            106.2s
-   ⠿ d43ee58cac0f Pull complete                                            106.4s
-   ⠿ 5760a0f555b4 Pull complete                                            106.5s
-   ⠿ c8aae845228a Pull complete                                            106.6s
- ⠿ ui Pulled                                                               124.3s
-   ⠿ 59bf1c3509f3 Pull complete                                            116.2s
-   ⠿ 8d6ba530f648 Pull complete                                            117.2s
-   ⠿ 5288d7ad7a7f Pull complete                                            117.3s
-   ⠿ 39e51c61c033 Pull complete                                            117.4s
-   ⠿ ee6f71c6f4a8 Pull complete                                            117.6s
-   ⠿ f2303c6c8865 Pull complete                                            117.7s
-   ⠿ 8357a4ef2c90 Pull complete                                            118.6s
-   ⠿ f1d450f2a23c Pull complete                                            121.1s
- ⠿ elasticsearch Pulled                                                    175.8s
-   ⠿ 7b1a6ab2e44d Pull complete                                             15.0s
-   ⠿ f85c3fdbf085 Pull complete                                            120.7s
-   ⠿ 0ee9ef16ef16 Pull complete                                            120.8s
-   ⠿ 1b555fc21eda Pull complete                                            171.2s
-   ⠿ 5195df1d2493 Pull complete                                            171.3s
-   ⠿ b22dfd95268f Pull complete                                            171.4s
-   ⠿ 762293acfd23 Pull complete                                            171.5s
-   ⠿ e7d18a44f390 Pull complete                                            171.5s
-   ⠿ 652e33f15f45 Pull complete                                            172.2s
-   ⠿ 2d14ac7b460a Pull complete                                            172.2s
-   ⠿ c85072c2f18a Pull complete                                            172.3s
- ⠿ api Pulled                                                              129.8s
-   ⠿ ea362f368469 Pull complete                                             99.9s
-   ⠿ 6f0e9d0b2a15 Pull complete                                            113.7s
-   ⠿ 94d0a3aecec3 Pull complete                                            124.6s
-   ⠿ 6c069ee7cd8e Pull complete                                            124.7s
- ⠿ shell Pulled                                                            129.8s
-   ⠿ c5a7997119f7 Pull complete                                            112.8s
-   ⠿ 49a1a2798723 Pull complete                                            113.8s
-   ⠿ 138fa9f664f7 Pull complete                                            126.6s
- ⠿ ingest-file Pulled                                                      140.9s
-   ⠿ ca3b09ffcfd6 Pull complete                                             74.6s
-   ⠿ 44bcf0985803 Pull complete                                             74.7s
-   ⠿ dedb4870a65f Pull complete                                             93.2s
-   ⠿ 20cfd754b918 Pull complete                                             93.8s
-   ⠿ b63b92d355c4 Pull complete                                             93.9s
-   ⠿ 259112fa402a Pull complete                                            109.6s
-   ⠿ ed84f8a0b122 Pull complete                                            113.7s
-   ⠿ 9ee0f4cb3510 Pull complete                                            120.1s
-   ⠿ 8332487593cb Pull complete                                            137.1s
-   ⠿ 57109e207b44 Pull complete                                            137.6s
-   ⠿ 98f8f3825eff Pull complete                                            137.7s
-   ⠿ 50fda763c0d6 Pull complete                                            138.4s
-[+] Running 10/10
- ⠿ Network homework-5-4_default               Created                        0.1s
- ⠿ Container homework-5-4-postgres-1          Created                        0.1s
- ⠿ Container homework-5-4-convert-document-1  Created                        0.1s
- ⠿ Container homework-5-4-elasticsearch-1     Created                        0.1s
- ⠿ Container homework-5-4-redis-1             Created                        0.1s
- ⠿ Container homework-5-4-ingest-file-1       Created                        0.0s
- ⠿ Container homework-5-4-worker-1            Created                        0.1s
- ⠿ Container homework-5-4-api-1               Created                        0.1s
- ⠿ Container homework-5-4-shell-1             Created                        0.1s
- ⠿ Container homework-5-4-ui-1                Created                        0.0s
-Attaching to homework-5-4-api-1, homework-5-4-convert-document-1, homework-5-4-elasticsearch-1, homework-5-4-ingest-file-1, homework-5-4-postgres-1, homework-5-4-redis-1, homework-5-4-shell-1, homework-5-4-ui-1, homework-5-4-worker-1
-homework-5-4-redis-1             | 1:C 25 Feb 2022 18:12:53.586 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-homework-5-4-redis-1             | 1:C 25 Feb 2022 18:12:53.587 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=1, just started
-homework-5-4-redis-1             | 1:C 25 Feb 2022 18:12:53.587 # Configuration loaded
-homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.588 * monotonic clock: POSIX clock_gettime
-homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.589 * Running mode=standalone, port=6379.
-homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.589 # Server initialized
-homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 * Loading RDB produced by version 6.2.6
-homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 * RDB age 196 seconds
-homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 * RDB memory usage when created 0.77 Mb
-homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 # Done loading RDB, keys loaded: 25, keys expired: 0.
-homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 * DB loaded from disk: 0.001 seconds
-homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 * Ready to accept connections
-homework-5-4-elasticsearch-1     | create keystore
-homework-5-4-postgres-1          | 2022-02-25 18:12:53.674 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
-homework-5-4-postgres-1          | 2022-02-25 18:12:53.674 UTC [1] LOG:  listening on IPv6 address "::", port 5432
-homework-5-4-postgres-1          | 2022-02-25 18:12:53.676 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
-homework-5-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [1] [INFO] Starting gunicorn 20.1.0
-homework-5-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [1] [INFO] Listening at: http://0.0.0.0:3000 (1)
-homework-5-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [1] [INFO] Using worker: sync
-homework-5-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [10] [INFO] Booting worker with pid: 10
-homework-5-4-postgres-1          | 2022-02-25 18:12:53.693 UTC [29] LOG:  database system was shut down at 2022-02-25 18:09:37 UTC
-homework-5-4-postgres-1          | 2022-02-25 18:12:53.704 UTC [1] LOG:  database system is ready to accept connections
-homework-5-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [11] [INFO] Booting worker with pid: 11
-homework-5-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [12] [INFO] Booting worker with pid: 12
-homework-5-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [13] [INFO] Booting worker with pid: 13
-homework-5-4-elasticsearch-1     | Created elasticsearch keystore in /usr/share/elasticsearch/config/elasticsearch.keystore
-homework-5-4-shell-1 exited with code 0
-homework-5-4-api-1               | [2022-02-25 18:12:56 +0000] [1] [DEBUG] Current configuration:
-homework-5-4-api-1               |   config: ./gunicorn.conf.py
-homework-5-4-api-1               |   wsgi_app: None
-homework-5-4-api-1               |   bind: ['0.0.0.0:8000']
-homework-5-4-api-1               |   backlog: 2048
-homework-5-4-api-1               |   workers: 6
+root@hacksleaksrev-example:~# apt update
+Hit:1 http://mirrors.digitalocean.com/ubuntu focal InRelease
+Hit:2 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                    
+Get:3 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease [114 kB]                    
+Get:4 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease [108 kB]       
+Get:5 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 Packages [1600 kB]
+Get:6 http://mirrors.digitalocean.com/ubuntu focal-updates/main Translation-en [306 kB]
+Get:7 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 c-n-f Metadata [14.8 kB]
+Get:8 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted amd64 Packages [818 kB]
+Get:9 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted Translation-en [116 kB]
+Get:10 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
+Get:11 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted amd64 c-n-f Metadata [500 B]
+Get:12 http://mirrors.digitalocean.com/ubuntu focal-updates/universe amd64 Packages [905 kB]
+Get:13 http://mirrors.digitalocean.com/ubuntu focal-updates/universe Translation-en [201 kB]
+Get:14 http://mirrors.digitalocean.com/ubuntu focal-updates/universe amd64 c-n-f Metadata [20.1 kB]
+Get:15 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse amd64 Packages [23.7 kB]
+Get:16 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse Translation-en [7312 B]
+Get:17 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse amd64 c-n-f Metadata [580 B]
+Get:18 http://mirrors.digitalocean.com/ubuntu focal-backports/universe amd64 Packages [22.0 kB]
+Get:19 http://mirrors.digitalocean.com/ubuntu focal-backports/universe Translation-en [15.2 kB]
+Get:20 http://mirrors.digitalocean.com/ubuntu focal-backports/universe amd64 c-n-f Metadata [728 B]
+Get:21 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [1265 kB]
+Get:22 http://security.ubuntu.com/ubuntu focal-security/main Translation-en [221 kB]
+Get:23 http://security.ubuntu.com/ubuntu focal-security/main amd64 c-n-f Metadata [9624 B]
+Get:24 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [764 kB]
+Get:25 http://security.ubuntu.com/ubuntu focal-security/restricted Translation-en [109 kB]
+Get:26 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 c-n-f Metadata [504 B]
+Get:27 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [679 kB]
+Get:28 http://security.ubuntu.com/ubuntu focal-security/universe Translation-en [116 kB]
+Get:29 http://security.ubuntu.com/ubuntu focal-security/universe amd64 c-n-f Metadata [13.1 kB]
+Get:30 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [20.7 kB]
+Get:31 http://security.ubuntu.com/ubuntu focal-security/multiverse Translation-en [5196 B]
+Get:32 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 c-n-f Metadata [500 B]
+Fetched 7592 kB in 3s (2641 kB/s)                
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+46 packages can be upgraded. Run 'apt list --upgradable' to see them.
+root@hacksleaksrev-example:~# apt upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Calculating upgrade... Done
+The following NEW packages will be installed:
+  linux-headers-5.4.0-100 linux-headers-5.4.0-100-generic linux-image-5.4.0-100-generic linux-modules-5.4.0-100-generic
+The following packages will be upgraded:
+  base-files bsdutils cryptsetup cryptsetup-bin cryptsetup-initramfs cryptsetup-run fdisk initramfs-tools initramfs-tools-bin initramfs-tools-core libarchive13
+  libblkid1 libcryptsetup12 libdrm-common libdrm2 libexpat1 libfdisk1 libmount1 libsasl2-2 libsasl2-modules libsasl2-modules-db libsmartcols1 libuuid1
+  linux-headers-generic linux-headers-virtual linux-image-virtual linux-virtual motd-news-config mount open-vm-tools python-apt-common python3-apt python3-distupgrade
+  python3-update-manager snapd sosreport ubuntu-advantage-tools ubuntu-release-upgrader-core update-manager-core util-linux uuid-runtime vim vim-common vim-runtime
+  vim-tiny xxd
+46 upgraded, 4 newly installed, 0 to remove and 0 not upgraded.
+30 standard security updates
+Need to get 85.1 MB of archives.
+After this operation, 192 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 motd-news-config all 11ubuntu5.5 [4472 B]                     
+Get:2 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 base-files amd64 11ubuntu5.5 [60.5 kB]                      
+Get:3 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 bsdutils amd64 1:2.34-0.1ubuntu9.3 [63.0 kB]
+Get:4 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 libblkid1 amd64 2.34-0.1ubuntu9.3 [136 kB]       
+Get:5 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 libuuid1 amd64 2.34-0.1ubuntu9.3 [19.9 kB]         
 --snip--
 ```
 
-## "Upgrade" the Aleph Database the First Time
+## Practice
 
-Open a separate terminal window and run:
+Check what my IP address is using curl:
 
 ```sh
-docker-compose run --rm shell aleph upgrade
+curl https://ifconfig.co
 ```
 
 Example:
 
 ```
-micah@trapdoor aleph % docker-compose run --rm shell aleph upgrade
-[+] Running 6/0
- ⠿ Container homework-5-4-elasticsearch-1     Running                      0.0s
- ⠿ Container homework-5-4-convert-document-1  Running                      0.0s
- ⠿ Container homework-5-4-redis-1             Running                      0.0s
- ⠿ Container homework-5-4-postgres-1          Running                      0.0s
- ⠿ Container homework-5-4-ingest-file-1       Running                      0.0s
- ⠿ Container homework-5-4-worker-1            Running                      0.0s
-{"logger": "alembic.runtime.migration", "timestamp": "2022-02-25 18:38:24.240581", "message": "Context impl PostgresqlImpl.", "severity": "INFO"}
-{"logger": "alembic.runtime.migration", "timestamp": "2022-02-25 18:38:24.240763", "message": "Will assume transactional DDL.", "severity": "INFO"}
-{"logger": "servicelayer.archive.file", "timestamp": "2022-02-25 18:38:24.265702", "message": "Archive: /data", "severity": "INFO"}
-{"logger": "aleph.logic.roles", "timestamp": "2022-02-25 18:38:24.265874", "message": "Creating system roles...", "severity": "INFO"}
-/usr/local/lib/python3.8/dist-packages/elasticsearch/connection/base.py:200: ElasticsearchWarning: Elasticsearch built-in security features are not enabled. Without authentication, your cluster could be accessible to anyone. See https://www.elastic.co/guide/en/elasticsearch/reference/7.16/security-minimal-setup.html to enable security.
-  warnings.warn(message, category=ElasticsearchWarning)
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:24.440236", "message": "Creating index: aleph-collection-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:25.594232", "message": "Creating index: aleph-notifications-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:26.255927", "message": "Creating index: aleph-entity-airplane-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:26.844667", "message": "Creating index: aleph-entity-person-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:27.567198", "message": "Creating index: aleph-entity-company-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:28.320704", "message": "Creating index: aleph-entity-representation-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:28.944303", "message": "Creating index: aleph-entity-vessel-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:29.612999", "message": "Creating index: aleph-entity-payment-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:30.208057", "message": "Creating index: aleph-entity-unknownlink-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:30.831330", "message": "Creating index: aleph-entity-organization-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:31.623136", "message": "Creating index: aleph-entity-page-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:32.350666", "message": "Creating index: aleph-entity-workbook-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:32.842468", "message": "Creating index: aleph-entity-table-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:33.600293", "message": "Creating index: aleph-entity-sanction-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:34.278753", "message": "Creating index: aleph-entity-hypertext-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:34.907842", "message": "Creating index: aleph-entity-folder-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:35.378273", "message": "Creating index: aleph-entity-plaintext-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:36.136378", "message": "Creating index: aleph-entity-membership-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:36.788913", "message": "Creating index: aleph-entity-mention-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:37.413392", "message": "Creating index: aleph-entity-bankaccount-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:38.087367", "message": "Creating index: aleph-entity-security-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:38.728879", "message": "Creating index: aleph-entity-package-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:39.235386", "message": "Creating index: aleph-entity-project-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:39.943382", "message": "Creating index: aleph-entity-asset-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:40.552525", "message": "Creating index: aleph-entity-documentation-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:41.187900", "message": "Creating index: aleph-entity-directorship-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:41.874500", "message": "Creating index: aleph-entity-passport-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:42.398196", "message": "Creating index: aleph-entity-publicbody-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:43.031384", "message": "Creating index: aleph-entity-taxroll-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:43.777893", "message": "Creating index: aleph-entity-identification-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:44.422236", "message": "Creating index: aleph-entity-event-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:45.072737", "message": "Creating index: aleph-entity-projectparticipant-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:45.764117", "message": "Creating index: aleph-entity-realestate-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:46.473516", "message": "Creating index: aleph-entity-pages-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:47.400724", "message": "Creating index: aleph-entity-ownership-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:48.093833", "message": "Creating index: aleph-entity-legalentity-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:48.838173", "message": "Creating index: aleph-entity-useraccount-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:49.530878", "message": "Creating index: aleph-entity-economicactivity-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:50.208326", "message": "Creating index: aleph-entity-succession-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:50.909530", "message": "Creating index: aleph-entity-family-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:51.457384", "message": "Creating index: aleph-entity-assessment-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:52.282539", "message": "Creating index: aleph-entity-associate-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:52.814251", "message": "Creating index: aleph-entity-address-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:53.507110", "message": "Creating index: aleph-entity-courtcaseparty-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:54.216167", "message": "Creating index: aleph-entity-image-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:55.115904", "message": "Creating index: aleph-entity-cryptowallet-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:55.847871", "message": "Creating index: aleph-entity-message-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:56.614634", "message": "Creating index: aleph-entity-contractaward-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:57.324471", "message": "Creating index: aleph-entity-license-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:58.057576", "message": "Creating index: aleph-entity-call-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:58.804226", "message": "Creating index: aleph-entity-courtcase-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:38:59.491853", "message": "Creating index: aleph-entity-employment-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:39:00.192920", "message": "Creating index: aleph-entity-article-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:39:00.903883", "message": "Creating index: aleph-entity-video-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:39:01.469860", "message": "Creating index: aleph-entity-email-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:39:02.385226", "message": "Creating index: aleph-entity-document-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:39:03.013252", "message": "Creating index: aleph-entity-vehicle-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:39:03.755903", "message": "Creating index: aleph-entity-note-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:39:04.754657", "message": "Creating index: aleph-entity-audio-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:39:05.308807", "message": "Creating index: aleph-entity-debt-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:39:06.009476", "message": "Creating index: aleph-entity-contract-v1...", "severity": "INFO"}
-{"logger": "aleph.index.util", "timestamp": "2022-02-25 18:39:06.729421", "message": "Creating index: aleph-xref-v1...", "severity": "INFO"}
+root@hacksleaksrev-example:~# curl https://ifconfig.co
+159.223.86.215
 ```
 
-When this command finishes running, load http://127.0.0.1:8080/ to see your Aleph server.
-
-![Aleph server running](./homework-5-4-aleph1.png)
-
-## Start an Aleph Shell
+Look at what files are in the root directory:
 
 ```sh
-docker-compose run --rm shell bash
+ls -l /
 ```
 
 Example:
 
 ```
-micah@trapdoor aleph % docker-compose run --rm shell bash
-[+] Running 6/0
- ⠿ Container homework-5-4-redis-1             Running                      0.0s
- ⠿ Container homework-5-4-convert-document-1  Running                      0.0s
- ⠿ Container homework-5-4-postgres-1          Running                      0.0s
- ⠿ Container homework-5-4-elasticsearch-1     Running                      0.0s
- ⠿ Container homework-5-4-ingest-file-1       Running                      0.0s
- ⠿ Container homework-5-4-worker-1            Running                      0.0s
-root@39093f0cc006:/aleph# aleph --help
-Usage: aleph [OPTIONS] COMMAND [ARGS]...
+root@hacksleaksrev-example:~# ls -l /
+total 64
+lrwxrwxrwx   1 root root     7 Jan 31 22:26 bin -> usr/bin
+drwxr-xr-x   4 root root  4096 Feb 24 21:41 boot
+drwxr-xr-x  17 root root  3800 Feb 24 21:35 dev
+drwxr-xr-x  94 root root  4096 Feb 24 21:40 etc
+drwxr-xr-x   2 root root  4096 Apr 15  2020 home
+lrwxrwxrwx   1 root root     7 Jan 31 22:26 lib -> usr/lib
+lrwxrwxrwx   1 root root     9 Jan 31 22:26 lib32 -> usr/lib32
+lrwxrwxrwx   1 root root     9 Jan 31 22:26 lib64 -> usr/lib64
+lrwxrwxrwx   1 root root    10 Jan 31 22:26 libx32 -> usr/libx32
+drwx------   2 root root 16384 Jan 31 22:29 lost+found
+drwxr-xr-x   2 root root  4096 Jan 31 22:26 media
+drwxr-xr-x   2 root root  4096 Jan 31 22:26 mnt
+drwxr-xr-x   3 root root  4096 Feb 24 21:35 opt
+dr-xr-xr-x 158 root root     0 Feb 24 21:35 proc
+drwx------   6 root root  4096 Feb 24 21:37 root
+drwxr-xr-x  27 root root   860 Feb 24 21:41 run
+lrwxrwxrwx   1 root root     8 Jan 31 22:26 sbin -> usr/sbin
+drwxr-xr-x   6 root root  4096 Jan 31 22:28 snap
+drwxr-xr-x   2 root root  4096 Jan 31 22:26 srv
+dr-xr-xr-x  13 root root     0 Feb 24 21:35 sys
+drwxrwxrwt  12 root root  4096 Feb 24 21:41 tmp
+drwxr-xr-x  14 root root  4096 Feb 24 21:40 usr
+drwxr-xr-x  13 root root  4096 Jan 31 22:28 var
+```
 
-  Server-side command line for aleph.
+Install `transmission-cli`:
+
+```sh
+root@hacksleaksrev-example:~# apt search transmission-cli
+Sorting... Done
+Full Text Search... Done
+libtransmission-client-perl/focal 0.0806-1 all
+  Perl interface to Transmission
+
+transmission-cli/focal 2.94-2ubuntu3 amd64
+  lightweight BitTorrent client (command line programs)
+
+transmission-daemon/focal 2.94-2ubuntu3 amd64
+  lightweight BitTorrent client (daemon)
+
+root@hacksleaksrev-example:~# apt install transmission-cli
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  libminiupnpc17 libnatpmp1 transmission-common
+Suggested packages:
+  minissdpd natpmpc transmission-daemon transmission-gtk
+The following NEW packages will be installed:
+  libminiupnpc17 libnatpmp1 transmission-cli transmission-common
+0 upgraded, 4 newly installed, 0 to remove and 0 not upgraded.
+Need to get 679 kB of archives.
+After this operation, 3683 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://mirrors.digitalocean.com/ubuntu focal/main amd64 libminiupnpc17 amd64 2.1.20190824-0ubuntu2 [25.8 kB]
+Get:2 http://mirrors.digitalocean.com/ubuntu focal/main amd64 libnatpmp1 amd64 20150609-7build1 [7724 B]
+Get:3 http://mirrors.digitalocean.com/ubuntu focal/main amd64 transmission-common all 2.94-2ubuntu3 [237 kB]
+Get:4 http://mirrors.digitalocean.com/ubuntu focal/universe amd64 transmission-cli amd64 2.94-2ubuntu3 [408 kB]
+Fetched 679 kB in 0s (8782 kB/s)      
+Selecting previously unselected package libminiupnpc17:amd64.
+(Reading database ... 94675 files and directories currently installed.)
+Preparing to unpack .../libminiupnpc17_2.1.20190824-0ubuntu2_amd64.deb ...
+Unpacking libminiupnpc17:amd64 (2.1.20190824-0ubuntu2) ...
+Selecting previously unselected package libnatpmp1:amd64.
+Preparing to unpack .../libnatpmp1_20150609-7build1_amd64.deb ...
+Unpacking libnatpmp1:amd64 (20150609-7build1) ...
+Selecting previously unselected package transmission-common.
+Preparing to unpack .../transmission-common_2.94-2ubuntu3_all.deb ...
+Unpacking transmission-common (2.94-2ubuntu3) ...
+Selecting previously unselected package transmission-cli.
+Preparing to unpack .../transmission-cli_2.94-2ubuntu3_amd64.deb ...
+Unpacking transmission-cli (2.94-2ubuntu3) ...
+Setting up libnatpmp1:amd64 (20150609-7build1) ...
+Setting up libminiupnpc17:amd64 (2.1.20190824-0ubuntu2) ...
+Setting up transmission-common (2.94-2ubuntu3) ...
+Setting up transmission-cli (2.94-2ubuntu3) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for libc-bin (2.31-0ubuntu9.2) ...
+root@hacksleaksrev-example:~# 
+```
+
+## Download the public OathKeepers dataset
+
+Check out the [Oath Keepers dataset](https://ddosecrets.com/wiki/Oath_Keepers) on the DDoSecrets website. Part of this dataset is private, but part of it is available to the public. Anyone can download 5 gigabyte torrent of emails and chat logs.
+
+See how to use `transmission-cli`:
+
+```sh
+transmission-cli --help
+```
+
+Example:
+
+```
+root@hacksleaksrev-example:~# transmission-cli --help
+transmission-cli 2.94 (d8e60ee44f)
+A fast and easy BitTorrent client
+
+Usage: transmission-cli [options] <file|url|magnet>
 
 Options:
-  --version  Show the flask version
-  --help     Show this message and exit.
-
-Commands:
-  cancel              Cancel all queued tasks for the dataset.
-  cancel-user         Cancel all queued tasks not related to a dataset.
-  cleanup-archive
-  collections         List all collections.
-  crawldir            Crawl the given directory.
-  createuser          Create a user and show their API key.
-  db                  Perform database migrations.
-  delete              Delete a given collection.
-  deleterole          Hard-delete a role (user, or group) from the database.
-  dump-entities       Export FtM entities for the given collection.
-  dump-profiles       Export profile entityset items for the given...
-  evilshit            EVIL: Delete all data and recreate the database.
-  flush               Flush all the contents for a given collection.
-  flushdeleted        Remove soft-deleted database objects.
-  load-entities       Load FtM entities from the specified iJSON file.
-  publish             Make a collection visible to all users.
-  reindex             Index all the aggregator contents for a collection.
-  reindex-casefiles   Re-index all the casefile collections.
-  reindex-full        Re-index all collections.
-  reingest            Process documents and database entities and index...
-  reingest-casefiles  Re-ingest all the casefile collections.
-  resetcache          Clear the redis cache.
-  resetindex          Re-create the ES index configuration, dropping all...
-  retry-exports       Cancel all queued tasks not related to a dataset.
-  routes              Show the routes for the app.
-  run                 Run a development server.
-  shell               Run a shell in the app context.
-  status              Get the queue status (pending and finished tasks.)
-  touch               Mark a collection as changed.
-  update              Re-index all collections and clear some caches.
-  upgrade             Create or upgrade the search index and database.
-  worker              Run the queue-based worker service.
-  xref                Cross-reference all entities and documents in a...
-root@39093f0cc006:/aleph# 
+ -h  --help                          Display this help page and exit
+ -b  --blocklist                     Enable peer blocklists
+ -B  --no-blocklist                  Disable peer blocklists
+ -d  --downlimit            <speed>  Set max download speed in kB/s
+ -D  --no-downlimit                  Don't limit the download speed
+ -er --encryption-required           Encrypt all peer connections
+ -ep --encryption-preferred          Prefer encrypted peer connections
+ -et --encryption-tolerated          Prefer unencrypted peer connections
+ -f  --finish               <script> Run a script when the torrent finishes
+ -g  --config-dir           <path>   Where to find configuration files
+ -m  --portmap                       Enable portmapping via NAT-PMP or UPnP
+ -M  --no-portmap                    Disable portmapping
+ -p  --port                 <port>   Port for incoming peers (Default: 51413)
+ -t  --tos                  <tos>    Peer socket TOS (0 to 255,
+                                     default=default)
+ -u  --uplimit              <speed>  Set max upload speed in kB/s
+ -U  --no-uplimit                    Don't limit the upload speed
+ -v  --verify                        Verify the specified torrent
+ -V  --version                       Show version number and exit
+ -w  --download-dir         <path>   Where to save downloaded data
 ```
 
-## Create a User for Yourself
-
-How to create a user:
-
-```
-root@39093f0cc006:/aleph# aleph createuser --help
-Usage: aleph createuser [OPTIONS] EMAIL
-
-  Create a user and show their API key.
-
-Options:
-  -p, --password TEXT  Set a user password
-  -n, --name TEXT      Set a label
-  -a, --admin          Make the user an admin.
-  --help               Show this message and exit.
-```
-
-In the Aleph shell, create a user. Generate a new password for this and store it in your password manager. Replace my name and email address with yours.
+Download the torrent file:
 
 ```sh
-aleph createuser -p put_password_here -n "Micah Lee" -a micah@micahflee.com
+wget https://ddosecrets.com/images/0/02/Oath_Keepers.torrent
 ```
 
 Example:
 
 ```
-root@39093f0cc006:/aleph# aleph createuser -p put_password_here -n "Micah Lee" -a micah@micahflee.com
-User created. ID: 4, API Key: dKXk1-JUurWfUSdOX8rc0SVSfqEgM-twExSt5CEzHA8
+root@hacksleaksrev-example:~# wget https://ddosecrets.com/images/0/02/Oath_Keepers.torrent
+--2022-02-24 21:57:23--  https://ddosecrets.com/images/0/02/Oath_Keepers.torrent
+Resolving ddosecrets.com (ddosecrets.com)... 104.26.3.199, 104.26.2.199, 172.67.75.15, ...
+Connecting to ddosecrets.com (ddosecrets.com)|104.26.3.199|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 45109 (44K) [application/x-bittorrent]
+Saving to: ‘Oath_Keepers.torrent’
+
+Oath_Keepers.torrent                      100%[=====================================================================================>]  44.05K  --.-KB/s    in 0s      
+
+2022-02-24 21:57:24 (148 MB/s) - ‘Oath_Keepers.torrent’ saved [45109/45109]
 ```
 
-Now back at http://127.0.0.1:8080/, login to your new account.
+Make sure it's downloaded with `ls`:
 
-Run `exit` to quit the Aleph shell, and in your Docker Compose window press CTRL-C to close down all of the Aleph containers.
+```sh
+ls -lh
+```
+
+Example:
+
+```
+root@hacksleaksrev-example:~# ls -lh
+total 52K
+-rw-r--r-- 1 root root  45K Sep 26 20:00 Oath_Keepers.torrent
+drwx------ 3 root root 4.0K Feb 24 21:35 snap
+root@hacksleaksrev-example:~# 
+```
+
+Download the torrent to the current folder:
+
+```sh
+transmission-cli --download-dir . Oath_Keepers.torrent
+```
+
+Example:
+
+![Downloading the Oath Keepers dataset](./homework-5-4-transmission.png)
+
+When it's done, you can press CTRL-C to stop seeding.
+
+Now check out the files:
+
+```sh
+ls -lh
+```
+
+Example:
+
+```
+root@hacksleaksrev-example:~# ls -lh
+total 56K
+drwxr-xr-x 3 root root 4.0K Feb 24 22:03 'Oath Keepers'
+-rw-r--r-- 1 root root  45K Sep 26 20:00  Oath_Keepers.torrent
+drwx------ 3 root root 4.0K Feb 24 21:35  snap
+```
+
+## Explore the Oath Keepers dataset
+
+```sh
+cd Oath\ Keepers/
+ls -l
+cd Oath\ Keepers.sbd/
+ls -l
+```
+
+Example:
+
+```
+root@hacksleaksrev-example:~# cd Oath\ Keepers/
+root@hacksleaksrev-example:~/Oath Keepers# ls -l
+total 13196
+drwxr-xr-x 2 root root     4096 Feb 24 22:03 'Oath Keepers.sbd'
+-rw-r--r-- 1 root root 12109624 Feb 24 22:03  messages.json
+-rw-r--r-- 1 root root  1393296 Feb 24 22:00  messages_old.json
+root@hacksleaksrev-example:~/Oath Keepers# cd Oath\ Keepers.sbd/
+root@hacksleaksrev-example:~/Oath Keepers/Oath Keepers.sbd# ls -l
+total 4007288
+-rw-r--r-- 1 root root    2288916 Feb 24 22:00  Archive
+-rw-r--r-- 1 root root      23192 Feb 24 22:00 'Saved Correspondence'
+-rw-r--r-- 1 root root      25382 Feb 24 22:00  Systems
+-rw-r--r-- 1 root root    2921276 Feb 24 22:00  ak
+-rw-r--r-- 1 root root   41772536 Feb 24 22:03  al
+-rw-r--r-- 1 root root     289734 Feb 24 22:00  alb
+-rw-r--r-- 1 root root   14085257 Feb 24 22:03  ar
+-rw-r--r-- 1 root root   32170455 Feb 24 22:03  az
+-rw-r--r-- 1 root root   24744491 Feb 24 22:03  ca
+-rw-r--r-- 1 root root      13843 Feb 24 22:00  carter
+-rw-r--r-- 1 root root  115954560 Feb 24 22:03  co
+-rw-r--r-- 1 root root  623043702 Feb 24 22:03  contact
+-rw-r--r-- 1 root root      73792 Feb 24 22:00  copyright-claims
+-rw-r--r-- 1 root root   38752256 Feb 24 22:03  ct
+-rw-r--r-- 1 root root    8491030 Feb 24 22:03  de
+-rw-r--r-- 1 root root        205 Feb 24 22:00  dead.letter
+-rw-r--r-- 1 root root        183 Feb 24 22:00  dead.letter335
+-rw-r--r-- 1 root root   37377548 Feb 24 22:03  disaster-volunteers
+-rw-r--r-- 1 root root      21384 Feb 24 22:00  disgruntled
+-rw-r--r-- 1 root root      36175 Feb 24 22:00  drafts
+-rw-r--r-- 1 root root      10414 Feb 24 22:00  drafts52
+-rw-r--r-- 1 root root   40379291 Feb 24 22:03  fl
+-rw-r--r-- 1 root root    2311439 Feb 24 22:01  ga
+-rw-r--r-- 1 root root   11659879 Feb 24 22:03  hi
+-rw-r--r-- 1 root root   16957793 Feb 24 22:03  ia
+-rw-r--r-- 1 root root   14816645 Feb 24 22:03  id
+-rw-r--r-- 1 root root   15011418 Feb 24 22:03  il
+-rw-r--r-- 1 root root   14396497 Feb 24 22:03  in
+-rw-r--r-- 1 root root   50026543 Feb 24 22:03  info
+-rw-r--r-- 1 root root    4411665 Feb 24 22:03  jeo
+-rw-r--r-- 1 root root       4549 Feb 24 22:00  josey-fold
+-rw-r--r-- 1 root root  103773969 Feb 24 22:03  jpj
+-rw-r--r-- 1 root root   14964856 Feb 24 22:03  ks
+-rw-r--r-- 1 root root   18960528 Feb 24 22:03  ky
+-rw-r--r-- 1 root root   29680448 Feb 24 22:03  la
+-rw-r--r-- 1 root root       4146 Feb 24 22:00  leo
+-rw-r--r-- 1 root root   36757744 Feb 24 22:03  ma
+-rw-r--r-- 1 root root    8023610 Feb 24 22:03  mail
+-rw-r--r-- 1 root root      24171 Feb 24 22:01  mbox
+-rw-r--r-- 1 root root   18217954 Feb 24 22:03  md
+-rw-r--r-- 1 root root   15951044 Feb 24 22:03  me
+-rw-r--r-- 1 root root   82673679 Feb 24 22:03  media
+-rw-r--r-- 1 root root     103319 Feb 24 22:00  membership
+-rw-r--r-- 1 root root  106632496 Feb 24 22:03  mi
+-rw-r--r-- 1 root root   12642968 Feb 24 22:02  mn
+-rw-r--r-- 1 root root    3281433 Feb 24 22:03  mo
+-rw-r--r-- 1 root root   13102162 Feb 24 22:02  ms
+-rw-r--r-- 1 root root   14178472 Feb 24 22:03  mt
+-rw-r--r-- 1 root root   22228676 Feb 24 22:03  nc
+-rw-r--r-- 1 root root   17401414 Feb 24 22:03  nd
+-rw-r--r-- 1 root root    4942433 Feb 24 22:03  ne
+-rw-r--r-- 1 root root   14647692 Feb 24 22:03  nh
+-rw-r--r-- 1 root root  105287358 Feb 24 22:03  nj
+-rw-r--r-- 1 root root   10978031 Feb 24 22:02  nm
+-rw-r--r-- 1 root root    3723754 Feb 24 22:02  nv
+-rw-r--r-- 1 root root  106080393 Feb 24 22:03  ny
+-rw-r--r-- 1 root root    9730438 Feb 24 22:03  oh
+-rw-r--r-- 1 root root  115396725 Feb 24 22:03  ok
+-rw-r--r-- 1 root root 1415118552 Feb 24 22:03  oksupport
+-rw-r--r-- 1 root root  101908002 Feb 24 22:03  or
+-rw-r--r-- 1 root root   16482905 Feb 24 22:03  pa
+-rw-r--r-- 1 root root     268699 Feb 24 22:01  picrights.com
+-rw-r--r-- 1 root root    2586635 Feb 24 22:01  press
+-rw-r--r-- 1 root root    2981244 Feb 24 22:00  rallypay
+-rw-r--r-- 1 root root      22118 Feb 24 22:00 'read and returned'
+-rw-r--r-- 1 root root      11956 Feb 24 22:00  refund
+-rw-r--r-- 1 root root   16212454 Feb 24 22:03  ri
+-rw-r--r-- 1 root root   66766724 Feb 24 22:03  root
+-rw-r--r-- 1 root root    9377453 Feb 24 22:02  sc
+-rw-r--r-- 1 root root   12827808 Feb 24 22:03  sd
+-rw-r--r-- 1 root root       3084 Feb 24 22:00  sent
+-rw-r--r-- 1 root root       3008 Feb 24 22:00  sent858
+-rw-r--r-- 1 root root       1137 Feb 24 22:00  sentmail
+-rw-r--r-- 1 root root      13024 Feb 24 22:00  sentmail197
+-rw-r--r-- 1 root root   19648783 Feb 24 22:03  sentmail34
+-rw-r--r-- 1 root root       8541 Feb 24 22:00  sentmail458
+-rw-r--r-- 1 root root    3299530 Feb 24 22:00  sentmail490
+-rw-r--r-- 1 root root      24557 Feb 24 22:00  sentmail497
+-rw-r--r-- 1 root root        634 Feb 24 22:00  sentmail587
+-rw-r--r-- 1 root root    2340634 Feb 24 22:03  sentmail648
+-rw-r--r-- 1 root root     148897 Feb 24 22:00  sentmail651
+-rw-r--r-- 1 root root       2878 Feb 24 22:00  sentmail654
+-rw-r--r-- 1 root root       5017 Feb 24 22:00  sentmail687
+-rw-r--r-- 1 root root        830 Feb 24 22:00  sentmail738
+-rw-r--r-- 1 root root       7234 Feb 24 22:00  sentmail833
+-rw-r--r-- 1 root root   18238836 Feb 24 22:03  sentmail881
+-rw-r--r-- 1 root root       3878 Feb 24 22:00  sentmail936
+-rw-r--r-- 1 root root       9254 Feb 24 22:00  sentmail95
+-rw-r--r-- 1 root root    3397050 Feb 24 22:01  stewart.rhodes
+-rw-r--r-- 1 root root   13490089 Feb 24 22:03  tn
+-rw-r--r-- 1 root root  256892355 Feb 24 22:03  trash961
+-rw-r--r-- 1 root root   13959440 Feb 24 22:03  tx
+-rw-r--r-- 1 root root    3842408 Feb 24 22:00  ut
+-rw-r--r-- 1 root root    2407419 Feb 24 22:03  va
+-rw-r--r-- 1 root root    1755509 Feb 24 22:00  volunteers
+-rw-r--r-- 1 root root   42023374 Feb 24 22:03  vt
+-rw-r--r-- 1 root root   44739864 Feb 24 22:03  wa
+-rw-r--r-- 1 root root   12250886 Feb 24 22:02  wi
+-rw-r--r-- 1 root root   13201098 Feb 24 22:03  wv
+-rw-r--r-- 1 root root    5481775 Feb 24 22:03  wy
+root@hacksleaksrev-example:~/Oath Keepers/Oath Keepers.sbd# 
+```
+
+## Delete the VPS
+
+When you're done using it, remember to delete your VPS so you won't be charged more for it.

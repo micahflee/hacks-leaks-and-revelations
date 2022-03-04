@@ -23,32 +23,38 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 - [Homework 4-5: Install a Text Editor](./chapter-4/homework-4-5.md)
 - [Homework 4-6: Your First Shell Script](./chapter-4/homework-4-6.md)
 - [Homework 4-7: Clone the Book's Git Repository](./chapter-4/homework-4-7.md)
-- [Homework 4-8: Unzip BlueLeaks](./chapter-4/homework-4-8.md)
-- [Homework 4-9: Explore BlueLeaks With the Terminal](./chapter-4/homework-4-9.md)
-- [Homework 4-10: Dip Your Toes Into the BlueLeaks Documents](./chapter-4/homework-4-10.md)
-- [Homework 4-11: Play With a VPS](./chapter-4/homework-4-11.md)
 
-## Chapter 5: Making Datasets Searchable
+## Chapter 5: Explore Datasets in the Terminal
 
-- [Homework 5-1 for Windows and Mac users: Install Docker Desktop](./chapter-5/homework-5-1.md)
-- Homework 5-2 for Linux users: Install Docker CE
-- [Homework 5-3: Quickly Run a WordPress Server With Docker Compose](./chapter-5/homework-5-3.md)
-- [Homework 5-4: Run Aleph Locally in Linux Containers](./chapter-5/homework-5-4.md)
-- [Homework 5-5: Index Part of BlueLeaks in Aleph](./chapter-5/homework-5-5.md)
+- [Homework 5-1: Unzip BlueLeaks](./chapter-5/homework-5-1.md)
+- [Homework 5-2: Explore BlueLeaks With the Terminal](./chapter-5/homework-5-2.md)
+- [Homework 5-3: Dip Your Toes Into the BlueLeaks Documents](./chapter-5/homework-5-3.md)
+- [Homework 5-4: Play With a VPS](./chapter-5/homework-5-4.md)
 
-## Chapter 6: A Brief Introduction to the Python Programming Language
+## Chapter 6: Make Datasets Searchable
 
-## Chapter 7: Parler, the Insurrection of January 6, and the JSON File Format
+- [Homework 6-1 for Windows and Mac users: Install Docker Desktop](./chapter-6/homework-6-1.md)
+- Homework 6-2 for Linux users: Install Docker CE
+- [Homework 6-3: Quickly Run a WordPress Server With Docker Compose](./chapter-6/homework-6-3.md)
+- [Homework 6-4: Run Aleph Locally in Linux Containers](./chapter-6/homework-6-4.md)
+- [Homework 6-5: Index Part of BlueLeaks in Aleph](./chapter-6/homework-6-5.md)
 
-## Chapter 8: The Many CSV Files of BlueLeaks
+## Chapter 7: A Brief Introduction to the Python Programming Language
 
-## Chapter 9: BlueLeaks Explorer
+- [Homework 7-1: Install Python](./chapter-7/homework-7-1.md)
+- [Homework 7-2: Your First Python Script](./chapter-7/homework-7-2.md)
 
-## Chapter 10: SQL Databases and Epik Fail
+## Chapter 8: Parler, the Insurrection of January 6, and the JSON File Format
 
-## Chapter 11: Reading Other People’s Email
+## Chapter 9: The Many CSV Files of BlueLeaks
 
-## Chapter 12: Pandemic Profiteers Making Millions from COVID-19 Disinformation
+## Chapter 10: BlueLeaks Explorer
+
+## Chapter 11: SQL Databases and Epik Fail
+
+## Chapter 12: Reading Other People’s Email
+
+## Chapter 13: Pandemic Profiteers Making Millions from COVID-19 Disinformation
 
 # Licenses
 
