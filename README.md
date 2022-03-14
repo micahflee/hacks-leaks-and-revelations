@@ -57,6 +57,8 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 ## Chapter 13: Pandemic Profiteers Making Millions from COVID-19 Disinformation
 
+## Chapter 14: Neo-Nazis and Their Chat Rooms
+
 # Licenses
 
 All of the source code in this repository is licensed [GPLv3](./LICENSE).

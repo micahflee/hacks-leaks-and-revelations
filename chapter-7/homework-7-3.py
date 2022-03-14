@@ -1,6 +1,6 @@
 import os
 
-# This function take a filename as a parameter, return True if the file is a video,
+# This function take a filename as a parameter, returns True if the file is a video,
 # and otherwise returns False
 def is_video_file(filename):
     video_extensions = [".mp4", ".avi", ".mov", ".mpeg", ".ogv"]

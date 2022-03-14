@@ -5,7 +5,7 @@ You can find my solution for this homework assignment in [homework-7-3.py](./hom
 This solution defines a function called `is_video_file()` which takes a filename as a parameter and returns either `True` or `False`, depending on the filename's extension.
 
 ```py
-# This function take a filename as a parameter, return True if the file is a video,
+# This function take a filename as a parameter, returns True if the file is a video,
 # and otherwise returns False
 def is_video_file(filename):
     video_extensions = [".mp4", ".avi", ".mov", ".mpeg", ".ogv"]
