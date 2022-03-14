@@ -1,4 +1,4 @@
-# Homework 7-3: List All Videos in BlueLeaks
+# Homework 7-3: List All the Videos in BlueLeaks
 
 You can find my solution for this homework assignment in [homework-7-3.py](./homework-7-3py).
 
