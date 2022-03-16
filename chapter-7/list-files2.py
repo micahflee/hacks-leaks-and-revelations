@@ -31,4 +31,5 @@ def main():
         print(f"{bl_folder} has {files_count} files, {folders_count} folders")
 
 
-main()
+if __name__ == "__main__":
+    main()

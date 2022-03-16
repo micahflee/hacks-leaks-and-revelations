@@ -26,4 +26,5 @@ def main():
                     print(f"{absolute_filename} is {size_in_mb}mb")
 
 
-main()
+if __name__ == "__main__":
+    main()

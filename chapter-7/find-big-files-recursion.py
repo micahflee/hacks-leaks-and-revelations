@@ -30,4 +30,5 @@ def main():
     files_bigger_than_100mb(ncric_path)
 
 
-main()
+if __name__ == "__main__":
+    main()
