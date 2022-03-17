@@ -1,4 +1,4 @@
-# Homework 7-4: Command Line Arguments With Click
+# Homework 7-4: Develop Your First CLI Program
 
 You can find my solution for this homework assignment in [homework-7-4.py](./homework-7-4py).
 

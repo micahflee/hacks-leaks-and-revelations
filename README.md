@@ -44,7 +44,8 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 - [Homework 7-1: Install Python](./chapter-7/homework-7-1.md)
 - [Homework 7-2: Your First Python Script](./chapter-7/homework-7-2.md)
 - [Homework 7-3: List All the Videos in BlueLeaks](./chapter-7/homework-7-3.md)
-- [Homework 7-4: Command Line Arguments With Click](./chapter-7/homework-7-4.md)
+- [Homework 7-4: Develop Your First CLI Program](./chapter-7/homework-7-4.md)
+- [Homework 7-5: Map Out the CSVs in BlueLeaks](./chapter-7/homework-7-5.md)
 
 ## Chapter 8: Parler, the Insurrection of January 6, and the JSON File Format
 
