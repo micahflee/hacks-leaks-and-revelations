@@ -1,6 +1,4 @@
 import csv
-import json
-import time
 
 
 # Export a CSV that adds up prescriptions and their costs for each drug
