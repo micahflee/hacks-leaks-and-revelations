@@ -15,21 +15,23 @@ One way to get around this problem is to format your USB disk with a Linux files
 
 - [Mount a Linux disk in WSL 2](https://docs.microsoft.com/en-us/windows/wsl/wsl2-mount-disk)
 - [Servicing the Windows Subsystem for Linux (WSL) 2 Linux kernel](https://devblogs.microsoft.com/commandline/servicing-the-windows-subsystem-for-linux-wsl-2-linux-kernel/)
-- [zuluCrypt](https://mhogomchungu.github.io/zuluCrypt/)
 
 ## Contents
 
-- Install Linux Dependencies
-- Attach a USB Disk to WSL and Create an Encrypted Linux USB Disk
-  - Identify the DeviceID
-  - Mount the Disk Into WSL
-  - Create the Encrypted Linux Partition
-  - Mount the Encrypted Linux Partition
-  - Make a Symbolic Link
-- Mount an Encrypted Linux USB Disk
-- Unmount an Encrypted Linux USB Disk
+- [Install Updates in Linux](#install_updates)
+- [Format Your USB Disk](#format)
+- [Setup Your Encrypted Linux USB Disk for the First Time](#setup)
+  - [Identify the DeviceID](#setup_identify_deviceid)
+  - [Mount the Disk Into WSL](#setup_mount_wsl)
+  - [Identify the Block Device](#setup_identify_block_device)
+  - [Create the Encrypted Linux Partition](#setup_create)
+  - [Mount the Encrypted Linux Partition](#setup_mount)
+  - [Unmount Everything](#setup_unmount)
+- [Mount Your Encrypted Linux USB Disk](#mount)
+- [Unmount Your Encrypted Linux USB Disk](#unmount)
+- [Using Your Linux Disk in Windows](#using)
 
-# Install Linux Dependencies
+# <a id="install_updates"></a>Install Updates in Linux
 
 Start by opening an Ubuntu terminal and install all of the updates. Specifically, we want to make sure you have the most recent Linux kernel available.
 
@@ -38,25 +40,29 @@ sudo apt update
 sudo apt upgrade -y
 ```
 
-Next, install the `zulucrypt-gui` and `xdg-utils` packages:
-
-```sh
-sudo apt install zulucrypt-gui xdg-utils -y
-```
-
 After installing updates, to make sure that you're using the latest version of the Linux kernel, restart WSL. To do this, open a PowerShell terminal and run:
 
 ```powershell
 wsl --shutdown
 ```
 
-# Attach a USB Disk to WSL and Create an Encrypted Linux USB Disk
+# <a id="format"></a>Format Your USB Disk
 
 Plug the USB disk you'd like to use into your computer. You're going to erase all of the data on this disk.
 
-Start by opening a PowerShell terminal _as an administrator_.
+Click the **Start** button, search for "disk management," and click "Create and format hard disk partitions." This opens the Disk Management app. In the bottom half of the window, find the disk you just plugged in, right-click on all of its partitions, and choose "Delete Volume". (Make sure you're deleting volumes on the correct hard disk!)
 
-## Identify the DeviceID
+![Deleting volumes in Disk Management](./images/disk-management.png)
+
+After deleting all volumes, the whole disk should be labeled "Unallocated." Right-click on the unallocated space and choose "New Simple Volume." Follow the wizard to create a new volume that takes up the entire disk.
+
+# <a id="setup"></a>Setup Your Encrypted Linux USB Disk for the First Time
+
+Setting up your encrypted Linux USB disk for the first time is the trickiest part of this. Don't worry if you mess up because you can always format your USB disk again and start over. You only have to do this step once. After your USB disk is set up, it's much simpler to mount it and unmount it.
+
+The first step is to attach this USB disk to WSL. Start by opening a PowerShell terminal _as an administrator_.
+
+## <a id="setup_identify_deviceid"></a>Identify the DeviceID
 
 In your administrator PowerShell terminal, run this command to show you a list of all of the disks connected to your computer:
 
@@ -77,7 +83,7 @@ DeviceID           Caption                        Partitions Size          Model
 
 Find the `DeviceID` of your USB disk. In my case, it's `\\.\PHYSICALDRIVE1`.
 
-## Mount the Disk Into WSL
+## <a id="setup_mount_wsl"></a>Mount the Disk Into WSL
 
 Now mount the disk so that WSL can access it by running this, replacing `<DeviceID>` with the `DeviceID` you identified in the previous step:
 
@@ -91,91 +97,244 @@ For example:
 PS C:\Windows\system32> wsl --mount \\.\PHYSICALDRIVE1 --bare
 ```
 
-## Create the Encrypted Linux Partition
+## <a id="setup_identify_block_device"></a>Identify the Block Device
 
-Open an Ubuntu terminal and open zuluCrypt. In WSL, you first need to run this command for zuluCrypt to work:
+In Linux, disks and partitions are known as "block devices." A block device is identified by the filename `/dev/<Device><Partition>`. For example, `/dev/sdc3`, is the partition number 3 of disk `sdc`. You need to find out the block device filename for the new partition that you created in Disk Management.
 
-```sh
-sudo service dbus restart
-```
-
-Then you can open zuluCrypt by running this command:
+Open an Ubuntu terminal and run this command to list all of the block devices Linux has access to:
 
 ```sh
-sudo zuluCrypt-gui
+lsblk
 ```
-
-After you run this, zuluCrypt should open in a new window, like this:
-
-![zuluCrypt](./images/zulucrypt.png)
-
-Click the **Create** menu, and choose **Encrypted Container In A Hard Drive**. This will load a list of hard disks that WSL can see. Select the USB disk that you plugged in and click **Open**.
-
-For example, in my case, my USB disk is `/dev/sdd2`.
-
-![Selecting a partition to create an encrypted volume in, in zuluCrypt](./images/zulucrypt-create1.png)
-
-It will warn you that it will destroy all of the data on the disk and ask, "Are you sure you want to continue?". Click **Yes**.
-
-It will ask you if you want to write random data to the partition before creating an encrypted container in it. If there was nothing sensitive on the disk before, or if it was encrypted before, it's safe to choose **No**. If you choose **Yes** it will take a much longer time. I'm choosing **No**.
-
-zuluCrypt will then ask for information about the new encrypted volume you'd like to create. Specifically, you need to provide a strong and unique passphrase in the "Key" and "Repeat Password" fields. Use your password manager's passphrase generator to generate one for you, and make sure to save it in your password manager.
-
-Fill out the passphrase in the "Key" and "Repeat Password" fields. You can keep default values for the rest of the fields. Click **Create**.
-
-For example, here's what it looked like when I did it:
-
-![Setting the disk encryption passphrase in zuluCrypt](./images/zulucrypt-create2.png)
-
-It will take a few seconds to create. When it's done, zuluCrypt will show you a window that says, "Volume created successfully."
-
-## Mount the Encrypted Linux Partition
-
-Now, in zuluCrypt, click the **Open** menu, click **Volume Hosted In A Hard Drive**, select the USB disk, and click **Open**. The type should now be `crypto-LUKS`.
 
 For example:
 
-![Mounting a volume in zuluCrypt](./images/zulucrypt-mount1.png)
-
-You'll then need to provide the passphrase in the "Password" field. Copy and paste it from your password manager and click **Open**.
-
-This will mount your USB disk into a path like `/run/media/private/root/sdd2`.
-
-Because of issues with using zuluCrypt in WSL, your encrypted Linux volume won't show up in the zuluCrypt window, but it should have worked.
-
-You can quit zuluCrypt now. Quit it by clicking the **zC** menu and choosing **Quit** (just closing the window doesn't full quit the app). If you've already closed the window, you can force it to quit by pressing CTRL-C in your Ubuntu shell.
-
-Back in your Ubuntu terminal, run this command so that your unprivileged user (instead of just `root`) has permission to access this disk:
-
-```sh
-sudo chown -R $USER:$USER /run/media/private/root
+```
+micah@cloak:~$ lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+loop0    7:0    0 331.6M  1 loop /mnt/wsl/docker-desktop/cli-tools
+loop1    7:1    0 302.9M  1 loop
+sda      8:0    0   256G  0 disk
+sdb      8:16   0 339.8M  1 disk
+sdc      8:32   0   256G  0 disk /
+sdd      8:48   0   256G  0 disk /mnt/wsl/docker-desktop/docker-desktop-proxy
+sde      8:64   0   256G  0 disk /mnt/wsl/docker-desktop-data/isocache
+sdf      8:80   0 931.5G  0 disk
+├─sdf1   8:81   0    16M  0 part
+└─sdf2   8:82   0 931.5G  0 part
 ```
 
-You can check to see the exact path by using `ls`. For example:
+In my case, the block device for the partition I just formatted is `/dev/sdf2`. Make sure you identify the correct block device for your disk.
+
+## <a id="setup_create"></a>Create the Encrypted Linux Partition
+
+Before you can encrypt a disk, you'll need to generate a passphrase that you will use to unlock it. Generate a new strong passphrase in your password manager and make sure to save it.
+
+In your Ubuntu terminal, run these commands to encrypt the partition, unlock the encrypted partition, and then create a Linux filesystem inside this encrypted partition. Make sure to change `/dev/sdf2` to whatever your block device is. You must confirm by typing `YES`, and type your passphrase twice.
 
 ```sh
-micah@cloak:~$ ls -l /run/media/private/root
-total 4
-drwxrwxrwx 3 micah micah 4096 Mar 24 16:44 sdd2
+sudo cryptsetup luksFormat /dev/sdf2
 ```
 
-There's just a single folder called `sdd2` there, so the mount path is `/run/media/private/root/sdd2/`.
+For example:
 
-## Make a Symbolic Link
+```
+micah@cloak:~$ sudo cryptsetup luksFormat /dev/sdf2
+WARNING: Device /dev/sdf2 already contains a 'ntfs' superblock signature.
 
-This is a long and cumbersome path though. To make it simpler, run this command to make a [symbolic link](https://en.wikipedia.org/wiki/Symbolic_link) to this path called `/mnt/datasets`:
+WARNING!
+========
+This will overwrite data on /dev/sdf2 irrevocably.
 
-```sh
-sudo ln -s /run/media/private/root/sdd2 /mnt/datasets
+Are you sure? (Type uppercase yes): YES
+Enter passphrase for /dev/sdf2:
+Verify passphrase:
+WARNING: Locking directory /run/cryptsetup is missing!
+micah@cloak:~$
 ```
 
-From now on, after the USB disk is mounted, you can access it from `/mnt/datasets`. For example:
+You can disregard the warning about the device already containing an NTFS partition. This is a Windows partition that you will be overwriting. And you can disregard the warning about the locking directory missing.
+
+Now unlock the partition by running this command. You'll need to type the passphrase to unlock it.
 
 ```sh
-micah@cloak:~$ cd /mnt/datasets
-micah@cloak:/mnt/datasets$ ls -l
+sudo cryptsetup luksOpen /dev/sdf2 encrypted-disk
+```
+
+For example:
+
+```
+micah@cloak:~$ sudo cryptsetup luksOpen /dev/sdf2 encrypted-disk
+Enter passphrase for /dev/sdf2:
+micah@cloak:~$
+```
+
+Now that it's unlocked, it should have created a virtual block device in `/dev/mapper/encrypted-disk`. Make sure that file is there by running:
+
+```sh
+ls -l /dev/mapper/encrypted-disk
+```
+
+For example:
+
+```
+micah@cloak:~$ ls -l /dev/mapper/encrypted-disk
+brw-rw---- 1 root disk 252, 0 Apr  1 10:14 /dev/mapper/encrypted-disk
+micah@cloak:~$
+```
+
+Format this block device to use a Linux partition.
+
+```sh
+sudo mkfs.ext4 /dev/mapper/encrypted-disk
+```
+
+For example:
+
+```
+micah@cloak:~$ sudo mkfs.ext4 /dev/mapper/encrypted-disk
+mke2fs 1.45.5 (07-Jan-2020)
+Found a atari partition table in /dev/mapper/encrypted-disk
+Proceed anyway? (y,N) y
+Creating filesystem with 244173568 4k blocks and 61046784 inodes
+Filesystem UUID: e6e553bb-72ff-4b98-acff-c4e247a1492a
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+        4096000, 7962624, 11239424, 20480000, 23887872, 71663616, 78675968,
+        102400000, 214990848
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (262144 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+micah@cloak:~$
+```
+
+## <a id="setup_mount"></a>Mount the Encrypted Linux Partition
+
+You have now created an encrypted Linux partition. The next step is to _mount_ it, so you can start using it. In Linux, disks are normally mounted in the `/mnt` folder. Create a new folder, `/mnt/datasets`, to mount this disk into.
+
+```sh
+sudo mkdir /mnt/datasets
+```
+
+And mount the disk.
+
+```sh
+sudo mount /dev/mapper/encrypted-disk /mnt/datasets/
+```
+
+Now, check out what's in your new encrypted disk.
+
+```sh
+ls -l /mnt/datasets
+```
+
+For example:
+
+```
+micah@cloak:~$ ls -l /mnt/datasets
 total 16
-drwx------ 2 micah micah 16384 Mar 24 16:44 lost+found
+drwx------ 2 root root 16384 Apr  1 10:19 lost+found
+micah@cloak:~$
 ```
 
-When you first create a new Linux partition there should just be a single folder called `lost+found`, so this means that this worked.
+When you create a new Linux filesystem of type `ext4`, you will start out with a folder called `lost+found`. If you see this folder, this means it worked. Now any data you save to `/mnt/datasets` gets saved to your encrypted Linux USB disk.
+
+The final step is to change the permissions on this disk so that you can access it with your unprivileged user instead of having to use `sudo`. **This is an important step!** If you don't do this step, you won't be able to copy files to this disk from Windows.
+
+Run this:
+
+```sh
+sudo chown -R $USER:$USER /mnt/datasets
+```
+
+## <a id="setup_unmount"></a>Unmount Everything
+
+To unmount everything, run:
+
+```sh
+sudo umount /mnt/datasets
+sudo cryptsetup luksClose /dev/mapper/encrypted-disk
+```
+
+After you unmount the disk, `/mnt/datasets` should just be an empty folder. For example:
+
+```
+micah@cloak:~$ ls -l /mnt/datasets/
+total 0
+```
+
+Then, in your _administrator_ PowerShell terminal, run this.
+
+```powershell
+wsl --unmount <DeviceID>
+```
+
+For example:
+
+```
+PS C:\Windows\system32> wsl --unmount \\.\PHYSICALDRIVE1
+```
+
+# <a id="mount"></a>Mount Your Encrypted Linux USB Disk
+
+Now that you have an encrypted Linux USB disk, here is how you mount it in WSL. You'll need to do this step each time you plug in your USB disk to start working with the datasets stored on it.
+
+- Plug in your USB disk.
+- Open a PowerShell terminal _as an administrator_.
+- [Identify the `DeviceID` of your disk](#setup_identify_deviceid). For example, mine is `\\.\PHYSICALDRIVE1`.
+- Mount the disk into WSL by running this command in your administrator PowerShell:
+  ```powershell
+  wsl --mount <DeviceID> --bare
+  ```
+  For example:
+  ```powershell
+  wsl --mount \\.\PHYSICALDRIVE1 --bare
+  ```
+- Open an Ubuntu terminal.
+- [Identify the block device of your disk](#setup_identify_block_device). For example, mine is `/dev/sdf2`.
+- Mount the encrypted Linux USB disk in Ubuntu by running these commands in your Ubuntu terminal:
+  ```sh
+  sudo cryptsetup luksOpen <block_device> encrypted-disk
+  sudo mount /dev/mapper/encrypted-disk /mnt/datasets
+  ```
+  For example:
+  ```sh
+  sudo cryptsetup luksOpen /dev/sdf2 encrypted-disk
+  sudo mount /dev/mapper/encrypted-disk /mnt/datasets
+  ```
+- Now your encrypted disk is mounted in `/mnt/datasets`.
+
+# <a id="unmount"></a>Unmount Your Encrypted Linux USB Disk
+
+If your encrypted Linux USB disk is mounted, you can unmount it like this.
+
+- Open an Ubuntu terminal. Run these commands to unmount the partition and lock the disk:
+  ```sh
+  sudo umount /mnt/datasets
+  sudo cryptsetup luksClose /dev/mapper/encrypted-disk
+  ```
+- Open a PowerShell terminal _as an administrator_ and run this command to unmount the disk from WSL:
+  ```powershell
+  wsl --unmount <DeviceID>
+  ```
+  For example:
+  ```powershell
+  wsl --unmount \\.\PHYSICALDRIVE1
+  ```
+
+# Using Your Linux Disk in Windows
+
+You can copy files between your new encrypted Linux disk and files in Windows using Explorer. Open Explorer and find _Linux_ in the left sidebar. You can expand _Ubuntu_, _mnt_, _datasets_ to access the files in this disk, and to copy data onto it and off of it from Windows.
+
+![Explorer](./images/explorer.png)
+
+You can even drag the _datasets_ folder into Explorer's "Quick access" group on the left sidebar to make it easier to navigate to.
+
+![Adding datasets to quick access in Explorer](./images/explorer-quick-access.png)
+
+You can download datasets directly to your encrypted Linux disk. For example, here I'm using the [Transmission](https://transmissionbt.com/) BitTorrent client to downloading the [BlueLeaks](https://ddosecrets.com/wiki/BlueLeaks) dataset directly to my encrypted Linux USB disk, in Windows.
+
+![Downloading BlueLeaks to the Linux disk](./images/bittorrent.png)
