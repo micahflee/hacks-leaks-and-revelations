@@ -49,6 +49,8 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 ## Chapter 8: Parler, the Insurrection of January 6, and the JSON File Format
 
+- [Homework 8-1: Download the Parler Video Metadata](./chapter-8/homework-8-1.md)
+
 ## Chapter 9: The Many CSV Files of BlueLeaks
 
 ## Chapter 10: BlueLeaks Explorer
