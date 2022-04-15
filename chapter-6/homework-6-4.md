@@ -4,6 +4,8 @@ Make a new homework folder just for this assignment. Follow the [production depl
 
 You can see example files in the [aleph](./aleph/) folder.
 
+If you're using Windows, use a PowerShell terminal.
+
 ## Configure Aleph and Start the Containers
 
 In short, you'll need to:
@@ -26,8 +28,8 @@ cp aleph.env.tmpl aleph.env
 Example:
 
 ```
-micah@trapdoor aleph % cp aleph.env.tmpl aleph.env      
-micah@trapdoor aleph % ls -l 
+micah@trapdoor aleph % cp aleph.env.tmpl aleph.env
+micah@trapdoor aleph % ls -l
 total 24
 -rw-r--r--  1 micah  staff  2931 Feb 25 09:20 aleph.env
 -rw-r--r--  1 micah  staff  2931 Feb 10 20:31 aleph.env.tmpl
@@ -91,7 +93,7 @@ Example:
 micah@trapdoor aleph % docker run -it --rm --privileged --pid=host alpine:edge nsenter -t 1 -m -u -n -i sh
 Unable to find image 'alpine:edge' locally
 edge: Pulling from library/alpine
-41dcc117e123: Pull complete 
+41dcc117e123: Pull complete
 Digest: sha256:1a4c2018cfbab67566904e18fde9bf6a5c190605bf7da0e1d181b26746a15188
 Status: Downloaded newer image for alpine:edge
 / # sysctl -w vm.max_map_count=262144
@@ -388,39 +390,7 @@ Commands:
   upgrade             Create or upgrade the search index and database.
   worker              Run the queue-based worker service.
   xref                Cross-reference all entities and documents in a...
-root@39093f0cc006:/aleph# 
+root@39093f0cc006:/aleph#
 ```
-
-## Create a User for Yourself
-
-How to create a user:
-
-```
-root@39093f0cc006:/aleph# aleph createuser --help
-Usage: aleph createuser [OPTIONS] EMAIL
-
-  Create a user and show their API key.
-
-Options:
-  -p, --password TEXT  Set a user password
-  -n, --name TEXT      Set a label
-  -a, --admin          Make the user an admin.
-  --help               Show this message and exit.
-```
-
-In the Aleph shell, create a user. Generate a new password for this and store it in your password manager. Replace my name and email address with yours.
-
-```sh
-aleph createuser -p put_password_here -n "Micah Lee" -a micah@micahflee.com
-```
-
-Example:
-
-```
-root@39093f0cc006:/aleph# aleph createuser -p put_password_here -n "Micah Lee" -a micah@micahflee.com
-User created. ID: 4, API Key: dKXk1-JUurWfUSdOX8rc0SVSfqEgM-twExSt5CEzHA8
-```
-
-Now back at http://127.0.0.1:8080/, login to your new account.
 
 Run `exit` to quit the Aleph shell, and in your Docker Compose window press CTRL-C to close down all of the Aleph containers.

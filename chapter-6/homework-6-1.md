@@ -4,7 +4,7 @@ Download and install [Docker Desktop](https://www.docker.com/products/docker-des
 
 If you're using a newer Mac with an M1 chip, make sure to choose "Mac with Apple Chip." Otherwise choose "Mac with Intel Chip."
 
-After opening Docker Desktop for the first time and waiting for it to start, see if it works by running:
+After opening Docker Desktop for the first time and waiting for it to start, open a terminal. If you're using Windows, use PowerShell. See if it works by running:
 
 ```sh
 docker run hello-world
@@ -16,7 +16,7 @@ Example:
 micah@trapdoor ~ % docker run hello-world
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
-2db29710123e: Pull complete 
+2db29710123e: Pull complete
 Digest: sha256:97a379f4f88575512824f3b352bc03cd75e239179eea0fecc38e597b2209f49a
 Status: Downloaded newer image for hello-world:latest
 
@@ -41,5 +41,5 @@ Share images, automate workflows, and more with a free Docker ID:
 For more examples and ideas, visit:
  https://docs.docker.com/get-started/
 
-micah@trapdoor ~ % 
+micah@trapdoor ~ %
 ```
