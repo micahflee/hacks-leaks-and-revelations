@@ -5,7 +5,7 @@ Read the instructions on the _DDoSecrets_ [Parler page](https://ddosecrets.com/w
 Open a terminal, change to your datasets USB disk, create a _Parler_ folder, and use the `wget` command to download the list of filenames and the video metadata:
 
 ```sh
-cd /mnt/datasets
+cd /mnt/d
 mkdir Parler
 cd Parler
 wget https://s3.wasabisys.com/ddosecrets-parler/ddosecrets-parler-listing.txt.gz
@@ -15,13 +15,13 @@ wget https://s3.wasabisys.com/ddosecrets-parler/metadata.tar.gz
 For example:
 
 ```
-micah@cloak:~$ cd /mnt/datasets/
-micah@cloak:/mnt/datasets$ mkdir Parler
-micah@cloak:/mnt/datasets$ cd Parler/
-micah@cloak:/mnt/datasets/Parler$ which wget
+micah@cloak:~$ cd /mnt/d/
+micah@cloak:/mnt/d$ mkdir Parler
+micah@cloak:/mnt/d$ cd Parler/
+micah@cloak:/mnt/d/Parler$ which wget
 /usr/bin/wget
-micah@cloak:/mnt/datasets/Parler$ ls
-micah@cloak:/mnt/datasets/Parler$ wget https://s3.wasabisys.com/ddosecrets-parler/ddosecrets-parler-listing.txt.gz
+micah@cloak:/mnt/d/Parler$ ls
+micah@cloak:/mnt/d/Parler$ wget https://s3.wasabisys.com/ddosecrets-parler/ddosecrets-parler-listing.txt.gz
 --2022-04-08 11:52:41--  https://s3.wasabisys.com/ddosecrets-parler/ddosecrets-parler-listing.txt.gz
 Resolving s3.wasabisys.com (s3.wasabisys.com)... 38.27.106.51, 38.27.106.53
 Connecting to s3.wasabisys.com (s3.wasabisys.com)|38.27.106.51|:443... connected.
@@ -33,7 +33,7 @@ ddosecrets-parler-listing.txt.gz       100%[====================================
 
 2022-04-08 11:52:45 (4.09 MB/s) - ‘ddosecrets-parler-listing.txt.gz’ saved [17790173/17790173]
 
-micah@cloak:/mnt/datasets/Parler$ wget https://s3.wasabisys.com/ddosecrets-parler/metadata.tar.gz
+micah@cloak:/mnt/d/Parler$ wget https://s3.wasabisys.com/ddosecrets-parler/metadata.tar.gz
 --2022-04-08 11:52:47--  https://s3.wasabisys.com/ddosecrets-parler/metadata.tar.gz
 Resolving s3.wasabisys.com (s3.wasabisys.com)... 38.27.106.51, 38.27.106.53
 Connecting to s3.wasabisys.com (s3.wasabisys.com)|38.27.106.51|:443... connected.
@@ -45,10 +45,10 @@ metadata.tar.gz                        100%[====================================
 
 2022-04-08 11:53:20 (6.28 MB/s) - ‘metadata.tar.gz’ saved [212461278/212461278]
 
-micah@cloak:/mnt/datasets/Parler$ ls -lh
+micah@cloak:/mnt/d/Parler$ ls -lh
 total 220M
--rw-r--r-- 1 micah micah  17M Mar 28  2021 ddosecrets-parler-listing.txt.gz
--rw-r--r-- 1 micah micah 203M Mar 15  2021 metadata.tar.gz
+-rwxrwxrwx 1 micah micah  17M Mar 28  2021 ddosecrets-parler-listing.txt.gz
+-rwxrwxrwx 1 micah micah 203M Mar 15  2021 metadata.tar.gz
 ```
 
 Both of these files are compressed.
@@ -64,12 +64,12 @@ gunzip ddosecrets-parler-listing.txt.gz
 For example:
 
 ```
-micah@cloak:/mnt/datasets/Parler$ gunzip ddosecrets-parler-listing.txt.gz
-micah@cloak:/mnt/datasets/Parler$ ls -lh
+micah@cloak:/mnt/d/Parler$ gunzip ddosecrets-parler-listing.txt.gz
+micah@cloak:/mnt/d/Parler$ ls -lh
 total 246M
--rw-r--r-- 1 micah micah  44M Mar 28  2021 ddosecrets-parler-listing.txt
--rw-r--r-- 1 micah micah 203M Mar 15  2021 metadata.tar.gz
-micah@cloak:/mnt/datasets/Parler$ cat ddosecrets-parler-listing.txt | wc -l
+-rwxrwxrwx 1 micah micah  44M Mar 28  2021 ddosecrets-parler-listing.txt
+-rwxrwxrwx 1 micah micah 203M Mar 15  2021 metadata.tar.gz
+micah@cloak:/mnt/d/Parler$ cat ddosecrets-parler-listing.txt | wc -l
 1031509
 ```
 
@@ -88,9 +88,9 @@ wget https://s3.wasabisys.com/ddosecrets-parler/0003lx5cSwSB
 For example:
 
 ```
-micah@cloak:/mnt/datasets/Parler$ mkdir videos
-micah@cloak:/mnt/datasets/Parler$ cd videos/
-micah@cloak:/mnt/datasets/Parler/videos$ wget https://s3.wasabisys.com/ddosecrets-parler/0003lx5cSwSB
+micah@cloak:/mnt/d/Parler$ mkdir videos
+micah@cloak:/mnt/d/Parler$ cd videos/
+micah@cloak:/mnt/d/Parler/videos$ wget https://s3.wasabisys.com/ddosecrets-parler/0003lx5cSwSB
 --2022-04-08 11:55:21--  https://s3.wasabisys.com/ddosecrets-parler/0003lx5cSwSB
 Resolving s3.wasabisys.com (s3.wasabisys.com)... 38.27.106.51, 38.27.106.53
 Connecting to s3.wasabisys.com (s3.wasabisys.com)|38.27.106.51|:443... connected.
@@ -122,8 +122,8 @@ tar -xvf metadata.tar.gz
 For example:
 
 ```
-micah@cloak:/mnt/datasets/Parler/videos$ cd ..
-micah@cloak:/mnt/datasets/Parler$ tar -xvf metadata.tar.gz
+micah@cloak:/mnt/d/Parler/videos$ cd ..
+micah@cloak:/mnt/d/Parler$ tar -xvf metadata.tar.gz
 metadata/
 metadata/.aws/
 metadata/meta-00CnBY5xCdca.json
@@ -134,4 +134,24 @@ metadata/meta-0002bz1GNsUP.json
 metadata/meta-0015NlY0yUB5.json
 metadata/meta-00DeGeeF9M25.json
 --snip--
+```
+
+### Note For Windows Users
+
+If you're using Windows with WSL, and you're doing this on your Windows-formatted USB disk, disk performance issues will make this take hours instead of a few minutes. To make much faster, extract this file with 7-Zip instead. You can quit your `tar` command by pressing CTRL-C, and then delete the metadata folder to delete what’s been extracted so far, like this:
+
+```sh
+rm -rf metadata
+```
+
+To decompress this file with 7-Zip, you can either use the `7z.exe` command in PowerShell or just use the 7-Zip graphical interface. Technically, when you decompress `metadata.tar.gz` you end up with `metadata.tar`, and you need to extract that too, which ends up being a folder called `metadata`.
+
+Assuming you have `C:\Program Files\7-Zip` in your Windows path and can use the `7z.exe` command directly, this is what you would run in a PowerShell terminal:
+
+```powershell
+cd D:\Parler
+# Decompress metadata.tar.gz to just metadata.tar
+7z x metadata.tar.gz
+# Extract metadata.tar into a folder called metadata
+7z x metadata.tar
 ```
