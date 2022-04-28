@@ -10,7 +10,8 @@ def main():
     for dirname, dirnames, filenames in os.walk(ncric_path):
         # Each time this for loop runs, dirname is the path to a folder, dirnames
         # is a list of subfolders inside it, and filenames is a list of files
-        # inside it. This will loop for each folder or subfolder it finds.
+        # inside it. This will loop for the ncric folder itself, and for each
+        # subfolder it finds inside of it.
 
         # Look at each file in this folder
         for filename in filenames:

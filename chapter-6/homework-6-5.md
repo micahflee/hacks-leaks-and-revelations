@@ -2,6 +2,8 @@
 
 You can see example files in the [aleph](./aleph/) folder.
 
+If you're using Windows, use a PowerShell terminal.
+
 ## Start Aleph
 
 ```sh
@@ -30,7 +32,7 @@ micah@trapdoor aleph % docker-compose up
 Attaching to aleph-api-1, aleph-convert-document-1, aleph-elasticsearch-1, aleph-ingest-file-1, aleph-postgres-1, aleph-redis-1, aleph-shell-1, aleph-ui-1, aleph-worker-1
 aleph-postgres-1          | The files belonging to this database system will be owned by user "postgres".
 aleph-postgres-1          | This user must also own the server process.
-aleph-postgres-1          | 
+aleph-postgres-1          |
 aleph-postgres-1          | The database cluster will be initialized with locale "en_US.utf8".
 --snip--
 ```

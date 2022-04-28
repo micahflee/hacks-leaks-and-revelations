@@ -5,7 +5,7 @@ def main():
     # The path to the BlueLeaks dataset. Change this to match your path.
     blueleaks_path = "/Volumes/datasets/BlueLeaks-extracted"
 
-    # Loop through each of the filenames returns by os.listdir()
+    # Loop through each of the filenames returned by os.listdir()
     for bl_folder in os.listdir(blueleaks_path):
         # The os.path.join() function is useful for combining parts of paths
         # For example, if bl_folder is "sfbay211", then bl_folder_path will be

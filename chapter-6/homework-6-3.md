@@ -2,6 +2,8 @@
 
 You can find the `docker-compose.yaml` file used in this homework [here](./homework-6-3/docker-compose.yaml).
 
+If you're using Windows, use a PowerShell terminal.
+
 ## Make a `docker-compose.yaml` File
 
 Make a new homework folder just for this assignment, and copy `docker-compose.yaml` into it.

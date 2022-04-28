@@ -1,7 +1,7 @@
 import os
 
 
-# Recursive function that prints the filename of every file larger than 10mb
+# Recursive function that prints the filename of every file larger than 100mb
 def files_bigger_than_100mb(path):
     # 100mb, in bytes
     one_hundred_mb = 1024 * 1024 * 100
@@ -20,7 +20,7 @@ def files_bigger_than_100mb(path):
                 size_in_mb = int(file_size / 1024 / 1024)
                 print(f"{absolute_filename} is {size_in_mb}mb")
 
-        # If it's a folder, then re-run this recursive function for the new folder
+        # If it's a folder, then re-run this recursive function on the new folder
         if os.path.isdir(absolute_filename):
             files_bigger_than_100mb(absolute_filename)
 
