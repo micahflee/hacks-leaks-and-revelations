@@ -1,4 +1,4 @@
-# Homework 6-3: Quickly Run a WordPress Server With Docker Compose
+# Homework 6-3: Quickly Run a WordPress Site With Docker Compose
 
 You can find the `docker-compose.yaml` file used in this homework [here](./homework-6-3/docker-compose.yaml).
 
@@ -125,7 +125,7 @@ homework-6-3-db-1         | Warning: Unable to load '/usr/share/zoneinfo/zone197
 homework-6-3-db-1         | 2022-02-25 16:59:26+00:00 [Note] [Entrypoint]: Creating database wordpress
 homework-6-3-db-1         | 2022-02-25 16:59:26+00:00 [Note] [Entrypoint]: Creating user wordpress
 homework-6-3-db-1         | 2022-02-25 16:59:26+00:00 [Note] [Entrypoint]: Giving user wordpress access to schema wordpress
-homework-6-3-db-1         | 
+homework-6-3-db-1         |
 homework-6-3-db-1         | 2022-02-25 16:59:26+00:00 [Note] [Entrypoint]: Stopping temporary server
 homework-6-3-db-1         | 2022-02-25T16:59:26.728281Z 0 [Note] Giving 0 client threads a chance to die gracefully
 homework-6-3-db-1         | 2022-02-25T16:59:26.728365Z 0 [Note] Shutting down slave threads
@@ -182,11 +182,11 @@ homework-6-3-db-1         | 2022-02-25T16:59:28.485685Z 0 [Note] Shutting down p
 homework-6-3-db-1         | 2022-02-25T16:59:28.485700Z 0 [Note] Shutting down plugin 'mysql_native_password'
 homework-6-3-db-1         | 2022-02-25T16:59:28.485836Z 0 [Note] Shutting down plugin 'binlog'
 homework-6-3-db-1         | 2022-02-25T16:59:28.489777Z 0 [Note] mysqld: Shutdown complete
-homework-6-3-db-1         | 
+homework-6-3-db-1         |
 homework-6-3-db-1         | 2022-02-25 16:59:28+00:00 [Note] [Entrypoint]: Temporary server stopped
-homework-6-3-db-1         | 
+homework-6-3-db-1         |
 homework-6-3-db-1         | 2022-02-25 16:59:28+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
-homework-6-3-db-1         | 
+homework-6-3-db-1         |
 homework-6-3-db-1         | 2022-02-25T16:59:28.921210Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
 homework-6-3-db-1         | 2022-02-25T16:59:28.922661Z 0 [Note] mysqld (mysqld 5.7.37) starting as process 1 ...
 homework-6-3-db-1         | 2022-02-25T16:59:28.925966Z 0 [Note] InnoDB: PUNCH HOLE support available
@@ -277,7 +277,7 @@ Example:
 
 ```
 micah@trapdoor homework-6-3 % docker exec -it homework-6-3-wordpress-1 bash
-root@4fe8833c3fe6:/var/www/html# 
+root@4fe8833c3fe6:/var/www/html#
 ```
 
 Check out the files in the WordPress container.
@@ -323,7 +323,7 @@ cat wp-config.php
 Example:
 
 ```
-root@4fe8833c3fe6:/var/www/html# cat wp-config.php 
+root@4fe8833c3fe6:/var/www/html# cat wp-config.php
 <?php
 /**
  * The base configuration for WordPress
