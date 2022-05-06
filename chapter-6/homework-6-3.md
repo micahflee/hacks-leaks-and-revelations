@@ -1,4 +1,4 @@
-# Homework 6-3: Quickly Run a WordPress Server With Docker Compose
+# Homework 6-3: Quickly Run a WordPress Site With Docker Compose
 
 You can find the `docker-compose.yaml` file used in this homework [here](./homework-6-3/docker-compose.yaml).
 
