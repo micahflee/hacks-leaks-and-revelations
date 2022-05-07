@@ -1,4 +1,6 @@
-# Homework 8-3: Update Script to Filter Videos from January 6, 2021
+# Homework 8-3: Update the Script to Filter Videos from January 6, 2021
+
+**NOTE:** If you're using Windows, I recommend that you follow the instructions in this chapter using your Ubuntu terminal instead of PowerShell, and that you save this data in your Ubuntu home folder, like in `~/datasets`, instead of using your Windows-formatted USB disk, like in `/mnt/d`. I found that working with this data in Linux was significantly faster than in directly in Windows.
 
 In this homework assignment you'll modify the script from Homework 8-2 to not only filter Parler videos down to just the ones that include GPS coordinates in their metadata, but also to those filmed on January 6, 2021. Start by coping your solution from Homework 8-2 into a new file for Homework-8-3.
 
@@ -25,7 +27,7 @@ def main(parler_metadata_path):
 
             metadata = json.loads(json_data)
             if "GPSCoordinates" in metadata[0]:
-                print(f"Found GPS coordinates: {abs_filename}")
+                print(f"Found GPS coordinates: {filename}")
                 count += 1
 
     print(f"Total videos with GPS coordinates: {count}")
@@ -50,14 +52,14 @@ The next step is to modify the code to filter it by date. I can do that by chang
 
 ```python
 if "GPSCoordinates" in metadata[0]:
-    print(f"Found GPS coordinates: {abs_filename}")
+    print(f"Found GPS coordinates: {filename}")
 ```
 
 To this:
 
 ```python
 if "GPSCoordinates" in metadata[0] and metadata[0]["CreateDate"].startswith("2021:01:06 "):
-    print(f"GPS + Jan 6: {abs_filename}")
+    print(f"GPS + Jan 6: {filename}")
 ```
 
 Finally, I'll change the text that gets displayed at the end from:
@@ -77,14 +79,14 @@ print(f"Total videos with GPS coordinates, filmed Jan 6: {count}")
 Here's what it looks like to run this script:
 
 ```
-micah@cloak:/mnt/d/homework/chapter-8$ python3 ./homework-8-3.py ~/datasets/Parler/metadata
-GPS + Jan 6: /home/micah/datasets/Parler/metadata/meta-8YA6CeYMxHh4.json
-GPS + Jan 6: /home/micah/datasets/Parler/metadata/meta-91Vga2rHrrID.json
-GPS + Jan 6: /home/micah/datasets/Parler/metadata/meta-a3NbAuIyNM3v.json
+micah@cloak:~/datasets/homework/chapter-8$ python3 homework-8-3.py ~/datasets/Parler/metadata
+GPS + Jan 6: meta-8YA6CeYMxHh4.json
+GPS + Jan 6: meta-91Vga2rHrrID.json
+GPS + Jan 6: meta-a3NbAuIyNM3v.json
 --snip--
-GPS + Jan 6: /home/micah/datasets/Parler/metadata/meta-diIeD4Ne7Ear.json
-GPS + Jan 6: /home/micah/datasets/Parler/metadata/meta-q7BpcYyFpX7J.json
-GPS + Jan 6: /home/micah/datasets/Parler/metadata/meta-OUJYa3npW0oE.json
+GPS + Jan 6: meta-diIeD4Ne7Ear.json
+GPS + Jan 6: meta-q7BpcYyFpX7J.json
+GPS + Jan 6: meta-OUJYa3npW0oE.json
 Total videos with GPS coordinates, filmed Jan 6: 1958
 ```
 

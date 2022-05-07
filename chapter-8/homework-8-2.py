@@ -18,7 +18,7 @@ def main(parler_metadata_path):
 
             metadata = json.loads(json_data)
             if "GPSCoordinates" in metadata[0]:
-                print(f"Found GPS coordinates: {abs_filename}")
+                print(f"Found GPS coordinates: {filename}")
                 count += 1
 
     print(f"Total videos with GPS coordinates: {count}")

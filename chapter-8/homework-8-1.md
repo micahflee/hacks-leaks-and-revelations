@@ -1,8 +1,8 @@
 # Homework 8-1: Download the Parler Video Metadata
 
-Read the instructions on the _DDoSecrets_ [Parler page](https://ddosecrets.com/wiki/Parler).
+**NOTE:** If you're using Windows, I recommend that you follow the instructions in this chapter using your Ubuntu terminal instead of PowerShell, and that you save this data in your Ubuntu home folder, like in `~/datasets`, instead of using your Windows-formatted USB disk, like in `/mnt/d`. I found that working with this data in Linux was significantly faster than in directly in Windows.
 
-If you're using Windows, I recommend that you follow the instructions in this chapter using your Ubuntu terminal instead of PowerShell, and that you save this data in your Ubuntu home folder, like in `~/datasets`, instead of using your Windows-formatted USB disk, like in `/mnt/d`. I found that working with this data in Linux was significantly faster than in directly in Windows.
+Read the instructions on the _DDoSecrets_ [Parler page](https://ddosecrets.com/wiki/Parler).
 
 Open a terminal, change to your datasets USB disk (or, in Windows, create a `~/datasets` folder and change to that), create a _Parler_ folder, and use the `wget` command to download the list of filenames and the video metadata:
 
