@@ -52,6 +52,7 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 - [Homework 8-1: Download the Parler Video Metadata](./chapter-8/homework-8-1.md)
 - [Homework 8-2: Write a Script to Filter Videos with GPS Coordinates](./chapter-8/homework-8-2.md)
 - [Homework 8-3: Update the Script to Filter Videos from January 6, 2021](./chapter-8/homework-8-3.md)
+- [Homework 8-4: Update the Script to Filter Videos Filmed in Washington, DC](./chapter-8/homework-8-4.md)
 
 ## Chapter 9: The Many CSV Files of BlueLeaks
 

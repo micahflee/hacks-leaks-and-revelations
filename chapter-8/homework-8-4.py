@@ -24,7 +24,7 @@ def main(parler_metadata_path):
             if "GPSCoordinates" in metadata[0] and metadata[0]["CreateDate"].startswith(
                 "2021:01:06 "
             ):
-                print(f"Found GPS coordinates, filmed Jan 6: {abs_filename}")
+                print(f"Found GPS coordinates, filmed Jan 6: {filename}")
                 count += 1
 
     print(f"Total videos with GPS coordinates, filmed Jan 6: {count}")
