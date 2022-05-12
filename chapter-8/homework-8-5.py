@@ -26,16 +26,14 @@ def gps_degrees_to_decimal(gps_coordinate):
     return gps_decimal
 
 
-def was_video_filmed_in_washington_dc(metadata):
-    x = gps_degrees_to_decimal(metadata[0]["GPSLongitude"])
-    y = gps_degrees_to_decimal(metadata[0]["GPSLatitude"])
-    return is_point_in_washington_dc(x, y)
-
-
 @click.command()
 @click.argument("parler_metadata_path")
 def main(parler_metadata_path):
-    """Filter Parler videos that were filmed in Washington DC and on Jan 6, 2021"""
+    """Create a GeoJSON file containing Parler GPS coordinates"""
+    # The list of GPS points
+    points = []
+
+    # Number of videos with GPS coordinates in their metadata
     count = 0
 
     for filename in os.listdir(parler_metadata_path):
@@ -45,15 +43,22 @@ def main(parler_metadata_path):
                 json_data = f.read()
 
             metadata = json.loads(json_data)
-            if (
-                "GPSCoordinates" in metadata[0]
-                and metadata[0]["CreateDate"].startswith("2021:01:06 ")
-                and was_video_filmed_in_washington_dc(metadata)
-            ):
-                print(f"Found an insurrection video: {filename}")
+            if "GPSCoordinates" in metadata[0]:
                 count += 1
+                print(f"\rFound {count:,} videos with GPS coordinates", end="")
 
-    print(f"Total videos filmed in Washington DC on January 6: {count}")
+                longitude_decimal = gps_degrees_to_decimal(metadata[0]["GPSLongitude"])
+                latitude_decimal = gps_degrees_to_decimal(metadata[0]["GPSLatitude"])
+                points.append([longitude_decimal, latitude_decimal, filename])
+
+    print()
+
+    # Save the CSV spreadsheet
+    with open("parler-videos.csv", "w") as f:
+        for point in points:
+            f.write(f"{point[0]},{point[1]},{point[2]}\n")
+
+    print("Wrote file: parler-videos.csv")
 
 
 if __name__ == "__main__":
