@@ -57,6 +57,9 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 ## Chapter 9: The Many CSV Files of BlueLeaks
 
+- [Homework 9-1: Install Spreadsheet Software](./chapter-9/homework-9-1.md)
+- [Homework 9-2: Make SARs Readable](./chapter-9/homework-9-2.md)
+
 ## Chapter 10: BlueLeaks Explorer
 
 ## Chapter 11: SQL Databases and Epik Fail
