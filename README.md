@@ -59,6 +59,7 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 - [Homework 9-1: Install Spreadsheet Software](./chapter-9/homework-9-1.md)
 - [Homework 9-2: Make SARs Readable](./chapter-9/homework-9-2.md)
+- [Homework 9-3: Make Bulk Emails Readable](./chapter-9/homework-9-3.md)
 
 ## Chapter 10: BlueLeaks Explorer
 

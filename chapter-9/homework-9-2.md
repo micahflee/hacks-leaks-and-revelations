@@ -54,7 +54,22 @@ City: Delhi
 Country: India
 Population: 28514000
 ===
---snip--
+City: Shanghai
+Country: China
+Population: 25582000
+===
+City: São Paulo
+Country: Brazil
+Population: 21650000
+===
+City: Mexico City
+Country: Mexico
+Population: 21581000
+===
+City: Cairo
+Country: Egypt
+Population: 20076000
+===
 ```
 
 You can find an implementation of this script in [homework-9-2.py](./homework-9-2.py).
