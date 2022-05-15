@@ -139,7 +139,7 @@ It takes Parler metadata a san argument. It sets the variable `x` equal to the l
 Here's what it looks like to run this script:
 
 ```
-micah@cloak:~/datasets/homework/chapter-8$ python3 homework-8-4.py ~/datasets/Parler/metadata
+micah@cloak:~/datasets/homework/chapter-9$ python3 homework-9-4.py ~/datasets/Parler/metadata
 Found an insurrection video: meta-8YA6CeYMxHh4.json
 Found an insurrection video: meta-91Vga2rHrrID.json
 Found an insurrection video: meta-mtR54fIOsU8Y.json
@@ -150,4 +150,4 @@ Found an insurrection video: meta-OUJYa3npW0oE.json
 Total videos filmed in Washington DC on January 6: 1199
 ```
 
-You can find an implementation of this script in [homework-8-4.py](./homework-8-4.py).
+You can find an implementation of this script in [homework-9-4.py](./homework-9-4.py).

@@ -47,19 +47,19 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 - [Homework 7-4: Develop Your First CLI Program](./chapter-7/homework-7-4.md)
 - [Homework 7-5: Map Out the CSVs in BlueLeaks](./chapter-7/homework-7-5.md)
 
-## Chapter 8: Parler, the Insurrection of January 6, and the JSON File Format
+## Chapter 8: The Many CSV Files of BlueLeaks
 
-- [Homework 8-1: Download the Parler Video Metadata](./chapter-8/homework-8-1.md)
-- [Homework 8-2: Write a Script to Filter Videos with GPS Coordinates](./chapter-8/homework-8-2.md)
-- [Homework 8-3: Update the Script to Filter Videos from January 6, 2021](./chapter-8/homework-8-3.md)
-- [Homework 8-4: Update the Script to Filter Videos Filmed in Washington, DC](./chapter-8/homework-8-4.md)
-- [Homework 8-5: Plot the Parler Videos on a Map](./chapter-8/homework-8-5.md)
+- [Homework 8-1: Install Spreadsheet Software](./chapter-8/homework-8-1.md)
+- [Homework 8-2: Make SARs Readable](./chapter-8/homework-8-2.md)
+- [Homework 8-3: Make Bulk Emails Readable](./chapter-8/homework-8-3.md)
 
-## Chapter 9: The Many CSV Files of BlueLeaks
+## Chapter 9: Parler, the Insurrection of January 6, and the JSON File Format
 
-- [Homework 9-1: Install Spreadsheet Software](./chapter-9/homework-9-1.md)
-- [Homework 9-2: Make SARs Readable](./chapter-9/homework-9-2.md)
-- [Homework 9-3: Make Bulk Emails Readable](./chapter-9/homework-9-3.md)
+- [Homework 9-1: Download the Parler Video Metadata](./chapter-9/homework-9-1.md)
+- [Homework 9-2: Write a Script to Filter Videos with GPS Coordinates](./chapter-9/homework-9-2.md)
+- [Homework 9-3: Update the Script to Filter Videos from January 6, 2021](./chapter-9/homework-9-3.md)
+- [Homework 9-4: Update the Script to Filter Videos Filmed in Washington, DC](./chapter-9/homework-9-4.md)
+- [Homework 9-5: Plot the Parler Videos on a Map](./chapter-9/homework-9-5.md)
 
 ## Chapter 10: BlueLeaks Explorer
 

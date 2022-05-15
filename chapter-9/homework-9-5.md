@@ -10,7 +10,7 @@ Open QGIS Desktop and Save the new blank project as `parler-videos.qgz`.
 
 ## Create a GeoJSON file
 
-Since Homework 8-2 already has code that filters all of the Parler videos with GPS coordinates, start by copying your solution from that assignment into a new file for Homework-8-5.
+Since Homework 8-2 already has code that filters all of the Parler videos with GPS coordinates, start by copying your solution from that assignment into a new file for homework-9-5.
 
 Here's the code I'm starting with:
 
@@ -209,11 +209,11 @@ This will basically _just_ print a newline character.
 Here's what it looks like to run this script:
 
 ```
-micah@cloak:~/datasets/homework/chapter-8$ python3 homework-8-5.py ~/datasets/Parler/metadata
+micah@cloak:~/datasets/homework/chapter-9$ python3 homework-9-5.py ~/datasets/Parler/metadata
 Found 63,983 videos with GPS coordinates
 Wrote file: parler-videos.geojson
 ```
 
 You should also now have an 8.7mb file called `parler-videos.geojson` in your working folder. This is your GeoJSON file that you just created, containing all of the GPS coordinates from the Parler metadata.
 
-You can find an implementation of this script in [homework-8-5.py](./homework-8-5.py).
+You can find an implementation of this script in [homework-9-5.py](./homework-9-5.py).
