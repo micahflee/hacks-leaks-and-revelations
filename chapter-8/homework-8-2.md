@@ -45,7 +45,7 @@ print("===")
 Here's what it looks like to run this script on `city-populations.csv`:
 
 ```
-micah@cloak:~/code/hacks-leaks-and-revelations/chapter-9$ python3 homework-9-2.py city-populations.csv
+micah@trapdoor chapter-8 % python3 homework-8-2.py city-populations.csv 
 City: Tōkyō
 Country: Japan
 Population: 37400000
@@ -72,4 +72,4 @@ Population: 20076000
 ===
 ```
 
-You can find an implementation of this script in [homework-9-2.py](./homework-9-2.py).
+You can find an implementation of this script in [homework-8-2.py](./homework-8-2.py).
