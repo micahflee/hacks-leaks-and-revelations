@@ -52,6 +52,7 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 - [Homework 8-1: Install Spreadsheet Software](./chapter-8/homework-8-1.md)
 - [Homework 8-2: Make SARs Readable](./chapter-8/homework-8-2.md)
 - [Homework 8-3: Make Bulk Emails Readable](./chapter-8/homework-8-3.md)
+- [Homework 8-4: Make a CSV of BlueLeaks Sites](./chapter-8/homework-8-4.md)
 
 ## Chapter 9: Parler, the Insurrection of January 6, and the JSON File Format
 
