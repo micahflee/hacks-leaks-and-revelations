@@ -2,157 +2,135 @@
 
 **NOTE:** If you're using Windows, I recommend that you follow the instructions in this chapter using your Ubuntu terminal instead of PowerShell, and that you save this data in your Ubuntu home folder, like in `~/datasets`, instead of using your Windows-formatted USB disk, like in `/mnt/d`. I found that working with this data in Linux was significantly faster than in directly in Windows.
 
-## Install QGIS
+In this homework assignment, you will use geographic information system (GIS) software called [QGIS](https://www.qgis.org/) to map the locations of where Parler videos were filmed, for the videos that include GPS coordinates in their metadata.
 
-Download and install the free and open source geographic information system (GIS) software QGIS from [qgis.org](https://www.qgis.org/).
+## Create a CSV of GPS Coordinates
 
-Open QGIS Desktop and Save the new blank project as `parler-videos.qgz`.
-
-## Create a GeoJSON file
-
-Since Homework 8-2 already has code that filters all of the Parler videos with GPS coordinates, start by copying your solution from that assignment into a new file for homework-9-5.
-
-Here's the code I'm starting with:
+Here's the code I started with:
 
 ```python
 import click
-import os
-import json
 
 @click.command()
 @click.argument("parler_metadata_path")
-def main(parler_metadata_path):
-    """Filter Parler videos that have GPS coordinates"""
-    # Number of videos with GPS coordinates in their metadata
-    count = 0
-
-    for filename in os.listdir(parler_metadata_path):
-        abs_filename = os.path.join(parler_metadata_path, filename)
-        if os.path.isfile(abs_filename) and abs_filename.endswith(".json"):
-            with open(abs_filename, "rb") as f:
-                json_data = f.read()
-
-            metadata = json.loads(json_data)
-            if "GPSCoordinates" in metadata[0]:
-                print(f"Found GPS coordinates: {filename}")
-                count += 1
-
-    print(f"Total videos with GPS coordinates: {count}")
+@click.argument("output_csv_path")
+def main(parler_metadata_path, output_csv_path):
+    """Create a CSV of GPS coordinates from Parler metadata"""
 
 if __name__ == "__main__":
     main()
 ```
 
-The first thing I changed is the docstring on the `main()` function to describe what this new script does instead.
+Then I added the `gps_degrees_to_decimal()` and `convert_filename()` functions above the `main()` function:
 
 ```python
-@click.command()
-@click.argument("parler_metadata_path")
-def main(parler_metadata_path):
-    """Create a GeoJSON file containing Parler GPS coordinates"""
-```
-
-At the top of the `main()` function, I also defined a new variable called `features` and set its value to an empty list.
-
-```python
-# The list of GeoJSON features to export
-features = []
-```
-
-Then, in the for loop, after finding metadata that includes GPS coordinates, I added some code add a GoeJSON-formatted dictionary to the features list:
-
-```python
-metadata = json.loads(json_data)
-if "GPSCoordinates" in metadata[0]:
-    print(f"Found GPS coordinates: {filename}")
-    longitude_decimal = 0  # TODO: Figure out the longitude
-    latitude_decimal = 0  # TODO: Figure out the latitude
-    features.append(
-        {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [longitude_decimal, latitude_decimal],
-            },
-            "properties": {"name": filename},
-        }
-    )
-```
-
-For now I just set the two variables `longitude_decimal` and `latitude_decimal` to 0, but I will fix that soon.
-
-After the for loop, I then saved the output of this script as `parler-videos.geojson`:
-
-```python
-# Save the GeoJSON file
-with open("parler-videos.geojson", "w") as f:
-    f.write(json.dumps(features))
-
-print("Wrote file: parler-videos.geojson")
-```
-
-Here's the script so far:
-
-```python
-import click
-import os
-import json
-
-@click.command()
-@click.argument("parler_metadata_path")
-def main(parler_metadata_path):
-    """Create a GeoJSON file containing Parler GPS coordinates"""
-    # The list of GeoJSON features to export
-    features = []
-
-    for filename in os.listdir(parler_metadata_path):
-        abs_filename = os.path.join(parler_metadata_path, filename)
-        if os.path.isfile(abs_filename) and abs_filename.endswith(".json"):
-            with open(abs_filename, "rb") as f:
-                json_data = f.read()
-
-            metadata = json.loads(json_data)
-            if "GPSCoordinates" in metadata[0]:
-                print(f"Found GPS coordinates: {filename}")
-                longitude_decimal = 0  # TODO: Figure out the longitude
-                latitude_decimal = 0  # TODO: Figure out the latitude
-                features.append(
-                    {
-                        "type": "Feature",
-                        "geometry": {
-                            "type": "Point",
-                            "coordinates": [longitude_decimal, latitude_decimal],
-                        },
-                        "properties": {"name": filename},
-                    }
-                )
-
-    # Save the GeoJSON file
-    with open("parler-videos.geojson", "w") as f:
-        f.write(json.dumps(features))
-
-    print("Wrote file: parler-videos.geojson")
-
-if __name__ == "__main__":
-    main()
-```
-Now I need to calculate `longitude_decimal` and `latitude_decimal`. I'll do that by adding the functions defined Homework 8-4 to the top of the Python script:
-
-```python
-import math
-
-
-def distance(x1, y1, x2, y2):
-    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-
-
-def is_point_in_washington_dc(x, y):
-    washington_dc_x = -77.00667073028771
-    washington_dc_y = 38.894101636006035
-    return distance(washington_dc_x, washington_dc_y, x, y) <= 0.25
-
-
 def gps_degrees_to_decimal(gps_coordinate):
+    parts = gps_coordinate.split()
+    degrees = float(parts[0])
+    minutes = float(parts[2].replace("'", ""))
+    seconds = float(parts[3].replace('"', ""))
+    hemisphere = parts[4]
+    gps_decimal = degrees + (minutes / 60) + (seconds / 3600)
+    if hemisphere == "W" or hemisphere == "S":
+        gps_decimal *= -1
+    return gps_decimal
+
+
+def convert_filename(json_filename):
+    return json_filename.split("-")[1].split(".")[0]
+```
+
+I needed to write the output CSV file, so I imported the `csv` module at the top of the file:
+
+```python
+import csv
+```
+
+And in the `main()` function started opening the CSV file for writing, with the appropriate headers:
+
+```python
+# Open the output CSV file for writing
+with open(output_csv_path, "w") as output_f:
+    writer = csv.DictWriter(output_f, fieldnames=["Filename", "Longitude", "Latitude"])
+    writer.writeheader()
+```
+
+Now that I'm able to write rows to the CSV, I needed to start searching for GPS coordinates in the Parler metadata JSON files. So I imported the `json` and `os` modules at the top of the file:
+
+```python
+import json
+import os
+```
+
+And, still inside the CSV writer code block, I added code to loop through all of the Parler metadata files, looking for GPS coordinates:
+
+```python
+for filename in os.listdir(parler_metadata_path):
+    abs_filename = os.path.join(parler_metadata_path, filename)
+    if os.path.isfile(abs_filename) and abs_filename.endswith(".json"):
+        with open(abs_filename, "rb") as f:
+            json_data = f.read()
+
+        metadata = json.loads(json_data)
+        if "GPSLongitude" in metadata[0] and "GPSLatitude" in metadata[0]:
+            pass
+```
+
+Now that I've found a JSON file with GPS coordinates, I created a dictionary called `row` that contains data for the row in the CSV, and wrote that row to the output file--and also print it to the terminal, just so I can see what's going on while I'm running the script.
+
+```python
+# Save the row
+row = {
+    "Filename": convert_filename(filename),
+    "Longitude": gps_degrees_to_decimal(metadata[0]["GPSLongitude"]),
+    "Latitude": gps_degrees_to_decimal(metadata[0]["GPSLatitude"]),
+}
+writer.writerow(row)
+print(row)
+```
+
+And finally, at the bottom of the `main()` function, I added a `print()` line to say that the CSV is saved:
+
+```python
+print(f"Saved: {output_csv_path}")
+```
+
+## An Exercise in Debugging
+
+I'm done, right? Let me try running it:
+
+```
+micah@cloak:~/code/hacks-leaks-and-revelations/chapter-9$ python3 homework-9-5.py ~/datasets/Parler/metadata parler-gps-coordinates.csv
+{'Filename': '27PknKIOwHt6', 'Longitude': -118.4026, 'Latitude': 34.0724}
+{'Filename': 'm3Wq53jjPnpw', 'Longitude': -118.2599, 'Latitude': 34.0473}
+{'Filename': 'kpKT3stt5LXq', 'Longitude': -80.2949, 'Latitude': 26.334}
+--snip--
+{'Filename': 'ZuLaQPyY7Goa', 'Longitude': -81.9819, 'Latitude': 35.5031}
+{'Filename': 'KJ8t1qELW1nH', 'Longitude': -117.5453, 'Latitude': 33.814}
+{'Filename': 'bSPOjbdsm2xF', 'Longitude': -71.32379999999999, 'Latitude': 43.7277}
+Traceback (most recent call last):
+  File "/home/micah/code/hacks-leaks-and-revelations/chapter-9/homework-9-5.py", line 66, in <module>
+    main()
+  File "/usr/lib/python3/dist-packages/click/core.py", line 1128, in __call__
+    return self.main(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/click/core.py", line 1053, in main
+    rv = self.invoke(ctx)
+  File "/usr/lib/python3/dist-packages/click/core.py", line 1395, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/lib/python3/dist-packages/click/core.py", line 754, in invoke
+    return __callback(*args, **kwargs)
+  File "/home/micah/code/hacks-leaks-and-revelations/chapter-9/homework-9-5.py", line 54, in main
+    "Longitude": gps_degrees_to_decimal(
+  File "/home/micah/code/hacks-leaks-and-revelations/chapter-9/homework-9-5.py", line 10, in gps_degrees_to_decimal
+    degrees = float(parts[0])
+IndexError: list index out of range
+```
+
+Hmm, it's crashing in the `gps_degrees_to_decimal()` function on the line `degrees = float(parts[0])`. If you look back at the code of that function, that must mean that the `parts` has zero items on it. Why is that? To debug, I added `print(f"gps_coordinate: {gps_coordinate}")` statement to that function, so I can tell what the `gps_coordinates` getting passed in are:
+
+```python
+def gps_degrees_to_decimal(gps_coordinate):
+    print(f"gps_coordinate: {gps_coordinate}")
     parts = gps_coordinate.split()
     degrees = float(parts[0])
     minutes = float(parts[2].replace("'", ""))
@@ -164,56 +142,76 @@ def gps_degrees_to_decimal(gps_coordinate):
     return gps_decimal
 ```
 
-And I replace setting the decimal GPS coordinates to 0 with their actual decimal values:
+And then I ran it again:
+
+```
+micah@cloak:~/code/hacks-leaks-and-revelations/chapter-9$ python3 homework-9-5.py ~/datasets/Parler/metadata parler-gps-coordinates.csv
+gps_coordinate: 118 deg 24' 9.36" W
+gps_coordinate: 34 deg 4' 20.64" N
+{'Filename': '27PknKIOwHt6', 'Longitude': -118.4026, 'Latitude': 34.0724}
+--snip--
+gps_coordinate: 71 deg 19' 25.68" W
+gps_coordinate: 43 deg 43' 39.72" N
+{'Filename': 'bSPOjbdsm2xF', 'Longitude': -71.32379999999999, 'Latitude': 43.7277}
+gps_coordinate:
+Traceback (most recent call last):
+  File "/home/micah/code/hacks-leaks-and-revelations/chapter-9/homework-9-5.py", line 66, in <module>
+    main()
+  File "/usr/lib/python3/dist-packages/click/core.py", line 1128, in __call__
+    return self.main(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/click/core.py", line 1053, in main
+    rv = self.invoke(ctx)
+  File "/usr/lib/python3/dist-packages/click/core.py", line 1395, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/lib/python3/dist-packages/click/core.py", line 754, in invoke
+    return __callback(*args, **kwargs)
+  File "/home/micah/code/hacks-leaks-and-revelations/chapter-9/homework-9-5.py", line 54, in main
+    "Longitude": gps_degrees_to_decimal(
+  File "/home/micah/code/hacks-leaks-and-revelations/chapter-9/homework-9-5.py", line 10, in gps_degrees_to_decimal
+    degrees = float(parts[0])
+IndexError: list index out of range
+```
+
+Each time this function is called it prints out the value of `gps_coordinates` and right before the crash that value was blank. That must mean that `gps_coordinates` is a blank string (`""`), which would make sense that when it gets split into zero parts.
+
+My guess is that I hit a false positive: I found a Parler metadata JSON file that had `GPSLongitude` and `GPSLatitude` fields, they were just empty, so it didn't actually include GPS coordinates.
+
+This if statement isn't good enough:
 
 ```python
-longitude_decimal = gps_degrees_to_decimal(metadata[0]["GPSLongitude"])
-latitude_decimal = gps_degrees_to_decimal(metadata[0]["GPSLatitude"])
+if "GPSLongitude" in metadata[0] and "GPSLatitude" in metadata[0]:
 ```
 
-And finally, just to make the output while running this script a little nicer, I replaced this `print()` line:
+In addition to making sure the `GPSLongitude` and `GPSLatitude` fields exist in the dictionary, I _also_ need to make sure they're not blank. So I changed my if statement to this:
 
 ```python
-print(f"Total videos with GPS coordinates: {count}")
+if (
+    "GPSLongitude" in metadata[0]
+    and "GPSLatitude" in metadata[0]
+    and metadata[0]["GPSLongitude"] != ""
+    and metadata[0]["GPSLatitude"] != ""
+):
 ```
 
-With this one:
-
-```python
-print(f"\rFound {count:,} videos with GPS coordinates", end="")
-```
-
-This includes a few tricks:
-
-- The first character that gets displayed in `\r`, which a special character known as a carriage return. Basically, it makes sure the cursor goes back to the beginning of the line before starting to print output, overwriting whatever was there before.
-- The `print()` function includes the argument `end=""`. Normally every time you call `print()` and pass in a string, it adds a newline character (`\n`) to the end of your string. This tells it to just not add a newline character.
-- Both of these combined mean that when you run the script, it will just continually overwrite the same line with an updated count rather than printing nearly 64,000 lines.
-- Also, when using the f-string to display the `count` variable I used `{count:,}` instead of just `{count}`. This makes it include a comma every three digits, making the number much easier to read.
-
-Since we're constantly printing the count, I replaced the `print()` line:
-
-```python
-print(f"Total videos with GPS coordinates: {count}")
-```
-
-With just:
-
-```python
-print()
-```
-
-This will basically _just_ print a newline character.
-
-## The Final Script
-
-Here's what it looks like to run this script:
+Then I commented out the `print(f"gps_coordinate: {gps_coordinate}")` line, which I only added for debugging, and ran it again:
 
 ```
-micah@cloak:~/datasets/homework/chapter-9$ python3 homework-9-5.py ~/datasets/Parler/metadata
-Found 63,983 videos with GPS coordinates
-Wrote file: parler-videos.geojson
+micah@cloak:~/code/hacks-leaks-and-revelations/chapter-9$ python3 homework-9-5.py ~/datasets/Parler/metadata parler-gps-coordinates.csv
+{'Filename': '27PknKIOwHt6', 'Longitude': -118.4026, 'Latitude': 34.0724}
+{'Filename': 'm3Wq53jjPnpw', 'Longitude': -118.2599, 'Latitude': 34.0473}
+{'Filename': 'kpKT3stt5LXq', 'Longitude': -80.2949, 'Latitude': 26.334}
+--snip--
+{'Filename': 'pMdvwJuktYPj', 'Longitude': -77.0058, 'Latitude': 38.8907}
+{'Filename': '50A0Fl2Fcg89', 'Longitude': -122.6799, 'Latitude': 49.174099999999996}
+{'Filename': 'H89ZQPBBfhZA', 'Longitude': -87.40530000000001, 'Latitude': 39.4479}
+Saved: parler-gps-coordinates.csv
 ```
-
-You should also now have an 8.7mb file called `parler-videos.geojson` in your working folder. This is your GeoJSON file that you just created, containing all of the GPS coordinates from the Parler metadata.
 
 You can find an implementation of this script in [homework-9-5.py](./homework-9-5.py).
+
+## Visualize the GPS Data Using QGIS
+
+Download and install the free and open source geographic information system (GIS) software QGIS from [qgis.org](https://www.qgis.org/).
+
+Open QGIS Desktop and save the new blank project as something like `parler-videos.qgz`.
+

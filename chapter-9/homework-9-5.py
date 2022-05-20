@@ -1,20 +1,11 @@
 import click
-import os
+import csv
 import json
-import math
-
-
-def distance(x1, y1, x2, y2):
-    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-
-
-def is_point_in_washington_dc(x, y):
-    washington_dc_x = -77.00667073028771
-    washington_dc_y = 38.894101636006035
-    return distance(washington_dc_x, washington_dc_y, x, y) <= 0.25
+import os
 
 
 def gps_degrees_to_decimal(gps_coordinate):
+    # print(f"gps_coordinate: {gps_coordinate}")
     parts = gps_coordinate.split()
     degrees = float(parts[0])
     minutes = float(parts[2].replace("'", ""))
@@ -26,39 +17,48 @@ def gps_degrees_to_decimal(gps_coordinate):
     return gps_decimal
 
 
+def convert_filename(json_filename):
+    return json_filename.split("-")[1].split(".")[0]
+
+
 @click.command()
 @click.argument("parler_metadata_path")
-def main(parler_metadata_path):
-    """Create a GeoJSON file containing Parler GPS coordinates"""
-    # The list of GPS points
-    points = []
+@click.argument("output_csv_path")
+def main(parler_metadata_path, output_csv_path):
+    """Create a CSV of GPS coordinates from Parler metadata"""
 
-    # Number of videos with GPS coordinates in their metadata
-    count = 0
+    # Open the output CSV file for writing
+    with open(output_csv_path, "w") as output_f:
+        writer = csv.DictWriter(
+            output_f, fieldnames=["Filename", "Longitude", "Latitude"]
+        )
+        writer.writeheader()
 
-    for filename in os.listdir(parler_metadata_path):
-        abs_filename = os.path.join(parler_metadata_path, filename)
-        if os.path.isfile(abs_filename) and abs_filename.endswith(".json"):
-            with open(abs_filename, "rb") as f:
-                json_data = f.read()
+        for filename in os.listdir(parler_metadata_path):
+            abs_filename = os.path.join(parler_metadata_path, filename)
+            if os.path.isfile(abs_filename) and abs_filename.endswith(".json"):
+                with open(abs_filename, "rb") as f:
+                    json_data = f.read()
 
-            metadata = json.loads(json_data)
-            if "GPSCoordinates" in metadata[0]:
-                count += 1
-                print(f"\rFound {count:,} videos with GPS coordinates", end="")
+                metadata = json.loads(json_data)
+                if (
+                    "GPSLongitude" in metadata[0]
+                    and "GPSLatitude" in metadata[0]
+                    and metadata[0]["GPSLongitude"] != ""
+                    and metadata[0]["GPSLatitude"] != ""
+                ):
+                    # Save the row
+                    row = {
+                        "Filename": convert_filename(filename),
+                        "Longitude": gps_degrees_to_decimal(
+                            metadata[0]["GPSLongitude"]
+                        ),
+                        "Latitude": gps_degrees_to_decimal(metadata[0]["GPSLatitude"]),
+                    }
+                    writer.writerow(row)
+                    print(row)
 
-                longitude_decimal = gps_degrees_to_decimal(metadata[0]["GPSLongitude"])
-                latitude_decimal = gps_degrees_to_decimal(metadata[0]["GPSLatitude"])
-                points.append([longitude_decimal, latitude_decimal, filename])
-
-    print()
-
-    # Save the CSV spreadsheet
-    with open("parler-videos.csv", "w") as f:
-        for point in points:
-            f.write(f"{point[0]},{point[1]},{point[2]}\n")
-
-    print("Wrote file: parler-videos.csv")
+    print(f"Saved: {output_csv_path}")
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 
 **NOTE:** If you're using Windows, I recommend that you follow the instructions in this chapter using your Ubuntu terminal instead of PowerShell, and that you save this data in your Ubuntu home folder, like in `~/datasets`, instead of using your Windows-formatted USB disk, like in `/mnt/d`. I found that working with this data in Linux was significantly faster than in directly in Windows.
 
-In this homework assignment you'll modify the script from Homework 8-2 to not only filter Parler videos down to just the ones that include GPS coordinates in their metadata, but also to those filmed on January 6, 2021. Start by copying your solution from Homework 8-2 into a new file for homework-9-3.
+In this homework assignment you'll modify the script from Homework 9-2 to not only filter Parler videos down to just the ones that include GPS coordinates in their metadata, but also to those filmed on January 6, 2021. Start by copying your solution from Homework 8-2 into a new file for homework-9-3.
 
 Here's the code I'm starting with:
 

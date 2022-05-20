@@ -2,9 +2,9 @@
 
 **NOTE:** If you're using Windows, I recommend that you follow the instructions in this chapter using your Ubuntu terminal instead of PowerShell, and that you save this data in your Ubuntu home folder, like in `~/datasets`, instead of using your Windows-formatted USB disk, like in `/mnt/d`. I found that working with this data in Linux was significantly faster than in directly in Windows.
 
-In this homework assignment, you'll make a modified version of the scripts from Homework 8-2 and 8-3, but this time filter it down to just videos with GPS coordinates that are (roughly) inside the city of Washington DC.
+In this homework assignment, you'll make a modified version of the scripts from Homework 9-2 and 9-3, but this time filter it down to just videos with GPS coordinates that are (roughly) inside the city of Washington DC.
 
-I'm starting with my solution for Homework 8-3, and then modifying. Here's the starting code:
+I'm starting with my solution for Homework 9-3, and then modifying. Here's the starting code:
 
 ```python
 import click
