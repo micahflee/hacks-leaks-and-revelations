@@ -64,6 +64,8 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 ## Chapter 10: BlueLeaks Explorer
 
+- [Homework 10-1: Install BlueLeaks Explorer](./chapter-10/homework-10-1.md)
+
 ## Chapter 11: SQL Databases and Epik Fail
 
 ## Chapter 12: Reading Other People’s Email
