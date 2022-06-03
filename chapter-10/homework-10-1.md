@@ -95,3 +95,4 @@ docker-compose exec app poetry run python ./initialize.py
 
 This will take a long time to finish running, and when it's done the `databases` folder inside your `blueleaks-explorer` folder will have 4.7GB of `.sqlite3` files in it.
 
+Now, you can start using BlueLeaks Explorer by going to http://localhost:8000.
