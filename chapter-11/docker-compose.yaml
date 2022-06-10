@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+
+  db:
+    image: mariadb:10.8
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: this-is-your-root-password
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db_data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

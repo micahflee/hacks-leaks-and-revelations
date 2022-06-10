@@ -69,6 +69,9 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 ## Chapter 11: SQL Databases and Epik Fail
 
+- [Homework 11-1: Download Parts of the Epik Dataset](./chapter-11/homework-11-1.md)
+- [Homework 10-2: Run a MySQL Server Using Docker](./chapter-11/homework-11-2.md)
+
 ## Chapter 12: Reading Other People's Email
 
 ## Chapter 13: Pandemic Profiteers Making Millions from COVID-19 Disinformation
