@@ -71,6 +71,8 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 - [Homework 11-1: Download Parts of the Epik Dataset](./chapter-11/homework-11-1.md)
 - [Homework 10-2: Run a MySQL Server Using Docker](./chapter-11/homework-11-2.md)
+- [Homework 11-3: Extract the Epik Data](./chapter-11/homework-11-3.md)
+- [Homework 11-4: Import Epik Data Into MySQL](./chapter-11/homework-11-4.md)
 
 ## Chapter 12: Reading Other People's Email
 
