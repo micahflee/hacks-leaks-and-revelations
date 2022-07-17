@@ -1,212 +1,121 @@
-# Homework 8-4: Make a CSV of BlueLeaks Sites
+# Homework 8-4: Develop Your First CLI Program
 
-In this homework assignment you will write a script that looks at the `Company.csv` file in all BlueLeaks folders and compiles the relevant fields from all of them into a single CSV.
+You can find my solution for this homework assignment in [homework-8-4.py](./homework-8-4py).
 
-Here's the template Python script to get you started:
+If you haven't installed the [Click](https://click.palletsprojects.com/) Python package yet, install it with pip:
 
-```python
-import click
-
-@click.command()
-@click.argument("blueleaks_path")
-@click.argument("output_csv_path")
-def main(blueleaks_path, output_csv_path):
-    """Make a CSV that describes all the BlueLeaks folders"""
-
-if __name__ == "__main__":
-    main()
+```sh
+pip3 install click
 ```
 
-I'm dealing with CSVs so I'll need to import the `csv` module. I'm also going to want to use some functions like `os.listdir()`, `os.path.join()`, and `os.path.exists()`, so I'll also need to import the `os` module. I started by adding these two lines to the top of my script.
+In this solution, the Python script starts by importing the two modules that we need, `os` and `click`:
 
 ```python
-import csv
 import os
+import click
 ```
 
-I want to started by setting up the CSV writer to write data to `output_csv_path` using a `csv.DictWriter()`. Here's how I did it:
+It then defines the `main()` function as a Click command. It takes a `path` argument, and it takes a `password` option. Click is smart enough so that, when the `main()` function is called, it passes in `path` and `password` as arguments to the function.
 
 ```python
-# Set up the CSV writer
-headers = ["BlueLeaksFolder", "CompanyID", "CompanyName", "WebsiteTitle", "URL"]
-with open(output_csv_path, "w") as output_f:
-    writer = csv.DictWriter(output_f, fieldnames=headers)
-    writer.writeheader()
+@click.command()
+@click.argument("path")
+@click.option("--password", prompt="Enter password", help="Password is required")
+def main(path, password):
+    """Get information about files and folders"""
 ```
 
-The `headers` variable contains the headers of the CSV that I'm writing. Each time I write a row, I'll need to run `writer.writerow()` and pass in a dictionary with each of those headers as a key.
+Just this code alone will create the help text for this CLI command:
 
-Now, still inside the same indented block so that I can use the `writer.writerow()` function to write rows of the output CSV, I looped through all of the BlueLeaks folders. For each folder, I defined a new variable called `company_csv_abs_path` that's the path where the `Company.csv` file should exist, assuming this is a normal BlueLeaks folder. Then I use an if statement to only proceed if the file actually exists there.
+```
+micah@trapdoor chapter-8 % python3 homework-8-4.py --help         
+Usage: homework-8-4.py [OPTIONS] PATH
+
+  Get information about files and folders
+
+Options:
+  --password TEXT  Password is required
+  --help           Show this message and exit.
+```
+
+The first requirement is make sure the password is `yourefired`, and if it's not quit with an error message. Here's the code that does that:
 
 ```python
-# List all of the folders in BlueLeaks
-for folder_name in os.listdir(blueleaks_path):
-    # Define the Company.csv path for each folder
-    company_csv_abs_path = os.path.join(blueleaks_path, folder_name, "Company.csv")
-    # If this path exists...
-    if os.path.exists(company_csv_abs_path):
-        pass
+    # Make sure the password is valid
+    if password != "yourefired":
+        click.echo("Access Denied")
+        return
 ```
 
-If the `Compancy.csv` file exists, I then opened it and set up a CSV reader:
+Just calling `return` will quit from the `main()` function early. If the password is anything except `yourefired`, the script quits early:
+
+```
+micah@trapdoor chapter-8 % python3 homework-8-4.py click-example.py --password letmein
+Access Denied
+```
+
+The next step is to make sure that `path` is an actual valid path:
 
 ```python
-# Set up the CSV reader
-with open(company_csv_abs_path) as input_f:
-    reader = csv.DictReader(input_f)
-    for row in reader:
-        pass
+    # Make sure the path is valid
+    if not os.path.exists(path):
+        click.echo("Error: Invalid path")
+        return
 ```
 
-Notice that the file that I opened for the writer is called `output_f` and the file that I opened for the reader is called `input_f`. It's important to make sure you don't re-use the same variable name for two very different things or you'll find yourself with bizarre bugs.
+If the path doesn't exist, it displays an error and quits early.
 
-Then I just found the correct values from `row` and wrote them into the output file.
+If we've made it past this check, we know for sure that it's a valid path. So the next step is to check to see if it's a file or a folder. In this solution I'm just using an if statement to check if `os.path.isfile(path)` is `True`. If it's false, the code assumes that it's a folder, and the else block runs.
 
 ```python
-output_row = {
-    "BlueLeaksFolder": folder_name,
-    "CompanyID": row["CompanyID"],
-    "CompanyName": row["CompanyName"],
-    "WebsiteTitle": row["WebsiteTitle"],
-    "URL": row["URL"],
-}
-writer.writerow(output_row)
+    # See if the path is a file
+    if os.path.isfile(path):
+        # Display information about this file
+        # -
+
+    # See if the path is a folder
+    else:
+        # Display information about this folder
+        # --snip--
 ```
 
-Finally, I added a `print()` statement at the end of each folder, just so I can see some progress while I'm running the script.
+If the path is a file, the code looks up the file size and displays this information:
 
 ```python
-print(f"Finished: {folder_name}")
+        # Display information about this file
+        file_size = os.path.getsize(path)
+        click.echo(f"{path} is a file that is {file_size} bytes.")
 ```
 
-## The Final Script
+If it's a folder, it's slightly more complicated. First, it loops through the output of `os.listdir(path)`, which is a list of all the files in the folder. Then for each filename in the output, if it's a file it displays the filename and its file size, and if it's a folder it just displays its filename:
 
-Here's what the output looked like when I ran this script:
-
-```
-micah@trapdoor chapter-8 % python3 homework-8-4.py /Volumes/datasets/BlueLeaks-extracted blueleaks-sites.csv
-Finished: bostonbric
-Finished: ociac
-Finished: alertmidsouth
-Finished: chicagoheat
-Finished: sanbrunopolice
-Finished: cbaghidta
-Finished: mactf
-Finished: safecityfw
-Finished: hidtatraining
-Finished: mhidta
-Finished: lupd
-Finished: cal-orca
-Finished: nmhidta
-Finished: nmfisoa
-Finished: membersfaithbased-isao
-Finished: morciu
-Finished: calema
-Finished: cnyorca
-Finished: pleasantonpolice
-Finished: alabamalecc
-Finished: kyorca
-Finished: fbicahouston
-Finished: nevadacyberexchange
-Finished: chicagolandfsg
-Finished: nnric
-Finished: northtexashidta
-Finished: miacx
-Finished: otewg
-Finished: burlingamepolice
-Finished: jric
-Finished: ruralcountysummit
-Finished: graorca
-Finished: njuasi
-Finished: neorca
-Finished: miorca
-Finished: jerseyvillagepd
-Finished: nymorca
-Finished: ileatraining
-Finished: icefishx
-Finished: northtexasfusion
-Finished: alabamafusioncenter
-Finished: akorca
-Finished: crimestopperslea
-Finished: sacrttac
-Finished: publicsafetycadets
-Finished: mvpddoc
-Finished: azhidta
-Finished: arictexas
-Finished: memiac
-Finished: ndslic
-Finished: rlpsaroc
-Finished: rmhidta
-Finished: corca
-Finished: aorca
-Finished: dvicphila
-Finished: cvchidta
-Finished: hpdlineup
-Finished: phillymostwanted
-Finished: energysecuritycouncil
-Finished: nhiac
-Finished: counterdrugtraining
-Finished: mvpdtx
-Finished: ilcrime
-Finished: mlrin
-Finished: mnorca
-Finished: azorca
-Finished: dediac
-Finished: okorca
-Finished: mtorca
-Finished: hpdretired
-Finished: orcaor
-Finished: ncric
-Finished: fbinaatexas
-Finished: nnorca
-Finished: flinttownshippolice
-Finished: nehidta
-Finished: orcaid
-Finished: gatlinburglec
-Finished: richlandshield
-Finished: maorca
-Finished: cnoatraining
-Finished: lapdtraining
-Finished: safecityabq
-Finished: acticaz
-Finished: rockhillyorkcountyconnect
-Finished: pchidta
-Finished: oaktac
-Finished: coorca
-Finished: ruasi
-Finished: leapsla
-Finished: losaltospdbc
-Finished: atlantahidta
-Finished: oaklandsheriffshield
-Finished: ciacco
-Finished: ntacnv
-Finished: eousa
-Finished: houstonhidtatraining
-Finished: hcsovcp
-Finished: iowaintex
-Finished: nvhidta
-Finished: fwintex
-Finished: attackwa
-Finished: millvalleypolice
-Finished: novatopolicedept
-Finished: orocc
-Finished: acprlea
-Finished: cnoa3
-Finished: metrohoustonpolice
-Finished: 211sfbay
-Finished: fbinaakansaswmissouri
-Finished: prvihidta
-Finished: fcpddoc
-Finished: hennepincountyshield
-Finished: pspddoc
-Finished: ccroc
-Finished: hiorca
-Finished: houstonhidta
-Finished: lacleartraining
-Finished: kcpers
-Finished: sccpca
-Finished: fbinaamichigan
+```python
+        # Display information about this folder
+        click.echo(f"{path} is a folder. Here are the files inside it:")
+        for filename in os.listdir(path):
+            if os.path.isfile(os.path.join(path, filename)):
+                file_size = os.path.getsize(os.path.join(path, filename))
+                click.echo(f"- FILE: {filename} ({file_size} bytes)")
+            else:
+                click.echo(f"- FOLDER: {filename}")
 ```
 
-You can find an implementation of this script in [homework-8-4.py](./homework-8-4.py).
+Here is the script in action. In my case, I don't have a file called `does-not-exist` in my working folder, and I have a file called `Docker.dmg` and a few other files, and a folder called `old`, in my _Downloads_ folder.
 
+```
+micah@trapdoor chapter-8 % python3 homework-8-4.py does-not-exist
+Enter password: letmein
+Access Denied
+micah@trapdoor chapter-8 % python3 homework-8-4.py does-not-exist
+Enter password: yourefired
+Error: Invalid path
+micah@trapdoor chapter-8 % python3 homework-8-4.py ~/Downloads/Docker.dmg
+Enter password: yourefired
+/Users/micah/Downloads/Docker.dmg is a file that is 589068342 bytes.
+micah@trapdoor chapter-8 % python3 homework-8-4.py ~/Downloads/ --password yourefired
+/Users/micah/Downloads/ is a folder. Here are the files inside it:
+- FILE: .DS_Store (6148 bytes)
+- FILE: .localized (0 bytes)
+- FOLDER: old
+- FILE: Docker.dmg (589068342 bytes)
+```

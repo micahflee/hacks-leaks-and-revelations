@@ -1,6 +1,6 @@
-# Homework 11-3: Extract the Epik Data
+# Homework 12-3: Extract the Epik Data
 
-In Homework 11-1 you downloaded 25GB of Epik data from two separate torrents. In this homework you'll extract this data.
+In [Homework 12-1](./homework-12-1.md) you downloaded 25GB of Epik data from two separate torrents. In this homework you'll extract this data.
 
 The MySQL database data is in the `EpikFail/sql` folder, and the Texas GOP website data is in the `EpikFailYouLostTheGame` folder. Here's what's in these folders:
 

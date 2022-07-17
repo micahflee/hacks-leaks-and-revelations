@@ -1,153 +1,212 @@
-# Homework 8-4: Update the Script to Filter Videos Filmed in Washington, DC
+# Homework 9-4: Make a CSV of BlueLeaks Sites
 
-**NOTE:** If you're using Windows, I recommend that you follow the instructions in this chapter using your Ubuntu terminal instead of PowerShell, and that you save this data in your Ubuntu home folder, like in `~/datasets`, instead of using your Windows-formatted USB disk, like in `/mnt/d`. I found that working with this data in Linux was significantly faster than in directly in Windows.
+In this homework assignment you will write a script that looks at the `Company.csv` file in all BlueLeaks folders and compiles the relevant fields from all of them into a single CSV.
 
-In this homework assignment, you'll make a modified version of the scripts from Homework 9-2 and 9-3, but this time filter it down to just videos with GPS coordinates that are (roughly) inside the city of Washington DC.
-
-I'm starting with my solution for Homework 9-3, and then modifying. Here's the starting code:
+Here's the template Python script to get you started:
 
 ```python
 import click
-import os
-import json
 
 @click.command()
-@click.argument("parler_metadata_path")
-def main(parler_metadata_path):
-    """Filter Parler videos that have GPS coordinates and were filmed Jan 6, 2021"""
-    # Number of videos with GPS coordinates, filmed January 6, 2021
-    count = 0
-
-    for filename in os.listdir(parler_metadata_path):
-        abs_filename = os.path.join(parler_metadata_path, filename)
-        if os.path.isfile(abs_filename) and abs_filename.endswith(".json"):
-            with open(abs_filename, "rb") as f:
-                json_data = f.read()
-
-            metadata = json.loads(json_data)
-            if "GPSCoordinates" in metadata[0] and metadata[0]["CreateDate"].startswith(
-                "2021:01:06 "
-            ):
-                print(f"GPS + Jan 6: {filename}")
-                count += 1
-
-    print(f"Total videos with GPS coordinates, filmed Jan 6: {count}")
+@click.argument("blueleaks_path")
+@click.argument("output_csv_path")
+def main(blueleaks_path, output_csv_path):
+    """Make a CSV that describes all the BlueLeaks folders"""
 
 if __name__ == "__main__":
     main()
 ```
 
-The first thing I changed is the docstring on the `main()` function to describe what this new script does instead:
+I'm dealing with CSVs so I'll need to import the `csv` module. I'm also going to want to use some functions like `os.listdir()`, `os.path.join()`, and `os.path.exists()`, so I'll also need to import the `os` module. I started by adding these two lines to the top of my script.
 
 ```python
-@click.command()
-@click.argument("parler_metadata_path")
-def main(parler_metadata_path):
-    """Filter Parler videos that were filmed in Washington DC and on Jan 6, 2021"""
+import csv
+import os
 ```
 
-## Add Functions From the Chapter
-
-Next, I'm adding the important functions defined in the chapter above the `main()` function.
-
-Here's the `distance()` function, which implements the distance formula.
+I want to started by setting up the CSV writer to write data to `output_csv_path` using a `csv.DictWriter()`. Here's how I did it:
 
 ```python
-def distance(x1, y1, x2, y2):
-    return math.sqrt((x2 - x1) ** 2 + (y2 - y2) ** 2)
+# Set up the CSV writer
+headers = ["BlueLeaksFolder", "CompanyID", "CompanyName", "WebsiteTitle", "URL"]
+with open(output_csv_path, "w") as output_f:
+    writer = csv.DictWriter(output_f, fieldnames=headers)
+    writer.writeheader()
 ```
 
-This function uses the `math.sqrt()` function, so I also imported the `math` module by adding this to the top of the Python script, next to the other imports:
+The `headers` variable contains the headers of the CSV that I'm writing. Each time I write a row, I'll need to run `writer.writerow()` and pass in a dictionary with each of those headers as a key.
+
+Now, still inside the same indented block so that I can use the `writer.writerow()` function to write rows of the output CSV, I looped through all of the BlueLeaks folders. For each folder, I defined a new variable called `company_csv_abs_path` that's the path where the `Company.csv` file should exist, assuming this is a normal BlueLeaks folder. Then I use an if statement to only proceed if the file actually exists there.
 
 ```python
-import math
+# List all of the folders in BlueLeaks
+for folder_name in os.listdir(blueleaks_path):
+    # Define the Company.csv path for each folder
+    company_csv_abs_path = os.path.join(blueleaks_path, folder_name, "Company.csv")
+    # If this path exists...
+    if os.path.exists(company_csv_abs_path):
+        pass
 ```
 
-Here's the `is_point_in_washington_dc()` function, which uses the `distance()` function to roughly determine if the (_x_, _y_) coordinates passed in are a point within 20 kilometers of the center of Washington DC.
+If the `Compancy.csv` file exists, I then opened it and set up a CSV reader:
 
 ```python
-def is_point_in_washington_dc(x, y):
-    washington_dc_x = -77.00667073028771
-    washington_dc_y = 38.894101636006035
-    return distance(washington_dc_x, washington_dc_y, x, y) <= 0.25
+# Set up the CSV reader
+with open(company_csv_abs_path) as input_f:
+    reader = csv.DictReader(input_f)
+    for row in reader:
+        pass
 ```
 
-And here's the `gps_degrees_to_decimal()` function, which converts GPS coordinates from the degrees, minutes, seconds format, exactly as they're represented in the Parler video metadata, into the decimal format, which will make it simpler to compare.
+Notice that the file that I opened for the writer is called `output_f` and the file that I opened for the reader is called `input_f`. It's important to make sure you don't re-use the same variable name for two very different things or you'll find yourself with bizarre bugs.
+
+Then I just found the correct values from `row` and wrote them into the output file.
 
 ```python
-def gps_degrees_to_decimal(gps_coordinate):
-    parts = gps_coordinate.split()
-    degrees = float(parts[0])
-    minutes = float(parts[2].replace("'", ""))
-    seconds = float(parts[3].replace('"', ""))
-    hemisphere = parts[4]
-    gps_decimal = degrees + (minutes / 60) + (seconds / 3600)
-    if hemisphere == "W" or hemisphere == "S":
-        gps_decimal *= -1
-    return gps_decimal
+output_row = {
+    "BlueLeaksFolder": folder_name,
+    "CompanyID": row["CompanyID"],
+    "CompanyName": row["CompanyName"],
+    "WebsiteTitle": row["WebsiteTitle"],
+    "URL": row["URL"],
+}
+writer.writerow(output_row)
 ```
 
-## Filter the Videos
-
-Here's some of the code that I'm starting with:
+Finally, I added a `print()` statement at the end of each folder, just so I can see some progress while I'm running the script.
 
 ```python
-if "GPSCoordinates" in metadata[0] and metadata[0]["CreateDate"].startswith(
-    "2021:01:06 "
-):
-    print(f"GPS + Jan 6: {filename}")
-    count += 1
+print(f"Finished: {folder_name}")
 ```
-
-For every metadata file, it opens it and parses the JSON into the a variable called `metadata`. Then it checks to make sure that:
-
-1. `GPSCoordinates` is in the metadata
-2. `CreateDate` starts with `2021:01:06`
-
-In order to filter videos down to videos of the insurrection, we need to add one more check:
-
-3. The video's GPS coordinates are located in Washington DC
-
-So I modified this if statement to include that check:
-
-```python
-if (
-    "GPSCoordinates" in metadata[0]
-    and metadata[0]["CreateDate"].startswith("2021:01:06 ")
-    and was_video_filmed_in_washington_dc(metadata)
-):
-    print(f"Found an insurrection video: {filename}")
-    count += 1
-```
-
-In my case, I made it ensure that the return value of `was_video_filmed_in_washington_dc(metadata)` is `True`, and if it is I add it to the count of insurrection videos. Now all that's left is to actually define the `was_video_filmed_in_washington_dc()` function.
-
-Here's how I defined it:
-
-```python
-def was_video_filmed_in_washington_dc(metadata):
-    x = gps_degrees_to_decimal(metadata[0]["GPSLongitude"])
-    y = gps_degrees_to_decimal(metadata[0]["GPSLatitude"])
-    return is_point_in_washington_dc(x, y)
-```
-
-It takes Parler metadata a san argument. It sets the variable `x` equal to the longitude value, converted to degrees, and it sets the variable `y` equal to the latitude value, converted to degrees. Then it just return the return value of `is_point_in_washington_dc(x, y)`.
-
 
 ## The Final Script
 
-Here's what it looks like to run this script:
+Here's what the output looked like when I ran this script:
 
 ```
-micah@cloak:~/datasets/homework/chapter-9$ python3 homework-9-4.py ~/datasets/Parler/metadata
-Found an insurrection video: meta-8YA6CeYMxHh4.json
-Found an insurrection video: meta-91Vga2rHrrID.json
-Found an insurrection video: meta-mtR54fIOsU8Y.json
---snip--
-Found an insurrection video: meta-diIeD4Ne7Ear.json
-Found an insurrection video: meta-q7BpcYyFpX7J.json
-Found an insurrection video: meta-OUJYa3npW0oE.json
-Total videos filmed in Washington DC on January 6: 1199
+micah@trapdoor chapter-9 % python3 homework-9-4.py /Volumes/datasets/BlueLeaks-extracted blueleaks-sites.csv
+Finished: bostonbric
+Finished: ociac
+Finished: alertmidsouth
+Finished: chicagoheat
+Finished: sanbrunopolice
+Finished: cbaghidta
+Finished: mactf
+Finished: safecityfw
+Finished: hidtatraining
+Finished: mhidta
+Finished: lupd
+Finished: cal-orca
+Finished: nmhidta
+Finished: nmfisoa
+Finished: membersfaithbased-isao
+Finished: morciu
+Finished: calema
+Finished: cnyorca
+Finished: pleasantonpolice
+Finished: alabamalecc
+Finished: kyorca
+Finished: fbicahouston
+Finished: nevadacyberexchange
+Finished: chicagolandfsg
+Finished: nnric
+Finished: northtexashidta
+Finished: miacx
+Finished: otewg
+Finished: burlingamepolice
+Finished: jric
+Finished: ruralcountysummit
+Finished: graorca
+Finished: njuasi
+Finished: neorca
+Finished: miorca
+Finished: jerseyvillagepd
+Finished: nymorca
+Finished: ileatraining
+Finished: icefishx
+Finished: northtexasfusion
+Finished: alabamafusioncenter
+Finished: akorca
+Finished: crimestopperslea
+Finished: sacrttac
+Finished: publicsafetycadets
+Finished: mvpddoc
+Finished: azhidta
+Finished: arictexas
+Finished: memiac
+Finished: ndslic
+Finished: rlpsaroc
+Finished: rmhidta
+Finished: corca
+Finished: aorca
+Finished: dvicphila
+Finished: cvchidta
+Finished: hpdlineup
+Finished: phillymostwanted
+Finished: energysecuritycouncil
+Finished: nhiac
+Finished: counterdrugtraining
+Finished: mvpdtx
+Finished: ilcrime
+Finished: mlrin
+Finished: mnorca
+Finished: azorca
+Finished: dediac
+Finished: okorca
+Finished: mtorca
+Finished: hpdretired
+Finished: orcaor
+Finished: ncric
+Finished: fbinaatexas
+Finished: nnorca
+Finished: flinttownshippolice
+Finished: nehidta
+Finished: orcaid
+Finished: gatlinburglec
+Finished: richlandshield
+Finished: maorca
+Finished: cnoatraining
+Finished: lapdtraining
+Finished: safecityabq
+Finished: acticaz
+Finished: rockhillyorkcountyconnect
+Finished: pchidta
+Finished: oaktac
+Finished: coorca
+Finished: ruasi
+Finished: leapsla
+Finished: losaltospdbc
+Finished: atlantahidta
+Finished: oaklandsheriffshield
+Finished: ciacco
+Finished: ntacnv
+Finished: eousa
+Finished: houstonhidtatraining
+Finished: hcsovcp
+Finished: iowaintex
+Finished: nvhidta
+Finished: fwintex
+Finished: attackwa
+Finished: millvalleypolice
+Finished: novatopolicedept
+Finished: orocc
+Finished: acprlea
+Finished: cnoa3
+Finished: metrohoustonpolice
+Finished: 211sfbay
+Finished: fbinaakansaswmissouri
+Finished: prvihidta
+Finished: fcpddoc
+Finished: hennepincountyshield
+Finished: pspddoc
+Finished: ccroc
+Finished: hiorca
+Finished: houstonhidta
+Finished: lacleartraining
+Finished: kcpers
+Finished: sccpca
+Finished: fbinaamichigan
 ```
 
 You can find an implementation of this script in [homework-9-4.py](./homework-9-4.py).
+

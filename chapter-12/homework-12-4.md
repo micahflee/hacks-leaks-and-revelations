@@ -1,6 +1,6 @@
-# Homework 11-4: Import Epik Data Into MySQL
+# Homework 12-4: Import Epik Data Into MySQL
 
-In this homework you'll import `api_system.sql` into the MySQL database you started running in Homework 11-2. Start by making sure your docker containers are up and running.
+In this homework you'll import `api_system.sql` into the MySQL database you started running in [Homework 12-2](./homework-12-2.md). Start by making sure your docker containers are up and running.
 
 ## Install `pv`
 

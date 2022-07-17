@@ -1,93 +1,115 @@
-# Homework 8-3: Update the Script to Filter Videos from January 6, 2021
+# Homework 9-3: Make Bulk Emails Readable
 
-**NOTE:** If you're using Windows, I recommend that you follow the instructions in this chapter using your Ubuntu terminal instead of PowerShell, and that you save this data in your Ubuntu home folder, like in `~/datasets`, instead of using your Windows-formatted USB disk, like in `/mnt/d`. I found that working with this data in Linux was significantly faster than in directly in Windows.
+In this homework assignment, you will write a script that takes the path to a `EmailBuilder.csv` file, and the path to an output folder, as input. For each row in the CSV, it should create an HTML file in the output folder describing that bulk email, including with a readable version of the HTML email body.
 
-In this homework assignment you'll modify the script from Homework 9-2 to not only filter Parler videos down to just the ones that include GPS coordinates in their metadata, but also to those filmed on January 6, 2021. Start by copying your solution from Homework 8-2 into a new file for homework-9-3.
-
-Here's the code I'm starting with:
+Here's the template Python script to get you started:
 
 ```python
 import click
-import os
-import json
-
 
 @click.command()
-@click.argument("parler_metadata_path")
-def main(parler_metadata_path):
-    """Filter Parler videos that have GPS coordinates"""
-    # Number of videos with GPS coordinates in their metadata
-    count = 0
-
-    for filename in os.listdir(parler_metadata_path):
-        abs_filename = os.path.join(parler_metadata_path, filename)
-        if os.path.isfile(abs_filename) and abs_filename.endswith(".json"):
-            with open(abs_filename, "rb") as f:
-                json_data = f.read()
-
-            metadata = json.loads(json_data)
-            if "GPSCoordinates" in metadata[0]:
-                print(f"Found GPS coordinates: {filename}")
-                count += 1
-
-    print(f"Total videos with GPS coordinates: {count}")
-
+@click.argument("emailbuilder_csv_path", "output_folder_path")
+def main(emailbuilder_csv_path, output_folder_path):
+    """Make bulk emails in BlueLeaks easier to read"""
 
 if __name__ == "__main__":
     main()
 ```
 
-## Updating the Script
-
-The first thing I'm changing is the comments at the top of the `main()` function.
+First, I need to import the `os` module and make sure that the folder described in `output_folder_path` exists. I import the `os` module by adding this to the top:
 
 ```python
-def main(parler_metadata_path):
-    """Filter Parler videos that have GPS coordinates and were filmed Jan 6, 2021"""
-    # Number of videos with GPS coordinates, filmed January 6, 2021
-    count = 0
+import os
 ```
 
-The next step is to modify the code to filter it by date. I can do that by changing this code:
+And then I make sure that the folder is created by adding this to the `main()` function:
 
 ```python
-if "GPSCoordinates" in metadata[0]:
-    print(f"Found GPS coordinates: {filename}")
+# Make sure output_folder_path exists and is a folder
+os.makedirs(output_folder_path, exist_ok=True)
 ```
 
-To this:
+Then I want to load the CSV and loop through its rows. So I import the `csv` module at the top:
 
 ```python
-if "GPSCoordinates" in metadata[0] and metadata[0]["CreateDate"].startswith("2021:01:06 "):
-    print(f"GPS + Jan 6: {filename}")
+import csv
 ```
 
-Finally, I'll change the text that gets displayed at the end from:
+And then some code to loop through the rows in `emailbuilder_csv_path`:
 
 ```python
-print(f"Total videos with GPS coordinates: {count}")
+# Load the EmailBuidler.csv file and loop through its rows
+with open(emailbuilder_csv_path) as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        pass
 ```
 
-To:
+I want to save each row as its own HTML file, so I need to come up with its filename. Inside the for loop, I'll define a `filename` variable, and I'll also make sure to replace all of the slashes with dashes--otherwise, Python will have trouble opening the file for writing because the slash character separates folders:
 
 ```python
-print(f"Total videos with GPS coordinates, filmed Jan 6: {count}")
+filename = f"{row['EmailBuilderID']}_{row['DateSent']}_{row['EmailSubject']}.html"
+filename = filename.replace("/", "-")
+```
+
+Next, I'll open that file (for writing). Since I want to save this file inside the `output_folder_path` folder, I'll use the `os.path.join()` function to connect `output_folder_path` and `filename`. And while I'm at it, I'll write the first line of HTML, a comment, the email body itself, and the last line of HTML.
+
+```python
+# Open the HTML file for writing
+with open(os.path.join(output_folder_path, filename), "w") as f:
+    f.write("<html><body>\n")
+    # TODO: write all of the other important fields here
+    f.write(f"<div>{row['EmailBody']}</div>\n")
+    f.write("</body></html>\n")
+    print(f"Saved file: {filename}")
+```
+
+Now it's time to display the rest of the important fields. Near the top of the `main()` function, before opening the file for writing, I will define a variable called `important_keys` and set it to a list of the extra fields (besides `EmailBody`) that I want to include in my HTML files:
+
+```python
+# A list of fields to include in the HTML output
+important_keys = [
+    "EmailBuilderID",
+    "EmailFrom",
+    "EmailSubject",
+    "DateSent",
+    "Attachment1",
+    "SentEmailList",
+]
+```
+
+Now, back inside the for loop, I want to replace the comment `# TODO: write all of the other important fields here` with code that actually writes those fields to the file. That code looks like this:
+
+```python
+f.write("<ul>\n")
+for key in important_keys:
+    f.write(f"<li><strong>{key}:</strong> {html.escape(row[key])}</li>\n")
+f.write("</ul>\n")
+```
+
+Since this code uses the `html.escape()` function, I also import the `html` module up at the top of the script:
+
+```python
+import html
 ```
 
 ## The Final Script
 
-Here's what it looks like to run this script:
+Here's what it looks like when I run this script on NCRIC's `EmailBuilder.csv` file:
 
 ```
-micah@cloak:~/datasets/homework/chapter-9$ python3 homework-9-3.py ~/datasets/Parler/metadata
-GPS + Jan 6: meta-8YA6CeYMxHh4.json
-GPS + Jan 6: meta-91Vga2rHrrID.json
-GPS + Jan 6: meta-a3NbAuIyNM3v.json
+micah@trapdoor chapter-9 % python3 homework-9-3.py /Volumes/datasets/BlueLeaks-extracted/ncric/EmailBuilder.csv ./output
+Saved file: 4867_09-04-18 09:13:49_2018 CNOA Training Institute.html
+Saved file: 4868_09-04-18 14:33:27_SMS Important.html
+Saved file: 4869_09-04-18 14:47:52_Brian SMS from Netsential.html
+Saved file: 4870_09-05-18 12:57:23_(U--LES) Officer Safety-Welfare Check Bulletin - Wesley Drake GRIFFIN.html
+Saved file: 4871_09-05-18 11:20:12_2018 CNOA Training Institute.html
+Saved file: 3687_01-24-17 18:09:02_17-013 (U--LES) NCRIC Partner Update Brief.html
+Saved file: 3688_01-24-17 18:25:41_17-014 (U--FOUO) NCRIC Partner Update Brief.html
+Saved file: 3689_01-25-17 16:00:36_Highway Drug Investigations for Patrol.html
 --snip--
-GPS + Jan 6: meta-diIeD4Ne7Ear.json
-GPS + Jan 6: meta-q7BpcYyFpX7J.json
-GPS + Jan 6: meta-OUJYa3npW0oE.json
-Total videos with GPS coordinates, filmed Jan 6: 1958
 ```
 
-You can find an implementation of this script in [homework-9-3.py](./homework-9-3.py).
+Here's what one of the HTML files that this script created looks like. This one is called `6098_05-18-20 12:45:12_Chasing Cell Phones presented via Zoom Webinar.html`.
+
+![Screenshot of a bulk email from NCRIC](./homework-9-3-html.png)

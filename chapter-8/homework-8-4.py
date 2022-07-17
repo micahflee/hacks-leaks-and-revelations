@@ -1,41 +1,39 @@
-import click
-import csv
 import os
+import click
 
 
 @click.command()
-@click.argument("blueleaks_path")
-@click.argument("output_csv_path")
-def main(blueleaks_path, output_csv_path):
-    """Make a CSV that describes all the BlueLeaks folders"""
-    
-    # Set up the CSV writer
-    headers = ["BlueLeaksFolder", "CompanyID", "CompanyName", "WebsiteTitle", "URL"]
-    with open(output_csv_path, "w") as output_f:
-        writer = csv.DictWriter(output_f, fieldnames=headers)
-        writer.writeheader()
+@click.argument("path")
+@click.option("--password", prompt="Enter password", help="Password is required")
+def main(path, password):
+    """Get information about files and folders"""
 
-        # List all of the folders in BlueLeaks
-        for folder_name in os.listdir(blueleaks_path):
-            # Define the Company.csv path for each folder
-            company_csv_abs_path = os.path.join(blueleaks_path, folder_name, "Company.csv")
-            # If this path exists...
-            if os.path.exists(company_csv_abs_path):
-                
-                # Set up the CSV reader
-                with open(company_csv_abs_path) as input_f:
-                    reader = csv.DictReader(input_f)
-                    for row in reader:
-                        output_row = {
-                            "BlueLeaksFolder": folder_name,
-                            "CompanyID": row["CompanyID"],
-                            "CompanyName": row["CompanyName"],
-                            "WebsiteTitle": row["WebsiteTitle"],
-                            "URL": row["URL"],
-                        }
-                        writer.writerow(output_row)
-            
-                print(f"Finished: {folder_name}")
+    # Make sure the password is valid
+    if password != "yourefired":
+        click.echo("Access Denied")
+        return
+
+    # Make sure the path is valid
+    if not os.path.exists(path):
+        click.echo("Error: Invalid path")
+        return
+    
+    # See if the path is a file
+    if os.path.isfile(path):
+        # Display information about this file
+        file_size = os.path.getsize(path)
+        click.echo(f"{path} is a file that is {file_size} bytes.")
+
+    # See if the path is a folder
+    else:
+        # Display information about this folder
+        click.echo(f"{path} is a folder. Here are the files inside it:")
+        for filename in os.listdir(path):
+            if os.path.isfile(os.path.join(path, filename)):
+                file_size = os.path.getsize(os.path.join(path, filename))
+                click.echo(f"- FILE: {filename} ({file_size} bytes)")
+            else:
+                click.echo(f"- FOLDER: {filename}")
 
 
 if __name__ == "__main__":

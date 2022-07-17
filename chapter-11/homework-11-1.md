@@ -1,24 +1,131 @@
-# Homework 11-1: Download Parts of the Epik Dataset
+# Homework 11-1: Install BlueLeaks Explorer
 
-You can read about the Epik dataset, and find links to the torrents to download it, at https://ddosecrets.com/wiki/Epik.
+In this homework assignment you will install BlueLeaks Explorer. You must have Docker and Docker Compose installed. If you don't, go back and follow along in Chapter 6.
 
-This dataset is split into three parts and it's very large: Part one is 180GB, part two is 72GB, and part three is 104GB. For this homework assignment you'll only need to download pieces of part one and part three, about 25GB total.
+You can find the source code and instructions for installing BlueLeaks Explorer at https://github.com/micahflee/blueleaks-explorer.
 
-## Download the SQL Databases
+## Create the Docker Compose Configuration File
 
-Open the torrent for **part one** in your BitTorrent client: https://ddosecrets.com/images/1/13/EpikFail.torrent
+Start by creating a new folder called `blueleaks-explorer` on your datasets USB disk, or somewhere else where you have at least 5GB of free disk space. Inside that folder, open a file called `docker-compose.yaml` in your text editor.
 
-Open it in your BitTorrent client, like Transmission. Make sure to save it somewhere with enough disk space, like your datasets USB disk. When you're downloading it, only select these files and folders to download:
+Here's how I did it on my Ubuntu computer:
 
-- `!README.txt`
-- `sql` (folder)
+```
+micah@rogue:~$ cd /media/micah/datasets/
+micah@rogue:/media/micah/datasets$ mkdir blueleaks-explorer
+micah@rogue:/media/micah/datasets$ cd blueleaks-explorer/
+micah@rogue:/media/micah/datasets/blueleaks-explorer$ code docker-compose.yaml
+```
 
-## Download the Texas GOP Website
+Here's how I did it in PowerShell on my Windows computer:
 
-Open the torrent for **part three** in your BitTorrent client: https://ddosecrets.com/images/6/6c/EpikFailYouLostTheGame.torrent
+```
+PS C:\Users\micah\code> cd D:\
+PS D:\> mkdir blueleaks-explorer
 
-When you're downloading this one, only select these files to download:
 
-- `gopfiles.tar.gz`
-- `README.txt`
-- `texasgop.sql.gz`
+    Directory: D:\
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----         5/22/2022   7:06 PM                blueleaks-explorer
+
+
+PS D:\> cd blueleaks-explorer
+PS D:\blueleaks-explorer> code docker-compose.yaml
+```
+
+Inside this file, copy and paste this:
+
+```yaml
+version: "3.9"
+
+services:
+  app:
+    image: micahflee/blueleaks-explorer:latest
+    ports:
+      - "8000:80"
+    volumes:
+      - /media/micah/datasets/BlueLeaks-extracted:/data/blueleaks
+      - ./databases:/data/databases
+      - ./structures:/data/structures
+```
+
+Change `/media/micah/datasets/BlueLeaks-extracted` to the path to the `BlueLeaks-extracted` folder on your computer.
+
+If you're using Windows, use slashes (`/`) instead of backslashes (`\`) when specifying the path to the BlueLeaks data. For example, my data in Windows is at `D:\BlueLeaks-extracted`, so I set that volume line to:
+
+```
+      - D:/BlueLeaks-extracted:/data/blueleaks
+```
+
+## Bring Up the Containers
+
+Now, in your terminal, in the `blueleaks-explorer` folder you just created, run:
+
+```sh
+docker-compose up
+```
+
+This will download the container image from Docker Hub and start running it on your computer. Here's what it looks like on mine:
+
+```
+micah@rogue:/media/micah/datasets/blueleaks-explorer$ docker-compose up
+Creating network "blueleaks-explorer_default" with the default driver
+Pulling app (micahflee/blueleaks-explorer:latest)...
+latest: Pulling from micahflee/blueleaks-explorer
+67e8aa6c8bbc: Pull complete
+627e6c1e1055: Pull complete
+0670968926f6: Pull complete
+5a8b0e20be4b: Pull complete
+b0b10a3a2784: Pull complete
+e16cd24209e8: Pull complete
+c8428195afac: Pull complete
+45ae7839fda5: Pull complete
+5ae8ff85c381: Pull complete
+ea661cfc83d7: Pull complete
+1fd3ea365e61: Pull complete
+b5e3a2971758: Pull complete
+031a4cb823a6: Pull complete
+ac3249973cd0: Pull complete
+21d53874befa: Pull complete
+808d8b18683b: Pull complete
+408248133d5a: Pull complete
+b312070690e2: Pull complete
+da13bd560733: Pull complete
+15955ecc634c: Pull complete
+0065bfbd6265: Pull complete
+adf5a92be88f: Pull complete
+37bfce78adfd: Pull complete
+2417ebf6135a: Pull complete
+307d5ae7538a: Pull complete
+40fa082d7f45: Pull complete
+Digest: sha256:83ce8cec1b8d5ff4f2fffef50b750d8aef7318ae8bf01827e22dbb7f30e1692b
+Status: Downloaded newer image for micahflee/blueleaks-explorer:latest
+Creating blueleaks-explorer_app_1 ... done
+Attaching to blueleaks-explorer_app_1
+app_1  |  * Serving Flask app 'app' (lazy loading)
+app_1  |  * Environment: production
+app_1  |    WARNING: This is a development server. Do not use it in a production deployment.
+app_1  |    Use a production WSGI server instead.
+app_1  |  * Debug mode: off
+app_1  |  * Running on all addresses (0.0.0.0)
+app_1  |    WARNING: This is a development server. Do not use it in a production deployment.
+app_1  |  * Running on http://127.0.0.1:80
+app_1  |  * Running on http://172.20.0.2:80 (Press CTRL+C to quit)
+app_1  | 172.20.0.1 - - [22/May/2022 23:41:43] "GET / HTTP/1.1" 200 -
+app_1  | 172.20.0.1 - - [22/May/2022 23:41:43] "GET /favicon.ico HTTP/1.1" 200 -
+```
+
+## Initialize the Database
+
+Next, initialize the SQLite3 databases. Open a second terminal window, change to your `blueleaks-explorer` folder, and run this command:
+
+```sh
+docker-compose exec app poetry run python ./initialize.py
+```
+
+This will take a long time to finish running, and when it's done the `databases` folder inside your `blueleaks-explorer` folder will have 4.7GB of `.sqlite3` files in it.
+
+Now, you can start using BlueLeaks Explorer by going to http://localhost:8000.
