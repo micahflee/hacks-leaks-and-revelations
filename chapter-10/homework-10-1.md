@@ -4,13 +4,36 @@ In this homework assignment you will install BlueLeaks Explorer. You must have D
 
 You can find the source code and instructions for installing BlueLeaks Explorer at https://github.com/micahflee/blueleaks-explorer.
 
-Start by creating a new folder called `blueleaks-explorer` on your datasets USB disk, or somewhere else where you have at least 5GB of free disk space. Inside that folder, create a file called `docker-compose.yaml`. Here's how I did it on my Ubuntu computer:
+## Create the Docker Compose Configuration File
+
+Start by creating a new folder called `blueleaks-explorer` on your datasets USB disk, or somewhere else where you have at least 5GB of free disk space. Inside that folder, open a file called `docker-compose.yaml` in your text editor.
+
+Here's how I did it on my Ubuntu computer:
 
 ```
 micah@rogue:~$ cd /media/micah/datasets/
 micah@rogue:/media/micah/datasets$ mkdir blueleaks-explorer
 micah@rogue:/media/micah/datasets$ cd blueleaks-explorer/
 micah@rogue:/media/micah/datasets/blueleaks-explorer$ code docker-compose.yaml
+```
+
+Here's how I did it in PowerShell on my Windows computer:
+
+```
+PS C:\Users\micah\code> cd D:\
+PS D:\> mkdir blueleaks-explorer
+
+
+    Directory: D:\
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----         5/22/2022   7:06 PM                blueleaks-explorer
+
+
+PS D:\> cd blueleaks-explorer
+PS D:\blueleaks-explorer> code docker-compose.yaml
 ```
 
 Inside this file, copy and paste this:
@@ -30,6 +53,14 @@ services:
 ```
 
 Change `/media/micah/datasets/BlueLeaks-extracted` to the path to the `BlueLeaks-extracted` folder on your computer.
+
+If you're using Windows, use slashes (`/`) instead of backslashes (`\`) when specifying the path to the BlueLeaks data. For example, my data in Windows is at `D:\BlueLeaks-extracted`, so I set that volume line to:
+
+```
+      - D:/BlueLeaks-extracted:/data/blueleaks
+```
+
+## Bring Up the Containers
 
 Now, in your terminal, in the `blueleaks-explorer` folder you just created, run:
 
@@ -86,6 +117,8 @@ app_1  |  * Running on http://172.20.0.2:80 (Press CTRL+C to quit)
 app_1  | 172.20.0.1 - - [22/May/2022 23:41:43] "GET / HTTP/1.1" 200 -
 app_1  | 172.20.0.1 - - [22/May/2022 23:41:43] "GET /favicon.ico HTTP/1.1" 200 -
 ```
+
+## Initialize the Database
 
 Next, initialize the SQLite3 databases. Open a second terminal window, change to your `blueleaks-explorer` folder, and run this command:
 
