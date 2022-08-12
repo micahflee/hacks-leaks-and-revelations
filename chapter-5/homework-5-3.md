@@ -1,3 +1,2 @@
-# Homework 5-3: Dip Your Toes Into the BlueLeaks Documents
+# Homework 5-3: Grepping for Revelations
 
-Go read some BlueLeaks documents!
