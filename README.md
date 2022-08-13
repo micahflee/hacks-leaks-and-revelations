@@ -47,6 +47,12 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 ### Chapter 7: Reading Other People's Email
 
+- [Homework 7-1: Download Email Dumps](./chapter-7/homework-7-1.md)
+- [Homework 7-2: Configure Thunderbird for Email Dumps](./chapter-7/homework-7-2.md)
+- [Homework 7-3: Import EML Files Into Thunderbird](./chapter-7/homework-7-3.md)
+- [Homework 7-4: Import MBOX Files Into Thunderbird](./chapter-7/homework-7-4.md)
+- [Homework 7-5: Import PST Files Into Thunderbird](./chapter-7/homework-7-5.md)
+
 ## Part 3: Programming and Structured Data
 
 ### Chapter 8: A Brief Introduction to the Python Programming Language
