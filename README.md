@@ -34,7 +34,7 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 - [Homework 5-1: Unzip BlueLeaks](./chapter-5/homework-5-1.md)
 - [Homework 5-2: Explore BlueLeaks With the Terminal](./chapter-5/homework-5-2.md)
-- [Homework 5-3: Homework 5-3: Grepping for Revelations](./chapter-5/homework-5-3.md)
+- [Homework 5-3: Grepping for Revelations](./chapter-5/homework-5-3.md)
 - [Homework 5-4: Play With a VPS](./chapter-5/homework-5-4.md)
 
 ### Chapter 6: Docker, Aleph, and Making Datasets Searchable
