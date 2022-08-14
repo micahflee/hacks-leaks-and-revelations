@@ -8,7 +8,7 @@ In this homework you'll import the Oath Keepers email dump into Thunderbird.
 - Click the Account Actions drop-down menu on the left side of the screen and choose Add Feed Account.
 - Under "Account Name" type `Oath Keepers`, click Next, then click Finish.
 
-## Import the EML Files
+## Import the MBOX Files
 
 - Switch back to the main tab.
 - Right-click on the `Oath Keepers` feed and choose ImportExportTools NG > Import mbox file.
