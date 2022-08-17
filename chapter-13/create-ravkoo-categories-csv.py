@@ -5,12 +5,6 @@ import time
 
 # Export a CSV that adds up prescriptions and their costs for each category of drug
 def main():
-    headers = [
-        "drug_category",
-        "prescription_count",
-        "total_cost",
-    ]
-
     # A dictionary that maps drug categories to another dictionary containing the
     # prescription count and total cost for that drug category
     drug_categories = {}
@@ -40,17 +34,22 @@ def main():
             drug_categories[category]["total_cost"] += float(row["Cost"])
 
     # Write the CSV file
+    headers = [
+        "drug_category",
+        "prescription_count",
+        "total_cost",
+    ]
     csv_filename = "ravkoo-categories.csv"
     with open(csv_filename, "w") as f:
-        writer = csv.writer(f)
-        writer.writerow(headers)
+        writer = csv.DictWriter(f, headers)
+        writer.writeheader()
         for category in drug_categories:
             writer.writerow(
-                [
-                    category,
-                    drug_categories[category]["prescription_count"],
-                    int(drug_categories[category]["total_cost"]),
-                ]
+                {
+                    "drug_category": category,
+                    "prescription_count": drug_categories[category]["prescription_count"],
+                    "total_cost": int(drug_categories[category]["total_cost"]),
+                }
             )
 
 

@@ -11,31 +11,21 @@ def data_from_json(filename):
 
 # Export a CSV full of AFLDS patients
 def main():
-    headers = [
-        "user_id",
-        "created_at",
-        "fname",
-        "lname",
-        "email",
-        "city",
-        "state",
-        "gender",
-        "birthdate",
-        "num_consultations",
-    ]
-    patient_rows = []
-
-    # Load patient data
+    # Load patient data from cadence_allpatients_all.json
     patients_data = data_from_json(
         "data/horse_around_find_out/cadence_allpatients_all.json"
     )
-    patient_ids_to_created = {}
+    # Keep track of the created_at timestamps for each patient's id
+    patient_ids_to_created_at = {}
     for patient in patients_data["patients"]:
-        patient_ids_to_created[patient["id"]] = patient["created_at"]
+        patient_ids_to_created_at[patient["id"]] = patient["created_at"]
 
-    # Make a list of patients from Cadence's AFLDS partner, and that have had
-    # at least one consultation
+    # Start the list of AFLDS patients that have had at least one consultation
+    patient_rows = []
+
+    # Loop through every file in the hipaa_special folder
     for patient_id in os.listdir("data/hipaa_special"):
+        # Load the patient data
         data = data_from_json(os.path.join("data/hipaa_special", patient_id))
 
         # Some of the patient records are empty. This skips them
@@ -51,25 +41,37 @@ def main():
             # If they have had more than one, add them to the list
             if num_consultations > 0:
                 patient_rows.append(
-                    [
-                        data["provider"]["user_id"],
-                        patient_ids_to_created[data["provider"]["user_id"]],
-                        data["provider"]["fname"],
-                        data["provider"]["lname"],
-                        data["provider"]["email"],
-                        data["provider"]["city"],
-                        data["provider"]["state"],
-                        data["provider"]["gender"],
-                        data["provider"]["birthdate"],
-                        num_consultations,
-                    ]
+                    {
+                        "user_id": data["provider"]["user_id"],
+                        "created_at": patient_ids_to_created_at[data["provider"]["user_id"]],
+                        "fname": data["provider"]["fname"],
+                        "lname": data["provider"]["lname"],
+                        "email": data["provider"]["email"],
+                        "city": data["provider"]["city"],
+                        "state": data["provider"]["state"],
+                        "gender": data["provider"]["gender"],
+                        "birthdate": data["provider"]["birthdate"],
+                        "num_consultations": num_consultations,
+                    }
                 )
 
     # Write the CSV file
     csv_filename = "aflds-patients.csv"
+    headers = [
+        "user_id",
+        "created_at",
+        "fname",
+        "lname",
+        "email",
+        "city",
+        "state",
+        "gender",
+        "birthdate",
+        "num_consultations",
+    ]
     with open(csv_filename, "w") as f:
-        writer = csv.writer(f)
-        writer.writerow(headers)
+        writer = csv.DictWriter(f, headers)
+        writer.writeheader()
         writer.writerows(patient_rows)
 
 

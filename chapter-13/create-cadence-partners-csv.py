@@ -24,7 +24,6 @@ def main():
     """
     List Cadence partners
     """
-    headers = ["ID", "Name", "Domain", "Patients"]
     partner_rows = []
 
     # Load the Cadence patient data
@@ -54,19 +53,20 @@ def main():
 
         # Add the partner's row
         partner_rows.append(
-            [
-                partner["id"],
-                partner["name"],
-                partner["domain"],
-                patients,
-            ]
+            {
+                "ID": partner["id"],
+                "Name": partner["name"],
+                "Domain": partner["domain"],
+                "Patients": patients,
+            }
         )
 
     # Write the CSV file
+    headers = ["ID", "Name", "Domain", "Patients"]
     csv_filename = "cadence-partners.csv"
     with open(csv_filename, "w") as f:
-        writer = csv.writer(f)
-        writer.writerow(headers)
+        writer = csv.DictWriter(f, headers)
+        writer.writeheader()
         writer.writerows(partner_rows)
 
 

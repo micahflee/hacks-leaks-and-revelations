@@ -3,11 +3,6 @@ from datetime import datetime, timedelta
 
 # Export a CSV that shows how many patients are part of each age group
 def main():
-    headers = [
-        "age_group",
-        "patients",
-    ]
-
     # Age groups, the same ones used in CDC data
     # https://www.cdc.gov/coronavirus/2019-ncov/covid-data/investigations-discovery/hospitalization-death-by-age.html
     age_groups = {
@@ -57,16 +52,20 @@ def main():
                 age_groups[">100"] += 1
 
     # Write the CSV file
+    headers = [
+        "age_group",
+        "patients",
+    ]
     csv_filename = "ages.csv"
     with open(csv_filename, "w") as f:
-        writer = csv.writer(f)
-        writer.writerow(headers)
+        writer = csv.DictWriter(f, headers)
+        writer.writeheader()
         for age_group in age_groups:
             writer.writerow(
-                [
-                    age_group,
-                    age_groups[age_group],
-                ]
+                {
+                    "age_group": age_group,
+                    "patients": age_groups[age_group],
+                }
             )
 
 

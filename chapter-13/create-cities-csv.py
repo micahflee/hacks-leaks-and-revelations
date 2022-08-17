@@ -4,7 +4,7 @@ import time
 import httpx
 
 # This script requires the third-party module httpx, which you can install like:
-# pip3 install httpx
+# python3 -m pip install httpx
 
 # This also requires an API key for https://geocodeapi.io, a service I used to do
 # geocoding. They have a free plan
@@ -13,14 +13,6 @@ geocode_api_key = "PUT_GEOCODE_API_KEY_HERE"
 
 # Export a CSV that for each city lists its GPS coordinates and the number of patients there
 def main():
-    headers = [
-        "count",
-        "city",
-        "lon",
-        "lat",
-        "label",
-    ]
-
     # This dictionary maps names of cities (in format "City, State", like "New York, NY")
     # to a dictionary with info about that city (number of patients, GPS coordinates)
     cities = {}
@@ -81,19 +73,26 @@ def main():
             cities[city]["lat"] = data["features"][0]["geometry"]["coordinates"][1]
 
     # Write the CSV file
+    headers = [
+        "count",
+        "city",
+        "lon",
+        "lat",
+        "label",
+    ]
     csv_filename = "cities.csv"
     with open(csv_filename, "w") as f:
-        writer = csv.writer(f)
-        writer.writerow(headers)
+        writer = csv.DictWriter(f)
+        writer.writeheader()
         for city in cities:
             writer.writerow(
-                [
-                    cities[city]["count"],
-                    city,
-                    cities[city]["lat"],
-                    cities[city]["lon"],
-                    f"{city} ({cities[city]['count']})",
-                ]
+                {
+                    "count": cities[city]["count"],
+                    "city": city,
+                    "lon": cities[city]["lat"],
+                    "lat": cities[city]["lon"],
+                    "label": f"{city} ({cities[city]['count']})",
+                }
             )
 
 
