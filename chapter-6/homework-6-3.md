@@ -8,7 +8,7 @@ If you're using Windows, use a PowerShell terminal.
 
 Make a new homework folder just for this assignment, and copy `docker-compose.yaml` into it.
 
-## Bring Up the Containers
+## Start Your WordPress Site
 
 Change to this folder and bring up the containers:
 
@@ -19,213 +19,103 @@ docker-compose up
 Example:
 
 ```
-micah@trapdoor homework-6-3 % docker-compose up
-[+] Running 34/34
- ⠿ db Pulled                                                              27.4s
-   ⠿ 6552179c3509 Pull complete                                           14.3s
-   ⠿ d69aa66e4482 Pull complete                                           14.4s
-   ⠿ 3b19465b002b Pull complete                                           14.8s
-   ⠿ 7b0d0cfe99a1 Pull complete                                           15.0s
-   ⠿ 9ccd5a5c8987 Pull complete                                           15.1s
-   ⠿ 44f5f7765d10 Pull complete                                           16.5s
-   ⠿ 7e8f1dd5efbe Pull complete                                           16.6s
-   ⠿ ab45b9a309e7 Pull complete                                           16.7s
-   ⠿ 90242da46c57 Pull complete                                           23.3s
-   ⠿ 9a8d822d1293 Pull complete                                           23.3s
-   ⠿ 1704bf9fa775 Pull complete                                           23.4s
- ⠿ wordpress Pulled                                                       24.0s
-   ⠿ 5eb5b503b376 Pull complete                                            5.3s
-   ⠿ 8b1ad84cf101 Pull complete                                            5.4s
-   ⠿ 38c937dadeb7 Pull complete                                           12.6s
-   ⠿ 6a2f1dc96e59 Pull complete                                           12.7s
-   ⠿ f8c3f82c39d4 Pull complete                                           14.0s
-   ⠿ 90fc6462bd8e Pull complete                                           14.0s
-   ⠿ c670d99116c9 Pull complete                                           14.1s
-   ⠿ a8b5d4e23f03 Pull complete                                           14.3s
-   ⠿ 9e2a6d8c1af3 Pull complete                                           14.4s
-   ⠿ 597ec1209872 Pull complete                                           15.6s
-   ⠿ fe74968caee0 Pull complete                                           15.7s
-   ⠿ c51e1df1e33f Pull complete                                           15.8s
-   ⠿ 99b82a1163e0 Pull complete                                           15.9s
-   ⠿ b1ff08bec31f Pull complete                                           17.2s
-   ⠿ 404a58a10072 Pull complete                                           18.3s
-   ⠿ e148fbb32ea5 Pull complete                                           18.4s
-   ⠿ f5a3ae8ca1b9 Pull complete                                           18.5s
-   ⠿ 65c5759819bc Pull complete                                           18.6s
-   ⠿ 05b95ec40549 Pull complete                                           20.1s
-   ⠿ a7819ab16fff Pull complete                                           20.2s
-   ⠿ c3b900b38c5d Pull complete                                           20.2s
-[+] Running 5/5
- ⠿ Network homework-6-3_default          Created                           0.1s
- ⠿ Volume "homework-6-3_wordpress_data"  Created                           0.0s
- ⠿ Volume "homework-6-3_db_data"         Created                           0.0s
- ⠿ Container homework-6-3-db-1           Created                           0.1s
- ⠿ Container homework-6-3-wordpress-1    Created                           0.1s
-Attaching to homework-6-3-db-1, homework-6-3-wordpress-1
-homework-6-3-db-1         | 2022-02-25 16:59:19+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 5.7.37-1debian10 started.
-homework-6-3-db-1         | 2022-02-25 16:59:20+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
-homework-6-3-db-1         | 2022-02-25 16:59:20+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 5.7.37-1debian10 started.
-homework-6-3-db-1         | 2022-02-25 16:59:20+00:00 [Note] [Entrypoint]: Initializing database files
-homework-6-3-db-1         | 2022-02-25T16:59:20.168908Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
-homework-6-3-db-1         | 2022-02-25T16:59:20.347335Z 0 [Warning] InnoDB: New log files created, LSN=45790
-homework-6-3-db-1         | 2022-02-25T16:59:20.374136Z 0 [Warning] InnoDB: Creating foreign key constraint system tables.
-homework-6-3-db-1         | 2022-02-25T16:59:20.378807Z 0 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: 466470da-965c-11ec-ada7-0242ac120002.
-homework-6-3-db-1         | 2022-02-25T16:59:20.379849Z 0 [Warning] Gtid table is not ready to be used. Table 'mysql.gtid_executed' cannot be opened.
-homework-6-3-wordpress-1  | WordPress not found in /var/www/html - copying now...
-homework-6-3-db-1         | 2022-02-25T16:59:20.920065Z 0 [Warning] A deprecated TLS version TLSv1 is enabled. Please use TLSv1.2 or higher.
-homework-6-3-db-1         | 2022-02-25T16:59:20.920104Z 0 [Warning] A deprecated TLS version TLSv1.1 is enabled. Please use TLSv1.2 or higher.
-homework-6-3-db-1         | 2022-02-25T16:59:20.920918Z 0 [Warning] CA certificate ca.pem is self signed.
-homework-6-3-wordpress-1  | Complete! WordPress has been successfully copied to /var/www/html
-homework-6-3-wordpress-1  | No 'wp-config.php' found in /var/www/html, but 'WORDPRESS_...' variables supplied; copying 'wp-config-docker.php' (WORDPRESS_DB_HOST WORDPRESS_DB_NAME WORDPRESS_DB_PASSWORD WORDPRESS_DB_USER)
-homework-6-3-db-1         | 2022-02-25T16:59:21.299793Z 1 [Warning] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
-homework-6-3-wordpress-1  | AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.18.0.3. Set the 'ServerName' directive globally to suppress this message
-homework-6-3-wordpress-1  | AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.18.0.3. Set the 'ServerName' directive globally to suppress this message
-homework-6-3-wordpress-1  | [Fri Feb 25 16:59:21.656520 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.52 (Debian) PHP/7.4.28 configured -- resuming normal operations
-homework-6-3-wordpress-1  | [Fri Feb 25 16:59:21.656618 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
-homework-6-3-db-1         | 2022-02-25 16:59:23+00:00 [Note] [Entrypoint]: Database files initialized
-homework-6-3-db-1         | 2022-02-25 16:59:23+00:00 [Note] [Entrypoint]: Starting temporary server
-homework-6-3-db-1         | 2022-02-25 16:59:23+00:00 [Note] [Entrypoint]: Waiting for server startup
-homework-6-3-db-1         | 2022-02-25T16:59:23.540512Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
-homework-6-3-db-1         | 2022-02-25T16:59:23.541713Z 0 [Note] mysqld (mysqld 5.7.37) starting as process 78 ...
-homework-6-3-db-1         | 2022-02-25T16:59:23.544899Z 0 [Note] InnoDB: PUNCH HOLE support available
-homework-6-3-db-1         | 2022-02-25T16:59:23.544947Z 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
-homework-6-3-db-1         | 2022-02-25T16:59:23.544951Z 0 [Note] InnoDB: Uses event mutexes
-homework-6-3-db-1         | 2022-02-25T16:59:23.544954Z 0 [Note] InnoDB: GCC builtin __atomic_thread_fence() is used for memory barrier
-homework-6-3-db-1         | 2022-02-25T16:59:23.544956Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
-homework-6-3-db-1         | 2022-02-25T16:59:23.544958Z 0 [Note] InnoDB: Using Linux native AIO
-homework-6-3-db-1         | 2022-02-25T16:59:23.545183Z 0 [Note] InnoDB: Number of pools: 1
-homework-6-3-db-1         | 2022-02-25T16:59:23.545341Z 0 [Note] InnoDB: Using CPU crc32 instructions
-homework-6-3-db-1         | 2022-02-25T16:59:23.547305Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
-homework-6-3-db-1         | 2022-02-25T16:59:23.556519Z 0 [Note] InnoDB: Completed initialization of buffer pool
-homework-6-3-db-1         | 2022-02-25T16:59:23.558514Z 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
-homework-6-3-db-1         | 2022-02-25T16:59:23.570280Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
-homework-6-3-db-1         | 2022-02-25T16:59:23.578084Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
-homework-6-3-db-1         | 2022-02-25T16:59:23.578168Z 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
-homework-6-3-db-1         | 2022-02-25T16:59:23.598781Z 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
-homework-6-3-db-1         | 2022-02-25T16:59:23.599453Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
-homework-6-3-db-1         | 2022-02-25T16:59:23.599489Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
-homework-6-3-db-1         | 2022-02-25T16:59:23.599897Z 0 [Note] InnoDB: Waiting for purge to start
-homework-6-3-db-1         | 2022-02-25T16:59:23.650164Z 0 [Note] InnoDB: 5.7.37 started; log sequence number 2749976
-homework-6-3-db-1         | 2022-02-25T16:59:23.650541Z 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
-homework-6-3-db-1         | 2022-02-25T16:59:23.650626Z 0 [Note] Plugin 'FEDERATED' is disabled.
-homework-6-3-db-1         | 2022-02-25T16:59:23.652380Z 0 [Note] InnoDB: Buffer pool(s) load completed at 220225 16:59:23
-homework-6-3-db-1         | 2022-02-25T16:59:23.655989Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
-homework-6-3-db-1         | 2022-02-25T16:59:23.656036Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
-homework-6-3-db-1         | 2022-02-25T16:59:23.656042Z 0 [Warning] A deprecated TLS version TLSv1 is enabled. Please use TLSv1.2 or higher.
-homework-6-3-db-1         | 2022-02-25T16:59:23.656044Z 0 [Warning] A deprecated TLS version TLSv1.1 is enabled. Please use TLSv1.2 or higher.
-homework-6-3-db-1         | 2022-02-25T16:59:23.656719Z 0 [Warning] CA certificate ca.pem is self signed.
-homework-6-3-db-1         | 2022-02-25T16:59:23.656750Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
-homework-6-3-db-1         | 2022-02-25T16:59:23.659452Z 0 [Warning] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
-homework-6-3-db-1         | 2022-02-25T16:59:23.667026Z 0 [Note] Event Scheduler: Loaded 0 events
-homework-6-3-db-1         | 2022-02-25T16:59:23.667968Z 0 [Note] mysqld: ready for connections.
-homework-6-3-db-1         | Version: '5.7.37'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server (GPL)
-homework-6-3-db-1         | 2022-02-25 16:59:24+00:00 [Note] [Entrypoint]: Temporary server started.
-homework-6-3-db-1         | Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
-homework-6-3-db-1         | Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
-homework-6-3-db-1         | Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
-homework-6-3-db-1         | Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
-homework-6-3-db-1         | 2022-02-25 16:59:26+00:00 [Note] [Entrypoint]: Creating database wordpress
-homework-6-3-db-1         | 2022-02-25 16:59:26+00:00 [Note] [Entrypoint]: Creating user wordpress
-homework-6-3-db-1         | 2022-02-25 16:59:26+00:00 [Note] [Entrypoint]: Giving user wordpress access to schema wordpress
-homework-6-3-db-1         |
-homework-6-3-db-1         | 2022-02-25 16:59:26+00:00 [Note] [Entrypoint]: Stopping temporary server
-homework-6-3-db-1         | 2022-02-25T16:59:26.728281Z 0 [Note] Giving 0 client threads a chance to die gracefully
-homework-6-3-db-1         | 2022-02-25T16:59:26.728365Z 0 [Note] Shutting down slave threads
-homework-6-3-db-1         | 2022-02-25T16:59:26.728380Z 0 [Note] Forcefully disconnecting 0 remaining clients
-homework-6-3-db-1         | 2022-02-25T16:59:26.728386Z 0 [Note] Event Scheduler: Purging the queue. 0 events
-homework-6-3-db-1         | 2022-02-25T16:59:26.728468Z 0 [Note] Binlog end
-homework-6-3-db-1         | 2022-02-25T16:59:26.729345Z 0 [Note] Shutting down plugin 'ngram'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729380Z 0 [Note] Shutting down plugin 'partition'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729385Z 0 [Note] Shutting down plugin 'BLACKHOLE'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729388Z 0 [Note] Shutting down plugin 'ARCHIVE'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729389Z 0 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729411Z 0 [Note] Shutting down plugin 'MRG_MYISAM'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729414Z 0 [Note] Shutting down plugin 'MyISAM'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729421Z 0 [Note] Shutting down plugin 'INNODB_SYS_VIRTUAL'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729424Z 0 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729426Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729429Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729431Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729433Z 0 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729436Z 0 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729438Z 0 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729440Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729443Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729445Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729447Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729449Z 0 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729452Z 0 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729454Z 0 [Note] Shutting down plugin 'INNODB_FT_DELETED'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729457Z 0 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729459Z 0 [Note] Shutting down plugin 'INNODB_METRICS'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729461Z 0 [Note] Shutting down plugin 'INNODB_TEMP_TABLE_INFO'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729464Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729466Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729469Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729471Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729474Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729476Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729479Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729481Z 0 [Note] Shutting down plugin 'INNODB_CMP_RESET'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729484Z 0 [Note] Shutting down plugin 'INNODB_CMP'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729486Z 0 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729531Z 0 [Note] Shutting down plugin 'INNODB_LOCKS'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729537Z 0 [Note] Shutting down plugin 'INNODB_TRX'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729540Z 0 [Note] Shutting down plugin 'InnoDB'
-homework-6-3-db-1         | 2022-02-25T16:59:26.729669Z 0 [Note] InnoDB: FTS optimize thread exiting.
-homework-6-3-db-1         | 2022-02-25T16:59:26.730172Z 0 [Note] InnoDB: Starting shutdown...
-homework-6-3-db-1         | 2022-02-25T16:59:26.833367Z 0 [Note] InnoDB: Dumping buffer pool(s) to /var/lib/mysql/ib_buffer_pool
-homework-6-3-db-1         | 2022-02-25T16:59:26.834552Z 0 [Note] InnoDB: Buffer pool(s) dump completed at 220225 16:59:26
-homework-6-3-db-1         | 2022-02-25T16:59:28.481505Z 0 [Note] InnoDB: Shutdown completed; log sequence number 12659898
-homework-6-3-db-1         | 2022-02-25T16:59:28.485495Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
-homework-6-3-db-1         | 2022-02-25T16:59:28.485642Z 0 [Note] Shutting down plugin 'MEMORY'
-homework-6-3-db-1         | 2022-02-25T16:59:28.485666Z 0 [Note] Shutting down plugin 'CSV'
-homework-6-3-db-1         | 2022-02-25T16:59:28.485685Z 0 [Note] Shutting down plugin 'sha256_password'
-homework-6-3-db-1         | 2022-02-25T16:59:28.485700Z 0 [Note] Shutting down plugin 'mysql_native_password'
-homework-6-3-db-1         | 2022-02-25T16:59:28.485836Z 0 [Note] Shutting down plugin 'binlog'
-homework-6-3-db-1         | 2022-02-25T16:59:28.489777Z 0 [Note] mysqld: Shutdown complete
-homework-6-3-db-1         |
-homework-6-3-db-1         | 2022-02-25 16:59:28+00:00 [Note] [Entrypoint]: Temporary server stopped
-homework-6-3-db-1         |
-homework-6-3-db-1         | 2022-02-25 16:59:28+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
-homework-6-3-db-1         |
-homework-6-3-db-1         | 2022-02-25T16:59:28.921210Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
-homework-6-3-db-1         | 2022-02-25T16:59:28.922661Z 0 [Note] mysqld (mysqld 5.7.37) starting as process 1 ...
-homework-6-3-db-1         | 2022-02-25T16:59:28.925966Z 0 [Note] InnoDB: PUNCH HOLE support available
-homework-6-3-db-1         | 2022-02-25T16:59:28.926072Z 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
-homework-6-3-db-1         | 2022-02-25T16:59:28.926086Z 0 [Note] InnoDB: Uses event mutexes
-homework-6-3-db-1         | 2022-02-25T16:59:28.926096Z 0 [Note] InnoDB: GCC builtin __atomic_thread_fence() is used for memory barrier
-homework-6-3-db-1         | 2022-02-25T16:59:28.926106Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
-homework-6-3-db-1         | 2022-02-25T16:59:28.926149Z 0 [Note] InnoDB: Using Linux native AIO
-homework-6-3-db-1         | 2022-02-25T16:59:28.926629Z 0 [Note] InnoDB: Number of pools: 1
-homework-6-3-db-1         | 2022-02-25T16:59:28.926825Z 0 [Note] InnoDB: Using CPU crc32 instructions
-homework-6-3-db-1         | 2022-02-25T16:59:28.928619Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
-homework-6-3-db-1         | 2022-02-25T16:59:28.938495Z 0 [Note] InnoDB: Completed initialization of buffer pool
-homework-6-3-db-1         | 2022-02-25T16:59:28.941260Z 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
-homework-6-3-db-1         | 2022-02-25T16:59:28.953290Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
-homework-6-3-db-1         | 2022-02-25T16:59:28.962463Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
-homework-6-3-db-1         | 2022-02-25T16:59:28.962621Z 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
-homework-6-3-db-1         | 2022-02-25T16:59:28.983905Z 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
-homework-6-3-db-1         | 2022-02-25T16:59:28.986024Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
-homework-6-3-db-1         | 2022-02-25T16:59:28.986228Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
-homework-6-3-db-1         | 2022-02-25T16:59:28.988392Z 0 [Note] InnoDB: 5.7.37 started; log sequence number 12659898
-homework-6-3-db-1         | 2022-02-25T16:59:28.989161Z 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
-homework-6-3-db-1         | 2022-02-25T16:59:28.989670Z 0 [Note] Plugin 'FEDERATED' is disabled.
-homework-6-3-db-1         | 2022-02-25T16:59:28.993188Z 0 [Note] InnoDB: Buffer pool(s) load completed at 220225 16:59:28
-homework-6-3-db-1         | 2022-02-25T16:59:28.995783Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
-homework-6-3-db-1         | 2022-02-25T16:59:28.995856Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
-homework-6-3-db-1         | 2022-02-25T16:59:28.995869Z 0 [Warning] A deprecated TLS version TLSv1 is enabled. Please use TLSv1.2 or higher.
-homework-6-3-db-1         | 2022-02-25T16:59:28.995878Z 0 [Warning] A deprecated TLS version TLSv1.1 is enabled. Please use TLSv1.2 or higher.
-homework-6-3-db-1         | 2022-02-25T16:59:28.996749Z 0 [Warning] CA certificate ca.pem is self signed.
-homework-6-3-db-1         | 2022-02-25T16:59:28.996820Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
-homework-6-3-db-1         | 2022-02-25T16:59:28.997458Z 0 [Note] Server hostname (bind-address): '*'; port: 3306
-homework-6-3-db-1         | 2022-02-25T16:59:28.997583Z 0 [Note] IPv6 is available.
-homework-6-3-db-1         | 2022-02-25T16:59:28.997634Z 0 [Note]   - '::' resolves to '::';
-homework-6-3-db-1         | 2022-02-25T16:59:28.997651Z 0 [Note] Server socket created on IP: '::'.
-homework-6-3-db-1         | 2022-02-25T16:59:28.999527Z 0 [Warning] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
-homework-6-3-db-1         | 2022-02-25T16:59:29.006414Z 0 [Note] Event Scheduler: Loaded 0 events
-homework-6-3-db-1         | 2022-02-25T16:59:29.006933Z 0 [Note] mysqld: ready for connections.
-homework-6-3-db-1         | Version: '5.7.37'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server (GPL)
+micah@trapdoor homework-6-3 % docker-compose up     
+Creating network "homework-6-3_default" with the default driver
+Pulling db (mysql:5.7)...
+5.7: Pulling from library/mysql
+9815334b7810: Pull complete
+f85cb6fccbfd: Pull complete
+b63612353671: Pull complete
+447901201612: Pull complete
+9b6bc806cc29: Pull complete
+24ec1f4b3b0d: Pull complete
+207ed1eb2fd4: Pull complete
+27cbde3edd97: Pull complete
+0a5aa35cc154: Pull complete
+e6c92bf6471b: Pull complete
+07b80de0d1af: Pull complete
+Digest: sha256:c1bda6ecdbc63d3b0d3a3a3ce195de3dd755c4a0658ed782a16a0682216b9a48
+Status: Downloaded newer image for mysql:5.7
+Pulling wordpress (wordpress:latest)...
+latest: Pulling from library/wordpress
+7a6db449b51b: Pull complete
+ad2afdb99a9d: Pull complete
+dbc5aa907229: Pull complete
+82f252ab4ad1: Pull complete
+bf5b34fc9894: Pull complete
+6161651d3d95: Pull complete
+cf2adf296ef1: Pull complete
+d921da48d554: Pull complete
+b18a4562cdb2: Pull complete
+c2620408b8f1: Pull complete
+7674ea7f8b64: Pull complete
+d424de41e878: Pull complete
+95dce5dc9f57: Pull complete
+4a65afeeb0d9: Pull complete
+e3f4c7b3ecca: Pull complete
+0f855ed70a9b: Pull complete
+8fd46befb58e: Pull complete
+b10589319bdf: Pull complete
+4df613d34dec: Pull complete
+2bf61e4e04d6: Pull complete
+268033097d9e: Pull complete
+Digest: sha256:5f1873a461105cb1dc1a75731671125f1fb406b18e3fcf63210e8f7f84ce560b
+Status: Downloaded newer image for wordpress:latest
+Creating homework-6-3_db_1 ... done
+Creating homework-6-3_wordpress_1 ... done
+Attaching to homework-6-3_db_1, homework-6-3_wordpress_1
+db_1         | 2022-08-26 22:39:40+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 5.7.39-1.el7 started.
+wordpress_1  | No 'wp-config.php' found in /var/www/html, but 'WORDPRESS_...' variables supplied; copying '/usr/src/wordpress/wp-config-docker.php' (WORDPRESS_DB_HOST WORDPRESS_DB_NAME WORDPRESS_DB_PASSWORD WORDPRESS_DB_USER)
+wordpress_1  | AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.3. Set the 'ServerName' directive globally to suppress this message
+wordpress_1  | AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.3. Set the 'ServerName' directive globally to suppress this message
+wordpress_1  | [Fri Aug 26 22:39:43.061940 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.54 (Debian) PHP/7.4.30 configured -- resuming normal operations
+wordpress_1  | [Fri Aug 26 22:39:43.062049 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+db_1         | 2022-08-26 22:39:43+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+db_1         | 2022-08-26 22:39:43+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 5.7.39-1.el7 started.
+db_1         | '/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
+db_1         | 2022-08-26T22:39:44.385188Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+db_1         | 2022-08-26T22:39:44.392002Z 0 [Note] mysqld (mysqld 5.7.39) starting as process 1 ...
+db_1         | 2022-08-26T22:39:44.397524Z 0 [Warning] Setting lower_case_table_names=2 because file system for /var/lib/mysql/ is case insensitive
+db_1         | 2022-08-26T22:39:44.399299Z 0 [Note] InnoDB: PUNCH HOLE support available
+db_1         | 2022-08-26T22:39:44.399372Z 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+db_1         | 2022-08-26T22:39:44.399377Z 0 [Note] InnoDB: Uses event mutexes
+db_1         | 2022-08-26T22:39:44.399380Z 0 [Note] InnoDB: GCC builtin __atomic_thread_fence() is used for memory barrier
+db_1         | 2022-08-26T22:39:44.399382Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.12
+db_1         | 2022-08-26T22:39:44.399388Z 0 [Note] InnoDB: Using Linux native AIO
+db_1         | 2022-08-26T22:39:44.399710Z 0 [Note] InnoDB: Number of pools: 1
+db_1         | 2022-08-26T22:39:44.399978Z 0 [Note] InnoDB: Using CPU crc32 instructions
+db_1         | 2022-08-26T22:39:44.401692Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+db_1         | 2022-08-26T22:39:44.410129Z 0 [Note] InnoDB: Completed initialization of buffer pool
+db_1         | 2022-08-26T22:39:44.412116Z 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+db_1         | 2022-08-26T22:39:44.458683Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+db_1         | 2022-08-26T22:39:44.464696Z 0 [Note] InnoDB: Log scan progressed past the checkpoint lsn 12142046
+db_1         | 2022-08-26T22:39:44.464755Z 0 [Note] InnoDB: Doing recovery: scanned up to log sequence number 12142055
+db_1         | 2022-08-26T22:39:44.464766Z 0 [Note] InnoDB: Database was not shutdown normally!
+db_1         | 2022-08-26T22:39:44.464770Z 0 [Note] InnoDB: Starting crash recovery.
+db_1         | 2022-08-26T22:39:44.676520Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+db_1         | 2022-08-26T22:39:44.676568Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+db_1         | 2022-08-26T22:39:44.678984Z 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+db_1         | 2022-08-26T22:39:44.742644Z 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+db_1         | 2022-08-26T22:39:44.748150Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+db_1         | 2022-08-26T22:39:44.748211Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+db_1         | 2022-08-26T22:39:44.749582Z 0 [Note] InnoDB: 5.7.39 started; log sequence number 12142055
+db_1         | 2022-08-26T22:39:44.749865Z 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+db_1         | 2022-08-26T22:39:44.750767Z 0 [Note] Plugin 'FEDERATED' is disabled.
+db_1         | 2022-08-26T22:39:44.780819Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+db_1         | 2022-08-26T22:39:44.780836Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+db_1         | 2022-08-26T22:39:44.780840Z 0 [Warning] A deprecated TLS version TLSv1 is enabled. Please use TLSv1.2 or higher.
+db_1         | 2022-08-26T22:39:44.780841Z 0 [Warning] A deprecated TLS version TLSv1.1 is enabled. Please use TLSv1.2 or higher.
+db_1         | 2022-08-26T22:39:44.795966Z 0 [Warning] CA certificate ca.pem is self signed.
+db_1         | 2022-08-26T22:39:44.796235Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+db_1         | 2022-08-26T22:39:44.802098Z 0 [Note] Server hostname (bind-address): '*'; port: 3306
+db_1         | 2022-08-26T22:39:44.802149Z 0 [Note] IPv6 is available.
+db_1         | 2022-08-26T22:39:44.802163Z 0 [Note]   - '::' resolves to '::';
+db_1         | 2022-08-26T22:39:44.802181Z 0 [Note] Server socket created on IP: '::'.
+db_1         | 2022-08-26T22:39:44.804645Z 0 [Warning] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+db_1         | 2022-08-26T22:39:44.805946Z 0 [Note] InnoDB: Buffer pool(s) load completed at 220826 22:39:44
+db_1         | 2022-08-26T22:39:45.037204Z 0 [Note] Event Scheduler: Loaded 0 events
+db_1         | 2022-08-26T22:39:45.037483Z 0 [Note] mysqld: ready for connections.
+db_1         | Version: '5.7.39'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server (GPL)
 ```
 
 ## Setup Your WordPress Site
@@ -257,29 +147,30 @@ homework-6-3-wordpress-1  | 127.0.0.1 - - [25/Feb/2022:17:02:16 +0000] "OPTIONS 
 Open a separate terminal and run:
 
 ```sh
-docker ps
+docker-compose ps
 ```
 
 Example:
 
 ```
-micah@trapdoor homework-6-3 % docker ps
-CONTAINER ID   IMAGE              COMMAND                  CREATED         STATUS         PORTS                  NAMES
-4fe8833c3fe6   wordpress:latest   "docker-entrypoint.s…"   7 minutes ago   Up 7 minutes   0.0.0.0:8000->80/tcp   homework-6-3-wordpress-1
-befb2bee2d08   mysql:5.7          "docker-entrypoint.s…"   7 minutes ago   Up 7 minutes   3306/tcp, 33060/tcp    homework-6-3-db-1
+micah@trapdoor homework-6-3 % docker-compose ps
+          Name                        Command               State          Ports        
+----------------------------------------------------------------------------------------
+homework-6-3_db_1          docker-entrypoint.sh mysqld      Up      3306/tcp, 33060/tcp 
+homework-6-3_wordpress_1   docker-entrypoint.sh apach ...   Up      0.0.0.0:8000->80/tcp
 ```
 
 Open a bash shell in the WordPress container:
 
 ```sh
-docker exec -it homework-6-3-wordpress-1 bash
+docker-compose exec wordpress bash
 ```
 
 Example:
 
 ```
-micah@trapdoor homework-6-3 % docker exec -it homework-6-3-wordpress-1 bash
-root@4fe8833c3fe6:/var/www/html#
+micah@trapdoor homework-6-3 % docker-compose exec wordpress bash
+root@4fe8833c3fe6:/var/www/html# 
 ```
 
 Check out the files in the WordPress container.
@@ -325,7 +216,7 @@ cat wp-config.php
 Example:
 
 ```
-root@4fe8833c3fe6:/var/www/html# cat wp-config.php
+root@7a313b222cd4:/var/www/html# cat wp-config.php 
 <?php
 /**
  * The base configuration for WordPress
@@ -403,14 +294,14 @@ define( 'DB_COLLATE', getenv_docker('WORDPRESS_DB_COLLATE', '') );
  *
  * @since 2.6.0
  */
-define( 'AUTH_KEY',         getenv_docker('WORDPRESS_AUTH_KEY',         '344b99bcc58664e5262593616c0287eb1ba7d0a7') );
-define( 'SECURE_AUTH_KEY',  getenv_docker('WORDPRESS_SECURE_AUTH_KEY',  'af5c9e062076300812941026dbacb1e63ff9b25c') );
-define( 'LOGGED_IN_KEY',    getenv_docker('WORDPRESS_LOGGED_IN_KEY',    '8e33dbca66cd3c9ad7c9ed92a4719f27a870e75b') );
-define( 'NONCE_KEY',        getenv_docker('WORDPRESS_NONCE_KEY',        'af5ffacb52abbd9f46590314cfbec9976828bfb1') );
-define( 'AUTH_SALT',        getenv_docker('WORDPRESS_AUTH_SALT',        'b227fe60bdc07fbd5cfb779c31efdd38a273443f') );
-define( 'SECURE_AUTH_SALT', getenv_docker('WORDPRESS_SECURE_AUTH_SALT', 'e12d66fc8c8783386b8b7472cdd25b64233f5313') );
-define( 'LOGGED_IN_SALT',   getenv_docker('WORDPRESS_LOGGED_IN_SALT',   '8e501d77205365a415169e6eee9ce8cf914945a4') );
-define( 'NONCE_SALT',       getenv_docker('WORDPRESS_NONCE_SALT',       '0b1a1477eeb213bbbc9c9dd68cc2f9b644546a81') );
+define( 'AUTH_KEY',         getenv_docker('WORDPRESS_AUTH_KEY',         'b6bd1c5789f8a5adb7eed40cf57ec78a63460828') );
+define( 'SECURE_AUTH_KEY',  getenv_docker('WORDPRESS_SECURE_AUTH_KEY',  'd1cedea61277f84ae2dc11491f7130152ce50587') );
+define( 'LOGGED_IN_KEY',    getenv_docker('WORDPRESS_LOGGED_IN_KEY',    'feddc62a06c08514dea6a7ef70bc5516f9d47435') );
+define( 'NONCE_KEY',        getenv_docker('WORDPRESS_NONCE_KEY',        '97a5847ebf26a45d8bf25b547d29ee432acbf6e2') );
+define( 'AUTH_SALT',        getenv_docker('WORDPRESS_AUTH_SALT',        'e7da1a994cab84b1675a704c272ec8bfdb3ad8cc') );
+define( 'SECURE_AUTH_SALT', getenv_docker('WORDPRESS_SECURE_AUTH_SALT', '50e58188282825066bbd93feb09bdbd07a18d9cb') );
+define( 'LOGGED_IN_SALT',   getenv_docker('WORDPRESS_LOGGED_IN_SALT',   '7688a09f1bfc298198bfcaf75917d5b61a5b38c5') );
+define( 'NONCE_SALT',       getenv_docker('WORDPRESS_NONCE_SALT',       'b4b2fc2760f3f496f1a9f4c6e13ce095b197cdef') );
 // (See also https://wordpress.stackexchange.com/a/152905/199287)
 
 /**#@-*/

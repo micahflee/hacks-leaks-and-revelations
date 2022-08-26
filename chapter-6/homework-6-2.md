@@ -1,6 +1,6 @@
-# Homework 6-2 for Linux users: Install Docker CE
+# Homework 6-2 for Linux users: Install Docker Engine
 
-Find instructions for installing Docker CE in Linux [here](https://docs.docker.com/engine/install/). My Linux computer is running Ubuntu, so I'm going to follow the [Ubuntu instructions](https://docs.docker.com/engine/install/ubuntu/).
+Find instructions for installing Docker Engine in Linux [here](https://docs.docker.com/engine/install/). My Linux computer is running Ubuntu, so I'm going to follow the [Ubuntu instructions](https://docs.docker.com/engine/install/ubuntu/).
 
 First, I will make sure I have some important packages installed:
 
@@ -11,32 +11,6 @@ sudo apt-get install \
     curl \
     gnupg \
     lsb-release
-```
-
-For example:
-
-```
-micah@rogue:~$ sudo apt-get update
-Hit:1 https://updates.signal.org/desktop/apt xenial InRelease
-Hit:3 http://us.archive.ubuntu.com/ubuntu impish InRelease                                                                                            
-Hit:4 http://security.ubuntu.com/ubuntu impish-security InRelease
-Hit:5 http://us.archive.ubuntu.com/ubuntu impish-updates InRelease
-Hit:6 http://us.archive.ubuntu.com/ubuntu impish-backports InRelease  
-Hit:2 https://packagecloud.io/firstlookmedia/code/ubuntu impish InRelease
-Reading package lists... Done
-micah@rogue:~$ sudo apt-get install \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
-Reading package lists... Done
-Building dependency tree... Done
-Reading state information... Done
-ca-certificates is already the newest version (20210119ubuntu1).
-curl is already the newest version (7.74.0-1.3ubuntu2).
-gnupg is already the newest version (2.2.20-1ubuntu4).
-lsb-release is already the newest version (11.1.0ubuntu3).
-0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
 ```
 
 Then I will import the signing key that Docker uses to make its Ubuntu repository secure:
@@ -53,77 +27,23 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
-Finally, I will install Docker CE:
+Finally, I will install Docker Engine:
 
 ```sh
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 
-For example:
+Docker Engine is now installed. To make sure it works properly, run:
 
-```
-micah@rogue:~$ sudo apt-get update
-Hit:1 https://download.docker.com/linux/ubuntu impish InRelease
-Hit:3 https://updates.signal.org/desktop/apt xenial InRelease                                           
-Hit:4 http://us.archive.ubuntu.com/ubuntu impish InRelease                        
-Hit:5 http://us.archive.ubuntu.com/ubuntu impish-updates InRelease                                                                        
-Hit:2 https://packagecloud.io/firstlookmedia/code/ubuntu impish InRelease                                                                 
-Hit:6 http://security.ubuntu.com/ubuntu impish-security InRelease   
-Hit:7 http://us.archive.ubuntu.com/ubuntu impish-backports InRelease
-Reading package lists... Done
-micah@rogue:~$ sudo apt-get install docker-ce docker-ce-cli containerd.io
-Reading package lists... Done
-Building dependency tree... Done
-Reading state information... Done
-The following additional packages will be installed:
-  docker-ce-rootless-extras docker-scan-plugin pigz
-Suggested packages:
-  aufs-tools cgroupfs-mount | cgroup-lite
-The following NEW packages will be installed:
-  containerd.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin pigz
-0 upgraded, 6 newly installed, 0 to remove and 0 not upgraded.
-Need to get 0 B/96.3 MB of archives.
-After this operation, 405 MB of additional disk space will be used.
-Do you want to continue? [Y/n] y
-Selecting previously unselected package pigz.
-(Reading database ... 190869 files and directories currently installed.)
-Preparing to unpack .../0-pigz_2.6-1_amd64.deb ...
-Unpacking pigz (2.6-1) ...
-Selecting previously unselected package containerd.io.
-Preparing to unpack .../1-containerd.io_1.5.11-1_amd64.deb ...
-Unpacking containerd.io (1.5.11-1) ...
-Selecting previously unselected package docker-ce-cli.
-Preparing to unpack .../2-docker-ce-cli_5%3a20.10.14~3-0~ubuntu-impish_amd64.deb ...
-Unpacking docker-ce-cli (5:20.10.14~3-0~ubuntu-impish) ...
-Selecting previously unselected package docker-ce.
-Preparing to unpack .../3-docker-ce_5%3a20.10.14~3-0~ubuntu-impish_amd64.deb ...
-Unpacking docker-ce (5:20.10.14~3-0~ubuntu-impish) ...
-Selecting previously unselected package docker-ce-rootless-extras.
-Preparing to unpack .../4-docker-ce-rootless-extras_5%3a20.10.14~3-0~ubuntu-impish_amd64.deb ...
-Unpacking docker-ce-rootless-extras (5:20.10.14~3-0~ubuntu-impish) ...
-Selecting previously unselected package docker-scan-plugin.
-Preparing to unpack .../5-docker-scan-plugin_0.17.0~ubuntu-impish_amd64.deb ...
-Unpacking docker-scan-plugin (0.17.0~ubuntu-impish) ...
-Setting up docker-scan-plugin (0.17.0~ubuntu-impish) ...
-Setting up containerd.io (1.5.11-1) ...
-Setting up docker-ce-cli (5:20.10.14~3-0~ubuntu-impish) ...
-Setting up pigz (2.6-1) ...
-Setting up docker-ce-rootless-extras (5:20.10.14~3-0~ubuntu-impish) ...
-Setting up docker-ce (5:20.10.14~3-0~ubuntu-impish) ...
-Processing triggers for man-db (2.9.4-2) ...
+```sh
+sudo docker run hello-world
 ```
 
 You will also need to install the `docker-compose` package:
 
 ```sh
 sudo apt install docker-compose
-```
-
-Docker CE is now installed. To make sure it works properly, run:
-
-```sh
-sudo docker run hello-world
 ```
 
 For example:

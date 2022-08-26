@@ -2,9 +2,9 @@
 
 Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop) for Windows or Mac.
 
-If you're using a newer Mac with an M1 chip, make sure to choose "Mac with Apple Chip." Otherwise choose "Mac with Intel Chip."
+If you're using a newer Mac with an M1 or M2 chip, make sure to choose "Mac with Apple Chip." Otherwise choose "Mac with Intel Chip."
 
-After opening Docker Desktop for the first time and waiting for it to start, open a terminal. If you're using Windows, use PowerShell. See if it works by running:
+After opening Docker Desktop for the first time and waiting for it to start, open a terminal (if you're using Windows, use PowerShell). See if it works by running:
 
 ```sh
 docker run hello-world
