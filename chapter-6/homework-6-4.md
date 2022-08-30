@@ -19,21 +19,16 @@ total 16
 -rw-r--r--  1 micah  staff  2247 Feb 10 20:31 docker-compose.yml
 ```
 
+Edit `docker-compose.yml` to delete, or comment out, this line in the `shell` container:
+
+```
+- "~:/host"
+```
+
 Make a copy of `aleph.env.tmpl` called `aleph.env`. You can do this by running:
 
 ```sh
 cp aleph.env.tmpl aleph.env
-```
-
-Example:
-
-```
-micah@trapdoor aleph % cp aleph.env.tmpl aleph.env
-micah@trapdoor aleph % ls -l
-total 24
--rw-r--r--  1 micah  staff  2931 Feb 25 09:20 aleph.env
--rw-r--r--  1 micah  staff  2931 Feb 10 20:31 aleph.env.tmpl
--rw-r--r--  1 micah  staff  2247 Feb 10 20:31 docker-compose.yml
 ```
 
 Open `aleph.env` in your text editor. Set a random value for `ALEPH_SECRET_KEY`. You can generate this value by running:
@@ -63,42 +58,19 @@ If you're using Linux or Windows with WSL, you can do this just by running this 
 sudo sysctl -w vm.max_map_count=262144
 ```
 
-### Docker Desktop for macOS Instructions
-
-**Increase the amount of memory Docker Desktop is allowed to use.**
-
-Click the Docker icon in the system tray and go to Preferences. Switch to the Resource tab. Increase the Memory resource to at least 6GB, and more if you have more available on your Mac. Then click **Apply & Restart**.
-
-![Increase Docker Desktop memory](./homework-6-4-macos-docker-settings.png)
-
-**If you're using macOS with Docker Desktop, you'll need to run this command inside of Docker Desktop's virtual machine instead. And when you restart Docker Desktop, this change gets undone. So make sure to do this step before starting Aleph containers.**
-
-Run this command to get a shell inside Docker's VM:
+If you're using macOS with Docker Desktop, enabling Elasticsearch is more complicated because you actually have to run this command in Docker Desktop's Linux VM rather than on your Mac. Here's how you can run it there:
 
 ```sh
-docker run -it --rm --privileged --pid=host alpine:edge nsenter -t 1 -m -u -n -i sh
+docker run -it --rm --privileged --pid=host alpine:edge \
+    nsenter -t 1 -m -u -n -i \
+    sysctl -w vm.max_map_count=262144
 ```
 
-Then you can run the command:
+Each time you restart Docker Desktop, this change gets undone and you’ll need to run it again if you want your Elasticsearch database to not run out of memory. The file [fix-es-memory.sh](./aleph/fix-es-memory.sh) is a shell script that includes this command, so you can run it before starting Aleph containers like this:
 
 ```sh
-sysctl -w vm.max_map_count=262144
-```
-
-Then run `exit` to exit out of the Docker VM.
-
-Example:
-
-```
-micah@trapdoor aleph % docker run -it --rm --privileged --pid=host alpine:edge nsenter -t 1 -m -u -n -i sh
-Unable to find image 'alpine:edge' locally
-edge: Pulling from library/alpine
-41dcc117e123: Pull complete
-Digest: sha256:1a4c2018cfbab67566904e18fde9bf6a5c190605bf7da0e1d181b26746a15188
-Status: Downloaded newer image for alpine:edge
-/ # sysctl -w vm.max_map_count=262144
-vm.max_map_count = 262144
-/ # exit
+./fix-es-memory.sh
+docker-compose up
 ```
 
 ## Start Aleph
