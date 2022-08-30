@@ -125,7 +125,7 @@ db_1         | 2022-08-28 18:07:39 0 [Note] mariadbd: ready for connections.
 db_1         | Version: '10.9.2-MariaDB-1:10.9.2+maria~ubu2204'  socket: '/run/mysqld/mysqld.sock'  port: 3306  mariadb.org binary distribution
 ```
 
-![Screenshot of Wordpress](./chapter-6-3-wordpress.png)
+![Screenshot of Wordpress](./homework-6-3-wordpress.png)
 
 ## Open a Shell in a Running Container
 
