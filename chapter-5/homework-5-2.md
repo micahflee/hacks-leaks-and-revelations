@@ -1,402 +1,405 @@
 # Homework 5-2: Explore BlueLeaks With the Terminal
 
+## Mac users, install GNU coreutils
+
+This homework uses the `du` command. Both macOS and Linux come with `du`, but they're slightly different, and the Linux version (part of GNU coreutils) is better and more up-to-date. If you're using macOS, install coreutils like this:
+
+```sh
+brew install coreutils
+```
+
+Now, `du` is the Mac version and `gdu` is the coreutils version you just installed. Below I'll be showing you examples with the `du` command, but you should change that command to `gdu` instead.
+
 ## Change to the `BlueLeaks-extracted` folder
 
 ```sh
 cd /media/micah/datasets/BlueLeaks-extracted/
 ```
 
-Example:
-
-```
-micah@rogue:~$ cd /media/micah/datasets/BlueLeaks-extracted/
-micah@rogue:/media/micah/datasets/BlueLeaks-extracted$ 
-```
-
 ## Measure disk space of all of `BlueLeaks-extracted`
 
 ```sh
-du -sh .
+du -sh --apparent-size .
 ```
 
 Example:
 
 ```
-micah@rogue:/media/micah/datasets/BlueLeaks-extracted$ du -sh .
-271G	.
+micah@rogue:/media/micah/datasets/BlueLeaks-extracted$ du -sh --apparent-size .
+269G	.
 ```
 
 ## Measure disk space of the `ncric` folder
 
 ```sh
-du -sh ncric
+du -sh --apparent-size ncric
 ```
 
 Example:
 
 ```
-micah@rogue:/media/micah/datasets/BlueLeaks-extracted$ du -sh ncric
+micah@rogue:/media/micah/datasets/BlueLeaks-extracted$ du -sh --apparent-size ncric
 19G	ncric
 ```
 
 ## Measure disk space of each BlueLeaks folder
 
 ```sh
-for FOLDER in $(ls); do du -sh $FOLDER; done
+for FOLDER in $(ls); do du -sh --apparent-size $FOLDER; done
 ```
 
 Example:
 
 ```
-micah@rogue:/media/micah/datasets/BlueLeaks-extracted$ for FOLDER in $(ls); do du -sh $FOLDER; done
+micah@rogue:/media/micah/datasets/BlueLeaks-extracted$ for FOLDER in $(ls); do du -sh --apparent-size $FOLDER; done
 2.8G	211sfbay
-225M	acprlea
-71M	acticaz
-771M	akorca
-587M	alabamafusioncenter
-27M	alabamalecc
-776M	alertmidsouth
-129M	aorca
+217M	acprlea
+65M	acticaz
+749M	akorca
+573M	alabamafusioncenter
+25M	alabamalecc
+749M	alertmidsouth
+123M	aorca
 9.4G	arictexas
 1.4G	atlantahidta
-212M	attackwa
+206M	attackwa
 5.6G	azhidta
 1.7G	azorca
-1016M	bostonbric
+1005M	bostonbric
 1.2G	burlingamepolice
-492M	calema
+489M	calema
 2.0G	cal-orca
 2.7G	calstas
-212M	cbaghidta
-386M	ccroc
-833M	chicagoheat
-126M	chicagolandfsg
+208M	cbaghidta
+379M	ccroc
+821M	chicagoheat
+119M	chicagolandfsg
 2.9G	ciacco
-821M	cnoa3
-105M	cnoatraining
-349M	cnyorca
-3.3G	coorca
+815M	cnoa3
+103M	cnoatraining
+338M	cnyorca
+3.2G	coorca
 1.3G	corca
-5.1G	counterdrugtraining
-27M	crimestopperslea
-214M	cvchidta
+5.0G	counterdrugtraining
+23M	crimestopperslea
+210M	cvchidta
 13G	dediac
-76M	dvicphila
+75M	dvicphila
 12M	energysecuritycouncil
-34M	eousa
-5.3G	fbicahouston
-76M	fbinaakansaswmissouri
-357M	fbinaamichigan
-135M	fbinaatexas
-8.1M	fcpddoc
-815M	flinttownshippolice
-602M	fwintex
-42M	gatlinburglec
-1.6G	graorca
-832M	hcsovcp
-7.1M	hennepincountyshield
-62M	hidtatraining
+30M	eousa
+5.2G	fbicahouston
+73M	fbinaakansaswmissouri
+350M	fbinaamichigan
+131M	fbinaatexas
+7.4M	fcpddoc
+808M	flinttownshippolice
+597M	fwintex
+41M	gatlinburglec
+1.5G	graorca
+820M	hcsovcp
+6.4M	hennepincountyshield
+49M	hidtatraining
 1.6G	hiorca
-791M	houstonhidta
-459M	houstonhidtatraining
+783M	houstonhidta
+451M	houstonhidtatraining
 4.6G	hpdlineup
-13M	hpdretired
-2.2G	icefishx
+12M	hpdretired
+2.1G	icefishx
 1.7G	ilcrime
-477M	ileatraining
-1.1G	iowaintex
+470M	ileatraining
+1.0G	iowaintex
 4.2G	jerseyvillagepd
 14G	jric
-7.0M	kcpers
-5.4M	kyorca
+6.3M	kcpers
+4.7M	kyorca
 13G	lacleartraining
-31M	lapdtraining
-2.5M	leapsla
+30M	lapdtraining
+1.9M	leapsla
 1.6G	losaltospdbc
-55M	lupd
+54M	lupd
 2.3G	mactf
-1.6G	maorca
-546M	membersfaithbased-isao
+1.5G	maorca
+540M	membersfaithbased-isao
 4.8G	memiac
-187M	metrohoustonpolice
-462M	mhidta
+185M	metrohoustonpolice
+454M	mhidta
 36G	miacx
 12K	miacxold
-1.9M	millvalleypolice
-308M	miorca
-495M	mlrin
-2.7M	mnorca
+1.2M	millvalleypolice
+304M	miorca
+489M	mlrin
+2.0M	mnorca
 1.3G	morciu
-3.7M	mtorca
+3.0M	mtorca
 12G	mvpddoc
-45M	mvpdtx
+44M	mvpdtx
 19G	ncric
 12K	ncric-history-good
 12K	ncricSteveBackup
-297M	nctccounterdrug
-2.1M	ndslic
-338M	nehidta
+281M	nctccounterdrug
+1.3M	ndslic
+330M	nehidta
 1.6G	neorca
-2.4M	nevadacyberexchange
-37M	nhiac
-887M	njuasi
-8.7M	nmfisoa
+1.5M	nevadacyberexchange
+35M	nhiac
+881M	njuasi
+8.0M	nmfisoa
 1.3G	nmhidta
-2.6M	nnorca
+1.9M	nnorca
 21M	nnric
-597M	northtexasfusion
-585M	northtexashidta
-6.8M	novatopolicedept
-61M	ntacnv
-719M	nvhidta
+592M	northtexasfusion
+574M	northtexashidta
+6.0M	novatopolicedept
+60M	ntacnv
+707M	nvhidta
 2.4G	nymorca
-1.4M	oaklandsheriffshield
-1.3M	oaktac
+650K	oaklandsheriffshield
+554K	oaktac
 4.9G	ociac
-2.2M	okorca
-16M	orcaid
-2.1M	orcaor
-8.0M	orocc
-9.5M	otewg
-13M	pchidta
-2.4M	phillymostwanted
-1.2G	pleasantonpolice
-1.6M	prvihidta
-3.7M	pspddoc
-6.0M	publicsafetycadets
+1.5M	okorca
+15M	orcaid
+1.4M	orcaor
+7.3M	orocc
+8.8M	otewg
+12M	pchidta
+1.7M	phillymostwanted
+1.1G	pleasantonpolice
+849K	prvihidta
+3.0M	pspddoc
+5.3M	publicsafetycadets
 46G	repo
-3.3M	richlandshield
-69M	rlpsaroc
-5.9G	rmhidta
-6.0M	rockhillyorkcountyconnect
-5.2M	ruasi
-1.9M	ruralcountysummit
-94M	sacrttac
+2.6M	richlandshield
+68M	rlpsaroc
+5.8G	rmhidta
+5.3M	rockhillyorkcountyconnect
+4.5M	ruasi
+1.2M	ruralcountysummit
+93M	sacrttac
 24M	safecityabq
-39M	safecityfw
-4.3M	sanbrunopolice
-1.4M	sccpca
-8.3M	scgcsandiego
+38M	safecityfw
+3.6M	sanbrunopolice
+630K	sccpca
+7.6M	scgcsandiego
 78M	sciic
-3.4M	sdciaa
-33M	sdfusion
-6.3M	sdorca
+2.7M	sdciaa
+32M	sdfusion
+5.6M	sdorca
 22M	sduasi
-3.6M	seattleshield
-30M	Securitypartnership
+2.9M	seattleshield
+29M	Securitypartnership
 6.6G	seffc
-2.3M	semacp
-2.5M	sfbay-infragard
-214M	sicrime
-26M	sltew
+1.4M	semacp
+1.7M	sfbay-infragard
+212M	sicrime
+25M	sltew
 29M	snctc
-9.5M	snorca
-15M	sogtraining
-2.7M	spottinglies
-3.3M	stopabqgangs
-126M	stopeasttexasgangs
-55M	stophoustondrugs
-153M	stoplubbockgangs
-1.4M	stopnorthtexasgangs
-1.7M	stopsanantoniogangs
-3.9M	stopseattledrugs
-570M	stopspokanegangs
-129M	stopwesttexasgangs
+8.8M	snorca
+14M	sogtraining
+2.0M	spottinglies
+2.6M	stopabqgangs
+125M	stopeasttexasgangs
+54M	stophoustondrugs
+150M	stoplubbockgangs
+686K	stopnorthtexasgangs
+964K	stopsanantoniogangs
+3.2M	stopseattledrugs
+564M	stopspokanegangs
+127M	stopwesttexasgangs
 2.5G	stxhidta
-5.8M	sunnyvalebriefing
-5.3M	swtxfusion
-1008K	terrorismtip
-8.1M	texasorca
-214M	tnoa
-25M	twnsg
-168M	unmpd
-2.2G	usao
-6.1M	utahsiac
-9.6M	utorca
-8.0M	vlnsn
-124M	vslea
-1.5M	wifusion
-14M	wsorca
+5.1M	sunnyvalebriefing
+4.6M	swtxfusion
+265K	terrorismtip
+7.5M	texasorca
+211M	tnoa
+24M	twnsg
+161M	unmpd
+2.1G	usao
+5.4M	utahsiac
+8.9M	utorca
+7.3M	vlnsn
+123M	vslea
+770K	wifusion
+13M	wsorca
 ```
 
 ## Sort the BlueLeaks folders from smallest to largest
 
 ```sh
-for FOLDER in $(ls); do du -s --bytes $FOLDER; done | sort -n
+for FOLDER in $(ls); do du -sh --apparent-size $FOLDER; done | sort -h
 ```
 
 Example:
 
 ```
-micah@rogue:/media/micah/datasets/BlueLeaks-extracted$ for FOLDER in $(ls); do du -s --bytes $FOLDER; done | sort -n
-12288	miacxold
-12288	ncric-history-good
-12288	ncricSteveBackup
-270559	terrorismtip
-566274	oaktac
-644887	sccpca
-665062	oaklandsheriffshield
-701853	stopnorthtexasgangs
-787905	wifusion
-868373	prvihidta
-986750	stopsanantoniogangs
-1170151	ruralcountysummit
-1201267	millvalleypolice
-1337372	ndslic
-1419838	orcaor
-1440924	semacp
-1513778	okorca
-1549096	nevadacyberexchange
-1695921	phillymostwanted
-1776771	sfbay-infragard
-1889254	leapsla
-1976425	nnorca
-2025576	mnorca
-2055392	spottinglies
-2629378	richlandshield
-2674579	stopabqgangs
-2744472	sdciaa
-3031954	seattleshield
-3098011	mtorca
-3117563	pspddoc
-3250974	stopseattledrugs
-3700657	sanbrunopolice
-4692245	ruasi
-4766738	swtxfusion
-4910116	kyorca
-5291263	sunnyvalebriefing
-5472028	rockhillyorkcountyconnect
-5482185	publicsafetycadets
-5647272	utahsiac
-5809050	sdorca
-6283999	novatopolicedept
-6594498	kcpers
-6660477	hennepincountyshield
-7585103	vlnsn
-7607507	orocc
-7709530	fcpddoc
-7764329	texasorca
-7932757	scgcsandiego
-8369315	nmfisoa
-9180985	snorca
-9205590	otewg
-9304775	utorca
-11697952	energysecuritycouncil
-12144092	hpdretired
-12420769	pchidta
-13014650	wsorca
-14374746	sogtraining
-15207078	orcaid
-21058299	nnric
-22204701	sduasi
-23823992	crimestopperslea
-24179662	safecityabq
-24594992	twnsg
-25982181	sltew
-26196795	alabamalecc
-29442932	snctc
-30315332	Securitypartnership
-30909959	eousa
-31324632	lapdtraining
-33237121	sdfusion
-36351851	nhiac
-39672825	safecityfw
-42010898	gatlinburglec
-45512047	mvpdtx
-50887752	hidtatraining
-56096892	stophoustondrugs
-56431816	lupd
-62464067	ntacnv
-67988648	acticaz
-70933599	rlpsaroc
-76095247	fbinaakansaswmissouri
-78111468	dvicphila
-80841405	sciic
-97462327	sacrttac
-107859406	cnoatraining
-124731427	chicagolandfsg
-128047446	vslea
-128374848	aorca
-130243203	stopeasttexasgangs
-132566964	stopwesttexasgangs
-136497120	fbinaatexas
-156728244	stoplubbockgangs
-168400743	unmpd
-193869396	metrohoustonpolice
-215412038	attackwa
-217146509	cbaghidta
-219427089	cvchidta
-220650654	tnoa
-222206413	sicrime
-226985525	acprlea
-294054722	nctccounterdrug
-318653894	miorca
-345897400	nehidta
-353890180	cnyorca
-366884245	fbinaamichigan
-396390568	ccroc
-472726881	houstonhidtatraining
-475336430	mhidta
-492814752	ileatraining
-511860248	mlrin
-512167353	calema
-565672635	membersfaithbased-isao
-591352936	stopspokanegangs
-600132564	alabamafusioncenter
-601493026	northtexashidta
-620712782	northtexasfusion
-625899641	fwintex
-740971346	nvhidta
-784512854	akorca
-784630687	alertmidsouth
-820824462	houstonhidta
-846632434	flinttownshippolice
-854529626	cnoa3
-859450146	hcsovcp
-860869794	chicagoheat
-923568087	njuasi
-1053401537	bostonbric
-1073551865	iowaintex
-1172817397	pleasantonpolice
-1238995907	burlingamepolice
-1303967392	corca
-1316467416	morciu
-1319313891	nmhidta
-1455518974	atlantahidta
-1588466378	maorca
-1604611445	graorca
-1617769203	neorca
-1651626231	hiorca
-1670287057	losaltospdbc
-1740127875	azorca
-1790956172	ilcrime
-2058728104	cal-orca
-2224526558	icefishx
-2228728006	usao
-2374124633	mactf
-2496686229	nymorca
-2663871769	stxhidta
-2810180846	calstas
-2944592140	211sfbay
-3062419669	ciacco
-3360726552	coorca
-4419973093	jerseyvillagepd
-4878534513	hpdlineup
-5107913683	memiac
-5177628314	ociac
-5368456742	counterdrugtraining
-5576945017	fbicahouston
-5920005958	azhidta
-6227649212	rmhidta
-7031720065	seffc
-9995631094	arictexas
-12703122416	mvpddoc
-13145195646	lacleartraining
-13296757211	dediac
-14440684104	jric
-20009469932	ncric
-38132797321	miacx
-49268450478	repo
+micah@rogue:/media/micah/datasets/BlueLeaks-extracted$ for FOLDER in $(ls); do du -sh --apparent-size $FOLDER; done | sort -h
+12K	miacxold
+12K	ncric-history-good
+12K	ncricSteveBackup
+265K	terrorismtip
+554K	oaktac
+630K	sccpca
+650K	oaklandsheriffshield
+686K	stopnorthtexasgangs
+770K	wifusion
+849K	prvihidta
+964K	stopsanantoniogangs
+1.2M	millvalleypolice
+1.2M	ruralcountysummit
+1.3M	ndslic
+1.4M	orcaor
+1.4M	semacp
+1.5M	nevadacyberexchange
+1.5M	okorca
+1.7M	phillymostwanted
+1.7M	sfbay-infragard
+1.9M	leapsla
+1.9M	nnorca
+2.0M	mnorca
+2.0M	spottinglies
+2.6M	richlandshield
+2.6M	stopabqgangs
+2.7M	sdciaa
+2.9M	seattleshield
+3.0M	mtorca
+3.0M	pspddoc
+3.2M	stopseattledrugs
+3.6M	sanbrunopolice
+4.5M	ruasi
+4.6M	swtxfusion
+4.7M	kyorca
+5.1M	sunnyvalebriefing
+5.3M	publicsafetycadets
+5.3M	rockhillyorkcountyconnect
+5.4M	utahsiac
+5.6M	sdorca
+6.0M	novatopolicedept
+6.3M	kcpers
+6.4M	hennepincountyshield
+7.3M	orocc
+7.3M	vlnsn
+7.4M	fcpddoc
+7.5M	texasorca
+7.6M	scgcsandiego
+8.0M	nmfisoa
+8.8M	otewg
+8.8M	snorca
+8.9M	utorca
+12M	energysecuritycouncil
+12M	hpdretired
+12M	pchidta
+13M	wsorca
+14M	sogtraining
+15M	orcaid
+21M	nnric
+22M	sduasi
+23M	crimestopperslea
+24M	safecityabq
+24M	twnsg
+25M	alabamalecc
+25M	sltew
+29M	Securitypartnership
+29M	snctc
+30M	eousa
+30M	lapdtraining
+32M	sdfusion
+35M	nhiac
+38M	safecityfw
+41M	gatlinburglec
+44M	mvpdtx
+49M	hidtatraining
+54M	lupd
+54M	stophoustondrugs
+60M	ntacnv
+65M	acticaz
+68M	rlpsaroc
+73M	fbinaakansaswmissouri
+75M	dvicphila
+78M	sciic
+93M	sacrttac
+103M	cnoatraining
+119M	chicagolandfsg
+123M	aorca
+123M	vslea
+125M	stopeasttexasgangs
+127M	stopwesttexasgangs
+131M	fbinaatexas
+150M	stoplubbockgangs
+161M	unmpd
+185M	metrohoustonpolice
+206M	attackwa
+208M	cbaghidta
+210M	cvchidta
+211M	tnoa
+212M	sicrime
+217M	acprlea
+281M	nctccounterdrug
+304M	miorca
+330M	nehidta
+338M	cnyorca
+350M	fbinaamichigan
+379M	ccroc
+451M	houstonhidtatraining
+454M	mhidta
+470M	ileatraining
+489M	calema
+489M	mlrin
+540M	membersfaithbased-isao
+564M	stopspokanegangs
+573M	alabamafusioncenter
+574M	northtexashidta
+592M	northtexasfusion
+597M	fwintex
+707M	nvhidta
+749M	akorca
+749M	alertmidsouth
+783M	houstonhidta
+808M	flinttownshippolice
+815M	cnoa3
+820M	hcsovcp
+821M	chicagoheat
+881M	njuasi
+1005M	bostonbric
+1.0G	iowaintex
+1.1G	pleasantonpolice
+1.2G	burlingamepolice
+1.3G	corca
+1.3G	morciu
+1.3G	nmhidta
+1.4G	atlantahidta
+1.5G	graorca
+1.5G	maorca
+1.6G	hiorca
+1.6G	losaltospdbc
+1.6G	neorca
+1.7G	azorca
+1.7G	ilcrime
+2.0G	cal-orca
+2.1G	icefishx
+2.1G	usao
+2.3G	mactf
+2.4G	nymorca
+2.5G	stxhidta
+2.7G	calstas
+2.8G	211sfbay
+2.9G	ciacco
+3.2G	coorca
+4.2G	jerseyvillagepd
+4.6G	hpdlineup
+4.8G	memiac
+4.9G	ociac
+5.0G	counterdrugtraining
+5.2G	fbicahouston
+5.6G	azhidta
+5.8G	rmhidta
+6.6G	seffc
+9.4G	arictexas
+12G	mvpddoc
+13G	dediac
+13G	lacleartraining
+14G	jric
+19G	ncric
+36G	miacx
+46G	repo
 ```
 
 ## Make a list of filenames
@@ -467,10 +470,4 @@ Example:
 ```
 micah@rogue:/media/micah/datasets/BlueLeaks-extracted$ cat ../BlueLeaks-filenames.txt | wc -l
 1031660
-```
-
-## Find files with "antifa" in the filenames
-
-```sh
-cat ../BlueLeaks-filenames.txt | grep antifa
 ```

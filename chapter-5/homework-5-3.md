@@ -73,10 +73,10 @@ Example:
 
 ```
 micah@rogue:/media/micah/datasets/BlueLeaks-extracted$ cat ../BlueLeaks-filenames.txt | grep -i .docx$ | wc -l
-8737
+8861
 ```
 
-There are **8,737** `.docx` files.
+There are **8,861** `.docx` files.
 
 ## Count Word documents in the `ncric` folder
 
