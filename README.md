@@ -95,11 +95,25 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 ### Chapter 13: Pandemic Profiteers Making Millions from COVID-19 Disinformation
 
+- [create-aflds-patients-csv.py](./chapter-13/create-aflds-patients-csv.py)
+- [create-ravkoo-csv.py](./chapter-13/create-ravkoo-csv.py)
+- [create-ravkoo-categories-csv.py](./chapter-13/create-ravkoo-categories-csv.py)
+- [create-cadence-partners-csv.py](./chapter-13/create-cadence-partners-csv.py)
+- [create-cities-csv.py](./chapter-13/create-cities-csv.py)
+- [create-ages-csv.py](./chapter-13/create-ages-csv.py)
+- [The Intercept: Network of Right-Wing Health Care Providers Is Making Millions Off Hydroxychloroquine and Ivermectin, Hacked Data Reveals](https://theintercept.com/2021/09/28/covid-telehealth-hydroxychloroquine-ivermectin-hacked/)
+
 ### Chapter 14: Neo-Nazis and Their Chat Rooms
+
+- [Unicorn Riot's Discord Leaks](https://discordleaks.unicornriot.ninja/)
+- [Discord Analysis](https://github.com/micahflee/discord-analysis)
+- [The Intercept: How Right-Wing Extremists Stalk, Dox, and Harass Their Enemies](https://theintercept.com/2017/09/06/how-right-wing-extremists-stalk-dox-and-harass-their-enemies/)
 
 ## Appendices
 
 ### Appendix A: Using the Windows Subsystem for Linux
+
+- [Use an Encrypted Linux Disk in Windows with WSL](./appendix-a/README.md)
 
 ### Appendix B: Texas GOP's Website Backup
 
