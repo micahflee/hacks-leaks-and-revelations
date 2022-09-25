@@ -2,3 +2,4 @@
 .vscode
 chapter-11/db_data
 wordpress/aleph/mappings
+__pycache__
