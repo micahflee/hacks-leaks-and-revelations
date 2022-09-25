@@ -115,7 +115,9 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 - [Use an Encrypted Linux Disk in Windows with WSL](./appendix-a/README.md)
 
-### Appendix B: Texas GOP's Website Backup
+### Appendix B: Scraping the Web
+
+### Appendix C: Texas GOP's Website Backup
 
 # Licenses
 
