@@ -5,8 +5,7 @@ import click
 @click.command()
 @click.argument("blueleaks_path")
 def main(blueleaks_path):
-    """Map Out the CSVs in BlueLeaks"""
-
+    """Map out the CSVs in BlueLeaks"""
     # A dictionary where the keys are CSV filenames and the values are BlueLeaks folders
     csv_to_folders = {}
 

@@ -60,8 +60,8 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 - [Homework 8-1: Install Python](./chapter-8/homework-8-1.md)
 - [Homework 8-2: Your First Python Script](./chapter-8/homework-8-2.md)
-- [Homework 8-3: List All the Videos in BlueLeaks](./chapter-8/homework-8-3.md)
-- [Homework 8-4: Develop Your First CLI Program](./chapter-8/homework-8-4.md)
+- [Homework 8-3: Traverse the Filesystem](./chapter-8/homework-8-3.md)
+- [Homework 8-4: Develop CLI Programs With Click](./chapter-8/homework-8-4.md)
 - [Homework 8-5: Map Out the CSVs in BlueLeaks](./chapter-8/homework-8-5.md)
 
 ### Chapter 9: The Many CSV Files of BlueLeaks

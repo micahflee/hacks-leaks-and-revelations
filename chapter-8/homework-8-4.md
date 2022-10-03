@@ -1,11 +1,13 @@
-# Homework 8-4: Develop Your First CLI Program
+# Homework 8-4: Develop CLI Programs With Click
+
+This homework teaches you to use the [Click])(https://click.palletsprojects.com/) module to make CLI programs in Python.
 
 You can find my solution for this homework assignment in [homework-8-4.py](./homework-8-4py).
 
-If you haven't installed the [Click](https://click.palletsprojects.com/) Python package yet, install it with pip:
+If you haven't installed click yet, install it with pip:
 
 ```sh
-pip3 install click
+python3 -m pip install click
 ```
 
 In this solution, the Python script starts by importing the two modules that we need, `os` and `click`:

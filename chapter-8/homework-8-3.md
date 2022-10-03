@@ -1,52 +1,118 @@
-# Homework 8-3: List All the Videos in BlueLeaks
+# Homework 8-3: Traverse the Filesystem
 
-You can find my solution for this homework assignment in [homework-8-3.py](./homework-8-3py).
+## List the Filenames in a Folder
 
-This solution defines a function called `is_video_file()` which takes a filename as a parameter and returns either `True` or `False`, depending on the filename's extension.
+Read this simple script, which you can also find in [list-files1.py](./list-files1.py):
 
 ```py
-# This function take a filename as a parameter, returns True if the file is a video,
-# and otherwise returns False
-def is_video_file(filename):
-    video_extensions = [".mp4", ".avi", ".mov", ".mpeg", ".ogv"]
-    for ext in video_extensions:
-        if filename.lower().endswith(ext):
-            return True
+import os
 
-    return False
-```
 
-To avoid having a really long if statement, this creates a list of video file extensions called `video_extensions` and loops through this list, to check each extension one at a time. If it finds one, it immediately returns `True`, which quits the function early. If it doesn't find any, then it returns `False`.
-
-Here's another way to implement this same function using a large if statement instead of a for loop:
-
-```python
-def is_video_file(filename):
-    if (
-        filename.lower().endswith(".mp4")
-        or filename.lower().endswith(".avi")
-        or filename.lower().endswith(".mov")
-        or filename.lower().endswith(".mpeg")
-        or filename.lower().endswith(".ogv")
-    ):
-        return True
-
-    return False
-```
-
-Either way works fine.
-
-Then, in the `main()` function, my solution uses `os.walk()` to walk through the BlueLeaks folder and calls `is_video_file()` on every file in BlueLeaks, printing out the filenames that are videos.
-
-```python
 def main():
-    # Walk the BlueLeaks folder tree
+    blueleaks_path = "/Volumes/datasets/BlueLeaks-extracted"
+
+    for filename in os.listdir(blueleaks_path):
+        print(filename)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+When you run it:
+
+```
+micah@trapdoor chapter-8 % python3 list-files.py
+211sfbay
+Securitypartnership
+acprlea
+acticaz
+akorca
+--snip--
+```
+
+## Count the Files and Folders in a Folder
+
+Read this more complicated script, which you can also find in [list-files2.py](./list-files2.py):
+
+```py
+import os
+
+
+def main():
+    blueleaks_path = "/Volumes/datasets/BlueLeaks-extracted"
+    for bl_folder in os.listdir(blueleaks_path):
+        bl_folder_path = os.path.join(blueleaks_path, bl_folder)
+
+        files_count = 0
+        folders_count = 0
+        for filename in os.listdir(bl_folder_path):
+            filename_path = os.path.join(bl_folder_path, filename)
+
+            if os.path.isfile(filename_path):
+                files_count += 1
+
+            if os.path.isdir(filename_path):
+                folders_count += 1
+
+        print(f"{bl_folder} has {files_count} files, {folders_count} folders")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+When you run it:
+
+```
+micah@trapdoor chapter-8 % python3 list-files2.py
+bostonbric has 506 files, 10 folders
+terrorismtip has 207 files, 0 folders
+ociac has 216 files, 1 folders
+usao has 0 files, 84 folders
+alertmidsouth has 512 files, 10 folders
+chicagoheat has 499 files, 10 folders
+--snip--
+```
+
+## Find the Largest Files in BlueLeaks
+
+Read this script which uses `os.walk()` to find all of the large files in BlueLeaks. You can also find it in [find-big-files.py](./find-big-files.py).
+
+```py
+import os
+
+
+def main():
+    one_hundred_mb = 1024 * 1024 * 100
+
     blueleaks_path = "/Volumes/datasets/BlueLeaks-extracted"
     for dirname, dirnames, filenames in os.walk(blueleaks_path):
         for filename in filenames:
             absolute_filename = os.path.join(dirname, filename)
-            if is_video_file(absolute_filename):
-                print(absolute_filename)
+            file_size = os.path.getsize(absolute_filename)
+            if file_size >= one_hundred_mb:
+                # Convert file_size from bytes to megabytes
+                size_in_mb = int(file_size / 1024 / 1024)
+                print(f"{absolute_filename} is {size_in_mb}MB")
+
+
+if __name__ == "__main__":
+    main()
 ```
 
-Finally, the last line in my solution calls the `main()` function, which kicks off the actual script.
+When you run it:
+
+```
+micah@trapdoor chapter-8 % python3 find-big-files.py 
+/Volumes/datasets/BlueLeaks-extracted/usao/usaoflntraining/files/VVSF00000/001.mp4 is 644MB
+/Volumes/datasets/BlueLeaks-extracted/chicagoheat/html/ZA-CHICAGO HEaT_LR-20160830-034_Final 
+Files.pdf is 102MB
+/Volumes/datasets/BlueLeaks-extracted/nmhidta/files/RFIF300000/722.pdf is 148MB
+/Volumes/datasets/BlueLeaks-extracted/nmhidta/files/RFIF200000/543.pdf is 161MB
+/Volumes/datasets/BlueLeaks-extracted/nmhidta/files/RFIF100000/723.pdf is 206MB
+/Volumes/datasets/BlueLeaks-extracted/fbicahouston/files/VVSF00000/002.mp4 is 145MB
+/Volumes/datasets/BlueLeaks-extracted/fbicahouston/files/PSAVF100000/009.mp4 is 146MB
+/Volumes/datasets/BlueLeaks-extracted/fbicahouston/files/PSAVF100000/026.mp4 is 105MB
+--snip--
+```
