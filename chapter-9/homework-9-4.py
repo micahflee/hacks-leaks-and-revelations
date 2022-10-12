@@ -8,7 +8,7 @@ import os
 @click.argument("output_csv_path")
 def main(blueleaks_path, output_csv_path):
     """Make a CSV that describes all the BlueLeaks folders"""
-    
+
     # Set up the CSV writer
     headers = ["BlueLeaksFolder", "CompanyID", "CompanyName", "WebsiteTitle", "URL"]
     with open(output_csv_path, "w") as output_f:
@@ -18,12 +18,12 @@ def main(blueleaks_path, output_csv_path):
         # List all of the folders in BlueLeaks
         for folder_name in os.listdir(blueleaks_path):
             # Define the Company.csv path for each folder
-            company_csv_abs_path = os.path.join(blueleaks_path, folder_name, "Company.csv")
+            company_csv_path = os.path.join(blueleaks_path, folder_name, "Company.csv")
             # If this path exists...
-            if os.path.exists(company_csv_abs_path):
-                
+            if os.path.exists(company_csv_path):
+
                 # Set up the CSV reader
-                with open(company_csv_abs_path) as input_f:
+                with open(company_csv_path, "r") as input_f:
                     reader = csv.DictReader(input_f)
                     for row in reader:
                         output_row = {
@@ -34,7 +34,7 @@ def main(blueleaks_path, output_csv_path):
                             "URL": row["URL"],
                         }
                         writer.writerow(output_row)
-            
+
                 print(f"Finished: {folder_name}")
 
 
