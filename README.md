@@ -71,18 +71,18 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 - [homework-9-3: Make Bulk Emails Readable](./chapter-9/homework-9-3.md)
 - [homework-9-4: Make a CSV of BlueLeaks Sites](./chapter-9/homework-9-4.md)
 
-### Chapter 10: Parler, the Insurrection of January 6, and the JSON File Format
+### Chapter 10: BlueLeaks Explorer
 
-- [Homework 10-1: Download the Parler Video Metadata](./chapter-10/homework-10-1.md)
-- [Homework 10-2: Write a Script to Filter Videos with GPS Coordinates](./chapter-10/homework-10-2.md)
-- [Homework 10-3: Update the Script to Filter Videos from January 6, 2021](./chapter-10/homework-10-3.md)
-- [Homework 10-4: Update the Script to Filter Videos Filmed in Washington, DC](./chapter-10/homework-10-4.md)
-- [Homework 10-5: Plot the Parler Videos on a Map](./chapter-10/homework-10-5.md)
+- [Homework 10-1: Install BlueLeaks Explorer](./chapter-10/homework-10-1.md)
+- [Homework 10-2: Finish Building the Structure for JRIC](./chapter-10/homework-10-2.md)
 
-### Chapter 11: BlueLeaks Explorer
+### Chapter 11: Parler, the Insurrection of January 6, and the JSON File Format
 
-- [Homework 11-1: Install BlueLeaks Explorer](./chapter-11/homework-11-1.md)
-- [Homework 11-2: Finish Building the Structure for JRIC](./chapter-11/homework-11-2.md)
+- [Homework 11-1: Download the Parler Video Metadata](./chapter-11/homework-11-1.md)
+- [Homework 11-2: Write a Script to Filter Videos with GPS Coordinates](./chapter-11/homework-11-2.md)
+- [Homework 11-3: Update the Script to Filter Videos from January 6, 2021](./chapter-11/homework-11-3.md)
+- [Homework 11-4: Update the Script to Filter Videos Filmed in Washington, DC](./chapter-11/homework-11-4.md)
+- [Homework 11-5: Plot the Parler Videos on a Map](./chapter-11/homework-11-5.md)
 
 ### Chapter 12: SQL Databases and Epik Fail
 
