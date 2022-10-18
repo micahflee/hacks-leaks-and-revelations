@@ -6,6 +6,9 @@ def main():
     for bl_folder in os.listdir(blueleaks_path):
         bl_folder_path = os.path.join(blueleaks_path, bl_folder)
 
+        if not os.path.isdir(bl_folder_path):
+            continue
+
         files_count = 0
         folders_count = 0
         for filename in os.listdir(bl_folder_path):
