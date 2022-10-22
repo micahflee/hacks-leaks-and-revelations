@@ -1,220 +1,171 @@
-# Homework 12-2: Run a MySQL Server Using Docker
+# Homework 12-2: Write a Script to Filter Videos with GPS Coordinates
 
-In this homework you'll run a MySQL server on your computer using Docker Compose.
+**NOTE:** If you're using Windows, I recommend that you follow the instructions in this chapter using your Ubuntu terminal instead of PowerShell, and that you save this data in your Ubuntu home folder, like in `~/datasets`, instead of using your Windows-formatted USB disk, like in `/mnt/d`. I found that working with this data in Linux was significantly faster than in directly in Windows.
 
-## Run the Server
+In this homework assignment you will write a Python script that filters Parler videos down to just the ones that include GPS coordinates in their metadata. Here is the template Python script provided in the book:
 
-Create a folder for this homework, and create a `docker-compose.yaml` file in it that has this content:
+```python
+import click
 
-```yaml
-version: '3.9'
+@click.command()
+@click.argument("parler_metadata_path")
+def main(parler_metadata_path):
+    """Filter Parler videos that have GPS coordinates"""
 
-services:
-
-  db:
-    image: mariadb:10.8
-    restart: always
-    environment:
-      MARIADB_ROOT_PASSWORD: this-is-your-root-password
-    ports:
-      - 3306:3306
-    volumes:
-      - ./db_data:/var/lib/mysql
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
+if __name__ == "__main__":
+    main()
 ```
 
-The root password is set to `this-is-your-root-password`, but feel free to change it to whatever you want. This will also save all of the MySQL data into a folder called `db_data`, in the same folder as the `docker-compose.yaml` file. Make sure you choose a folder with enough disk space, like on your datasets USB disk.
+## Define the Count Variable
 
-Open a terminal, change to this homework folder, and run:
+Let's start by defining the `count` variable to keep track of the number of videos with GPS coordinates in their metadata:
 
-```sh
-docker-compose up
+```python
+# Number of videos with GPS coordinates in their metadata
+count = 0
 ```
 
-For example:
+# Loop Through the JSON Files
+
+Now we need to loop through all of the files in the `parler_metadata_path` folder. To do this, we can use the `os.listdir()` function, which requires importing the `os` module. So we must add this to the top of the file:
+
+```python
+import os
+```
+
+Now, in the `main()` function, here's code that loops through all of the metadata files and display the absolute filenames. You can try running this code just to make sure it works so far.
+
+```python
+for filename in os.listdir(parler_metadata_path):
+    abs_filename = os.path.join(parler_metadata_path, filename)
+        print(abs_filename)
+```
+
+An example of running this code so far:
 
 ```
-micah@trapdoor chapter-12 % docker-compose up
-Creating network "chapter-12_default" with the default driver
-Pulling db (mariadb:10.8)...
-10.8: Pulling from library/mariadb
-405f018f9d1d: Pull complete
+micah@cloak:~/datasets/homework/chapter-9$ python3 homework-9-2.py ~/datasets/Parler/metadata
+/home/micah/datasets/Parler/metadata/meta-ISVeh218verI.json
+/home/micah/datasets/Parler/metadata/meta-BeLykBcFbpEW.json
+/home/micah/datasets/Parler/metadata/meta-qQqSthmGdpSn.json
+/home/micah/datasets/Parler/metadata/meta-Aswvxy3XDKg8.json
 --snip--
-Creating chapter-12_db_1      ... done
-Creating chapter-12_adminer_1 ... done
-Attaching to chapter-12_db_1, chapter-12_adminer_1
-adminer_1  | [Fri Jun 10 20:30:31 2022] PHP 7.4.30 Development Server (http://[::]:8080) started
-db_1       | 2022-06-10 20:30:31+00:00 [Note] [Entrypoint]: Entrypoint script for MariaDB Server 1:10.8.3+maria~jammy started.
-db_1       | 2022-06-10 20:30:32+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
-db_1       | 2022-06-10 20:30:32+00:00 [Note] [Entrypoint]: Entrypoint script for MariaDB Server 1:10.8.3+maria~jammy started.
-db_1       | 2022-06-10 20:30:32+00:00 [Note] [Entrypoint]: Initializing database files
+```
+
+This should list over one million filenames. Great, it works so far.
+
+## Parse The JSON Files
+
+Now we need to load the content of these JSON files as a string, and then run this content through the `json.loads()` function to convert it into Python object. This requires importing the `json` module. So we must add this to the top of the file:
+
+```python
+import json
+```
+
+Now change the for loop code to read the content from each JSON file, parse the JSON into a variable called `metadata`, and then display that variable, like this:
+
+```python
+for filename in os.listdir(parler_metadata_path):
+    abs_filename = os.path.join(parler_metadata_path, filename)
+    if os.path.isfile(abs_filename) and abs_filename.endswith(".json"):
+        with open(abs_filename, "rb") as f:
+            json_data = f.read()
+
+        metadata = json.loads(json_data)
+        print(metadata)
+```
+
+Notice that the `open()` function includes the argument `"rb"`. This means we will be reading the file in binary mode instead of text mode. This normally isn't required for reading JSON files, but I discovered that it in this case, because some of the JSON files (like `meta-01tjNglj83ad.json`) include Chinese characters.
+
+Running this code so far only displays all of the metadata inside all of the JSON objects, which means it's working:
+
+```
+micah@cloak:~/datasets/homework/chapter-9$ python3 homework-9-2.py ~/datasets/Parler/metadata
+[{'SourceFile': '-', 'ExifToolVersion': 12.0, 'FileType': 'MP4', 'FileTypeExtension': 'mp4', 'MIMEType': 'video/mp4', 'MajorBrand': 'MP4  Base Media v1 [IS0 14496-12:2003]', 'MinorVersion': '0.2.0', 'CompatibleBrands': ['isom', 'iso2', 'avc1', 'mp41'], 'MediaDataSize': 4088795, 'MediaDataOffset': 48, 'MovieHeaderVersion': 0, 'CreateDate': '0000:00:00 00:00:00', 'ModifyDate': '0000:00:00 00:00:00', 'TimeScale': 1000, 'Duration': '0:00:30', 'PreferredRate': 1, 'PreferredVolume': '100.00%', 'PreviewTime': '0 s', 'PreviewDuration': '0 s', 'PosterTime': '0 s', 'SelectionTime': '0 s', 'SelectionDuration': '0 s', 'CurrentTime': '0 s', 'NextTrackID': 3, 'TrackHeaderVersion': 0, 'TrackCreateDate': '0000:00:00 00:00:00', 'TrackModifyDate': '0000:00:00 00:00:00', 'TrackID': 1, 'TrackDuration': '28.03 s', 'TrackLayer': 0, 'TrackVolume': '0.00%', 'ImageWidth': 1280, 'ImageHeight': 720, 'GraphicsMode': 'srcCopy', 'OpColor': '0 0 0', 'CompressorID': 'avc1', 'SourceImageWidth': 1280, 'SourceImageHeight': 720, 'XResolution': 72, 'YResolution': 72, 'BitDepth': 24, 'VideoFrameRate': 23.976, 'MatrixStructure': '1 0 0 0 1 0 0 0 1', 'MediaHeaderVersion': 0, 'MediaCreateDate': '0000:00:00 00:00:00', 'MediaModifyDate': '0000:00:00 00:00:00', 'MediaTimeScale': 48000, 'MediaDuration': '0:00:30', 'MediaLanguageCode': 'eng', 'HandlerDescription': 'SoundHandler', 'Balance': 0, 'AudioFormat': 'mp4a', 'AudioChannels': 2, 'AudioBitsPerSample': 16, 'AudioSampleRate': 48000, 'HandlerType': 'Metadata', 'HandlerVendorID': 'Apple', 'Title': 579413866321053, 'Encoder': 'Lavf57.83.100', 'ImageSize': '1280x720', 'Megapixels': 0.922, 'AvgBitrate': '1.09 Mbps', 'Rotation': 0}]
 --snip--
-db_1       | 2022-06-10 20:30:41 0 [Note] mariadbd: ready for connections.
-db_1       | Version: '10.8.3-MariaDB-1:10.8.3+maria~jammy'  socket: '/run/mysqld/mysqld.sock'  port: 3306  mariadb.org binary distribution
 ```
 
-## Connect to Database With Adminer
-
-When the containers finish starting, load http://localhost:8080 in your browser to access Adminer, a MySQL client. Login with the `root` user and the password you set in the `docker-compose.yaml` file. Leave the Database field blank.
-
-![The login page of Adminer, a MySQL client](./homework-12-2-adminer-login.png)
-
-## Create a Test Database and Add Test Data
-
-Leave the default databases alone (`information_schema`, `mysql`, `performance_schema`, and `sys`), and instead create a new database to work with.
-
-Click the "Create database" link, and create a new database called `books`.
-
-Inside this database, click the "Create table" link and make a new table called `authors`. Give it these columns:
-
-- `id`, with type `int`, and check the "AI" radio button, which sets this column to auto-increment
-- `name`, with type `text`
-
-It should look like this:
-
-![Creating the authors table in Adminer](./homework-12-2-authors-table.png)
-
-Go back to the `books` table and click the "Create table" link again, this time making a new table called `books`. Give it these columns:
-
-- `id`, with type `int` and with "AI" checked
-- `title`, with type`text`
-- `author_id` -- Adminer is smart enough to determine that this column uses type `int` and relates to the `authors.id` column, so it will automatically set the type as `authors`
-
-It should look like this:
-
-![Creating the books table in Adminer](./homework-12-2-books-table.png)
-
-Click "SQL command" to run SQL commands, and copy and paste these SQL queries to insert the initial data into these two tables:
-
-```sql
-INSERT INTO authors (name) VALUES ('Micah Lee');
-INSERT INTO authors (name) VALUES ('Carl Sagan');
-INSERT INTO books (title, author_id) VALUES ('Hacks, Leaks, and Revelations', 1);
-INSERT INTO books (title, author_id) VALUES ('Pale Blue Dot', 2);
-INSERT INTO books (title, author_id) VALUES ('Contact: A Novel', 2);
-```
-
-Now that there's data, you can run queries on it. Try running this one:
-
-```sql
-SELECT
-    books.title,
-    authors.name
-FROM books
-INNER JOIN authors ON books.author_id = authors.id;
-```
-
-It should look like this:
-
-![Running a SQL query in Adminer](./homework-12-2-adminer-query.png)
-
-## Install and Test the CLI MySQL Client
-
-If you're using macOS, install it with Homebrew:
-
-```sh
-brew install mariadb
-```
-
-If you're using Linux or Windows with WSL, install it with `apt`:
-
-```sh
-sudo apt install mariadb-client
-```
-
-You can connect to the database by running:
-
-```sh
-mysql -h localhost --protocol=tcp -u root -p
-```
-
-For example:
+If you let this finish running though, you will eventually hit a problem, and your script will crash with an error something like this:
 
 ```
-micah@trapdoor ~ % mysql -h localhost --protocol=tcp -u root -p
-Enter password: 
-Welcome to the MariaDB monitor.  Commands end with ; or \g.
-Your MariaDB connection id is 23
-Server version: 10.8.3-MariaDB-1:10.8.3+maria~jammy mariadb.org binary distribution
-
-Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
-
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-MariaDB [(none)]> 
+Traceback (most recent call last):
+  File "homework-9-2.py", line 22, in <module>
+    main()
+  File "/home/micah/.local/lib/python3.8/site-packages/click/core.py", line 1128, in __call__
+    return self.main(*args, **kwargs)
+  File "/home/micah/.local/lib/python3.8/site-packages/click/core.py", line 1053, in main
+    rv = self.invoke(ctx)
+  File "/home/micah/.local/lib/python3.8/site-packages/click/core.py", line 1395, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/home/micah/.local/lib/python3.8/site-packages/click/core.py", line 754, in invoke
+    return __callback(*args, **kwargs)
+  File "homework-9-2.py", line 15, in main
+    with open(abs_filename, "rb") as f:
+IsADirectoryError: [Errno 21] Is a directory: '/home/micah/datasets/Parler/metadata/.aws'
 ```
 
-List all of the available databases:
+This is an `IsADirectoryError` error, and the line of code that triggered the error is `with open(abs_filename, "rb") as f:`. This line is trying to open the file at path `abs_filename`, but it crashed because (in my case) `/home/micah/datasets/Parler/metadata/.aws` is a directory, not a file.
 
-```
-MariaDB [(none)]> SHOW DATABASES;
-+--------------------+
-| Database           |
-+--------------------+
-| books              |
-| information_schema |
-| mysql              |
-| performance_schema |
-| sys                |
-+--------------------+
-5 rows in set (0.004 sec)
+This is because the metadata folder has an empty directory called `.aws` in it. It's easy to fix this though. Let's just modify the code to only try to open `.json` files, by changing this:
+
+```python
+for filename in os.listdir(parler_metadata_path):
+    abs_filename = os.path.join(parler_metadata_path, filename)
+    with open(abs_filename, "rb") as f:
+        json_data = f.read()
+
+    metadata = json.loads(json_data)
+    print(metadata)
 ```
 
-Switch to the `books` database:
+To this:
 
-```
-MariaDB [(none)]> USE books;
-Reading table information for completion of table and column names
-You can turn off this feature to get a quicker startup with -A
+```python
+for filename in os.listdir(parler_metadata_path):
+    abs_filename = os.path.join(parler_metadata_path, filename)
+    if os.path.isfile(abs_filename) and abs_filename.endswith(".json"):
+        with open(abs_filename, "rb") as f:
+            json_data = f.read()
 
-Database changed
-MariaDB [books]> 
-```
-
-Now that you've selected the `books` database, list all of the tables:
-
-```
-MariaDB [books]> SHOW TABLES;
-+-----------------+
-| Tables_in_books |
-+-----------------+
-| authors         |
-| books           |
-+-----------------+
-2 rows in set (0.003 sec)
+        metadata = json.loads(json_data)
+        print(metadata)
 ```
 
-List all of the columns in the `books` table:
+Now, it checks to make sure `abs_filename` is a file and not a folder, and that that filename ends with `.json`, before trying to open it.
 
-```
-MariaDB [books]> DESCRIBE books;
-+-----------+---------+------+-----+---------+----------------+
-| Field     | Type    | Null | Key | Default | Extra          |
-+-----------+---------+------+-----+---------+----------------+
-| id        | int(11) | NO   | PRI | NULL    | auto_increment |
-| title     | text    | NO   |     | NULL    |                |
-| author_id | int(11) | NO   | MUL | NULL    |                |
-+-----------+---------+------+-----+---------+----------------+
-3 rows in set (0.003 sec)
-```
+## Filtering Videos With GPS Coordinates
 
-And finally, run SQL queries, like this:
+Now that we're successfully parsing the JSON, the next step is to check to see if includes the `"GPSCoordinates"` key, like this:
 
-```
-MariaDB [books]> SELECT * FROM books;
-+----+-------------------------------+-----------+
-| id | title                         | author_id |
-+----+-------------------------------+-----------+
-|  1 | Hacks, Leaks, and Revelations |         1 |
-|  2 | Pale Blue Dot                 |         2 |
-|  3 | Contact: A Novel              |         2 |
-+----+-------------------------------+-----------+
-3 rows in set (0.003 sec)
+```python
+metadata = json.loads(json_data)
+if "GPSCoordinates" in metadata[0]:
+    print(f"Found GPS coordinates: {filename}")
+    count += 1
 ```
 
-Try running some other SQL queries.
+Notice that the if statement checks to see if `"GPSCoordinates"` is in `metadata[0]` instead of `metadata`. This is because each JSON object is technically a list with one element, and the `[0]` part selects that element, which ultimately searches the dictionary for that key.
+
+Finally, when the for loop is finished, you can add a final `print()` that displays the total count.
+
+```python
+print(f"Total videos with GPS coordinates: {count}")
+```
+
+## The Final Script
+
+Here's what it looks like to run this script:
+
+```
+micah@cloak:~/datasets/homework/chapter-9$ python3 homework-9-2.py ~/datasets/Parler/metadata
+Found GPS coordinates: meta-27PknKIOwHt6.json
+Found GPS coordinates: meta-m3Wq53jjPnpw.json
+Found GPS coordinates: meta-kpKT3stt5LXq.json
+--snip--
+Found GPS coordinates: meta-pMdvwJuktYPj.json
+Found GPS coordinates: meta-50A0Fl2Fcg89.json
+Found GPS coordinates: meta-H89ZQPBBfhZA.json
+Total videos with GPS coordinates: 63983
+```
+
+You can find an implementation of this script in [homework-9-2.py](./homework-9-2.py).
