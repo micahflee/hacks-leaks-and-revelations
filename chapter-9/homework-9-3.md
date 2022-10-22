@@ -1,4 +1,4 @@
-# Homework 8-4: Develop CLI Programs With Click
+# Homework 9-3: Develop CLI Programs With Click
 
 This homework teaches you to use the [Click])(https://click.palletsprojects.com/) module to make CLI programs in Python.
 

@@ -14,6 +14,6 @@ def alternating_caps(text):
     return alternating_caps_text
 
 
-print(alternating_caps("Hacks, Leaks, and Revelations"))
+print("Hacks, Leaks, and Revelations")
 print(alternating_caps("This book is amazing"))
 print(alternating_caps("I'm learning so much"))
