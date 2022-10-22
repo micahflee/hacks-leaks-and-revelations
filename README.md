@@ -30,7 +30,7 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 - [Homework 4-6: Your First Shell Script](./chapter-4/homework-4-6.md)
 - [Homework 4-7: Clone the Book's Git Repository](./chapter-4/homework-4-7.md)
 
-### Chapter 5: Explore Datasets in the Terminal
+### Chapter 5: Exploring Datasets in the Terminal
 
 - [Homework 5-1: Unzip BlueLeaks](./chapter-5/homework-5-1.md)
 - [Homework 5-2: Explore BlueLeaks With the Terminal](./chapter-5/homework-5-2.md)
@@ -46,7 +46,7 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 - [Homework 6-4: Run Aleph Locally in Linux Containers](./chapter-6/homework-6-4.md)
 - [Homework 6-5: Add Part of BlueLeaks to Aleph](./chapter-6/homework-6-5.md)
 
-### Chapter 7: Reading Other People's Email
+### Chapter 7: Reading Other People's Emails
 
 - [Homework 7-1: Download Email Dumps](./chapter-7/homework-7-1.md)
 - [Homework 7-2: Configure Thunderbird for Email Dumps](./chapter-7/homework-7-2.md)
@@ -54,56 +54,65 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 - [Homework 7-4: Import MBOX Files Into Thunderbird](./chapter-7/homework-7-4.md)
 - [Homework 7-5: Import PST Files Into Thunderbird](./chapter-7/homework-7-5.md)
 
-## Part 3: Programming and Structured Data
+## Part 3: Python Programming
 
-### Chapter 8: A Brief Introduction to the Python Programming Language
+### Chapter 8: An Introduction to Python
 
 - [Homework 8-1: Install Python](./chapter-8/homework-8-1.md)
 - [Homework 8-2: Your First Python Script](./chapter-8/homework-8-2.md)
-- [Homework 8-3: Traverse the Filesystem](./chapter-8/homework-8-3.md)
-- [Homework 8-4: Develop CLI Programs With Click](./chapter-8/homework-8-4.md)
-- [Homework 8-5: Map Out the CSVs in BlueLeaks](./chapter-8/homework-8-5.md)
+- [Homework 8-3: Practice the Basics](./chapter-8/homework-8-3.md)
+- [Homework 8-4: Practice Loops](./chapter-8/homework-8-4.md)
+- [Homework 8-5: Practice Writing Functions](./chapter-8/homework-8-5.py)
 
-### Chapter 9: The Many CSV Files of BlueLeaks
+### Chapter 9: Working With Data in Python
 
-- [homework-9-1: Install Spreadsheet Software](./chapter-9/homework-9-1.md)
-- [homework-9-2: Make SARs Readable](./chapter-9/homework-9-2.md)
-- [homework-9-3: Make Bulk Emails Readable](./chapter-9/homework-9-3.md)
-- [homework-9-4: Make a CSV of BlueLeaks Sites](./chapter-9/homework-9-4.md)
+- [Homework 9-1: Traverse the Filesystem](./chapter-9/homework-9-1.md)
+- [Homework 9-2: Find the Largest Files in BlueLeaks](./chapter-9/homework-9-2.md)
+- [Homework 9-3: Develop CLI Programs With Click](./chapter-9/homework-9-3.md)
+- [Homework 9-4: Map Out the CSVs in BlueLeaks](./chapter-9/homework-9-4.md)
 
-### Chapter 10: BlueLeaks Explorer
+## Part 4: Structured Data
 
-- [Homework 10-1: Install BlueLeaks Explorer](./chapter-10/homework-10-1.md)
-- [Homework 10-2: Finish Building the Structure for JRIC](./chapter-10/homework-10-2.md)
+### Chapter 10: BlueLeaks and the CSV File Format
 
-### Chapter 11: Parler, the Insurrection of January 6, and the JSON File Format
+- [homework-10-1: Install Spreadsheet Software](./chapter-10/homework-10-1.md)
+- [homework-10-2: Make SARs Readable](./chapter-10/homework-10-2.md)
+- [homework-10-3: Make Bulk Emails Readable](./chapter-10/homework-10-3.md)
+- [homework-10-4: Make a CSV of BlueLeaks Sites](./chapter-10/homework-10-4.md)
 
-- [Homework 11-1: Download the Parler Video Metadata](./chapter-11/homework-11-1.md)
-- [Homework 11-2: Write a Script to Filter Videos with GPS Coordinates](./chapter-11/homework-11-2.md)
-- [Homework 11-3: Update the Script to Filter Videos from January 6, 2021](./chapter-11/homework-11-3.md)
-- [Homework 11-4: Update the Script to Filter Videos Filmed in Washington, DC](./chapter-11/homework-11-4.md)
-- [Homework 11-5: Plot the Parler Videos on a Map](./chapter-11/homework-11-5.md)
+### Chapter 11: BlueLeaks Explorer
 
-### Chapter 12: SQL Databases and Epik Fail
+- [Homework 11-1: Install BlueLeaks Explorer](./chapter-11/homework-11-1.md)
+- [Homework 11-2: Finish Building the Structure for JRIC](./chapter-11/homework-11-2.md)
 
-- [Homework 12-1: Download Parts of the Epik Dataset](./chapter-12/homework-12-1.md)
-- [Homework 12-2: Run a MySQL Server Using Docker](./chapter-12/homework-12-2.md)
-- [Homework 12-3: Extract the Epik Data](./chapter-12/homework-12-3.md)
-- [Homework 12-4: Import Epik Data Into MySQL](./chapter-12/homework-12-4.md)
+### Chapter 12: Parler, January 6, and the JSON File Format
 
-## Part 3: Case Studies
+- [Homework 12-1: Download the Parler Video Metadata](./chapter-12/homework-12-1.md)
+- [Homework 12-2: Write a Script to Filter Videos with GPS Coordinates](./chapter-12/homework-12-2.md)
+- [Homework 12-3: Update the Script to Filter Videos from January 6, 2021](./chapter-12/homework-12-3.md)
+- [Homework 12-4: Update the Script to Filter Videos Filmed in Washington, DC](./chapter-12/homework-12-4.md)
+- [Homework 12-5: Plot the Parler Videos on a Map](./chapter-12/homework-12-5.md)
 
-### Chapter 13: Pandemic Profiteers Making Millions from COVID-19 Disinformation
+### Chapter 13: Epik Fail and SQL Databases
 
-- [create-aflds-patients-csv.py](./chapter-13/create-aflds-patients-csv.py)
-- [create-ravkoo-csv.py](./chapter-13/create-ravkoo-csv.py)
-- [create-ravkoo-categories-csv.py](./chapter-13/create-ravkoo-categories-csv.py)
-- [create-cadence-partners-csv.py](./chapter-13/create-cadence-partners-csv.py)
-- [create-cities-csv.py](./chapter-13/create-cities-csv.py)
-- [create-ages-csv.py](./chapter-13/create-ages-csv.py)
+- [Homework 13-1: Download Parts of the Epik Dataset](./chapter-13/homework-13-1.md)
+- [Homework 13-2: Run a MySQL Server Using Docker](./chapter-13/homework-13-2.md)
+- [Homework 13-3: Extract the Epik Data](./chapter-13/homework-13-3.md)
+- [Homework 13-4: Import Epik Data Into MySQL](./chapter-13/homework-13-4.md)
+
+## Part 5: Case Studies
+
+### Chapter 14: Pandemic Profiteers and COVID-19 Disinformation
+
+- [create-aflds-patients-csv.py](./chapter-14/create-aflds-patients-csv.py)
+- [create-ravkoo-csv.py](./chapter-14/create-ravkoo-csv.py)
+- [create-ravkoo-categories-csv.py](./chapter-14/create-ravkoo-categories-csv.py)
+- [create-cadence-partners-csv.py](./chapter-14/create-cadence-partners-csv.py)
+- [create-cities-csv.py](./chapter-14/create-cities-csv.py)
+- [create-ages-csv.py](./chapter-14/create-ages-csv.py)
 - [The Intercept: Network of Right-Wing Health Care Providers Is Making Millions Off Hydroxychloroquine and Ivermectin, Hacked Data Reveals](https://theintercept.com/2021/09/28/covid-telehealth-hydroxychloroquine-ivermectin-hacked/)
 
-### Chapter 14: Neo-Nazis and Their Chat Rooms
+### Chapter 15: Neo-Nazis and Their Chat Rooms
 
 - [Unicorn Riot's Discord Leaks](https://discordleaks.unicornriot.ninja/)
 - [Discord Analysis](https://github.com/micahflee/discord-analysis)
