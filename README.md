@@ -70,15 +70,16 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 - [Homework 9-2: Find the Largest Files in BlueLeaks](./chapter-9/homework-9-2.md)
 - [Homework 9-3: Develop CLI Programs With Click](./chapter-9/homework-9-3.md)
 - [Homework 9-4: Map Out the CSVs in BlueLeaks](./chapter-9/homework-9-4.md)
+- [Homework 9-5: Practice Reading and Writing Files](./chapter-9/homework-9-5.md)
 
 ## Part 4: Structured Data
 
 ### Chapter 10: BlueLeaks and the CSV File Format
 
-- [homework-10-1: Install Spreadsheet Software](./chapter-10/homework-10-1.md)
-- [homework-10-2: Make SARs Readable](./chapter-10/homework-10-2.md)
-- [homework-10-3: Make Bulk Emails Readable](./chapter-10/homework-10-3.md)
-- [homework-10-4: Make a CSV of BlueLeaks Sites](./chapter-10/homework-10-4.md)
+- [Homework-10-1: Install Spreadsheet Software](./chapter-10/homework-10-1.md)
+- [Homework-10-2: Make SARs Readable](./chapter-10/homework-10-2.md)
+- [Homework-10-3: Make Bulk Emails Readable](./chapter-10/homework-10-3.md)
+- [Homework-10-4: Make a CSV of BlueLeaks Sites](./chapter-10/homework-10-4.md)
 
 ### Chapter 11: BlueLeaks Explorer
 
