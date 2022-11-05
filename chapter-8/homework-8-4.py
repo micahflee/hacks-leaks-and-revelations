@@ -1,4 +1,4 @@
-text = "I need healthcare because I have cancer and I'm dying"
+text = "One does not simply walk into Mordor"
 alternating_caps_text = ""
 should_be_capital = True
 
