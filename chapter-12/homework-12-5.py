@@ -1,11 +1,14 @@
 import click
-import csv
-import json
 import os
+import json
+import simplekml
+
+
+def json_filename_to_parler_id(json_filename):
+    return json_filename.split("-")[1].split(".")[0]
 
 
 def gps_degrees_to_decimal(gps_coordinate):
-    # print(f"gps_coordinate: {gps_coordinate}")
     parts = gps_coordinate.split()
     degrees = float(parts[0])
     minutes = float(parts[2].replace("'", ""))
@@ -17,48 +20,34 @@ def gps_degrees_to_decimal(gps_coordinate):
     return gps_decimal
 
 
-def convert_filename(json_filename):
-    return json_filename.split("-")[1].split(".")[0]
-
-
 @click.command()
 @click.argument("parler_metadata_path")
-@click.argument("output_csv_path")
-def main(parler_metadata_path, output_csv_path):
-    """Create a CSV of GPS coordinates from Parler metadata"""
+def main(parler_metadata_path):
+    """Create a KML file of GPS coordinates from Parler metadata"""
+    kml = simplekml.Kml()
 
-    # Open the output CSV file for writing
-    with open(output_csv_path, "w") as output_f:
-        writer = csv.DictWriter(
-            output_f, fieldnames=["Filename", "Longitude", "Latitude"]
-        )
-        writer.writeheader()
+    for filename in os.listdir(parler_metadata_path):
+        abs_filename = os.path.join(parler_metadata_path, filename)
+        if os.path.isfile(abs_filename) and abs_filename.endswith(".json"):
+            with open(abs_filename, "rb") as f:
+                json_data = f.read()
 
-        for filename in os.listdir(parler_metadata_path):
-            abs_filename = os.path.join(parler_metadata_path, filename)
-            if os.path.isfile(abs_filename) and abs_filename.endswith(".json"):
-                with open(abs_filename, "rb") as f:
-                    json_data = f.read()
+            metadata = json.loads(json_data)
+            if (
+                "GPSLongitude" in metadata[0]
+                and "GPSLatitude" in metadata[0]
+                and metadata[0]["GPSLongitude"] != ""
+                and metadata[0]["GPSLatitude"] != ""
+            ):
+                name = json_filename_to_parler_id(filename)
+                url = f"https://s3.wasabisys.com/ddosecrets-parler/{name}"
+                lon = gps_degrees_to_decimal(metadata[0]["GPSLongitude"])
+                lat = gps_degrees_to_decimal(metadata[0]["GPSLatitude"])
 
-                metadata = json.loads(json_data)
-                if (
-                    "GPSLongitude" in metadata[0]
-                    and "GPSLatitude" in metadata[0]
-                    and metadata[0]["GPSLongitude"] != ""
-                    and metadata[0]["GPSLatitude"] != ""
-                ):
-                    # Save the row
-                    row = {
-                        "Filename": convert_filename(filename),
-                        "Longitude": gps_degrees_to_decimal(
-                            metadata[0]["GPSLongitude"]
-                        ),
-                        "Latitude": gps_degrees_to_decimal(metadata[0]["GPSLatitude"]),
-                    }
-                    writer.writerow(row)
-                    print(row)
+                print(f"Adding point {name}: {lon},{lat}")
+                kml.newpoint(name=name, description=url, coords=[(lon, lat)])
 
-    print(f"Saved: {output_csv_path}")
+    kml.save("parler-videos.kml")
 
 
 if __name__ == "__main__":

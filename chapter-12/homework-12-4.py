@@ -46,7 +46,9 @@ def main(parler_metadata_path):
 
             metadata = json.loads(json_data)
             if (
-                "GPSCoordinates" in metadata[0]
+                "GPSLongitude" in metadata[0]
+                and "GPSLatitude" in metadata[0]
+                and "CreateDate" in metadata[0]
                 and metadata[0]["CreateDate"].startswith("2021:01:06 ")
                 and was_video_filmed_in_washington_dc(metadata)
             ):
