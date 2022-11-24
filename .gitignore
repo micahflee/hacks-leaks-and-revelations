@@ -1,5 +1,6 @@
 .DS_Store
 .vscode
-chapter-11/db_data
-wordpress/aleph/mappings
 __pycache__
+chapter-11/db_data
+chapter-13/db_data
+wordpress/aleph/mappings

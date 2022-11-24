@@ -82,7 +82,7 @@ def main():
     ]
     csv_filename = "cities.csv"
     with open(csv_filename, "w") as f:
-        writer = csv.DictWriter(f)
+        writer = csv.DictWriter(f, fieldnames=headers)
         writer.writeheader()
         for city in cities:
             writer.writerow(
