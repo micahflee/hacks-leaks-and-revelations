@@ -64,13 +64,12 @@ def main():
 
         try:
             data = json.loads(r.text)
+            if "features" in data and len(data["features"]) > 0:
+                cities[city]["lon"] = data["features"][0]["geometry"]["coordinates"][0]
+                cities[city]["lat"] = data["features"][0]["geometry"]["coordinates"][1]
         except:
             cities[city]["lon"] = None
             cities[city]["lat"] = None
-
-        if len(data["features"]) > 0:
-            cities[city]["lon"] = data["features"][0]["geometry"]["coordinates"][0]
-            cities[city]["lat"] = data["features"][0]["geometry"]["coordinates"][1]
 
     # Write the CSV file
     headers = [
