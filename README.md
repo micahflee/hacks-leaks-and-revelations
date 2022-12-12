@@ -119,7 +119,7 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 - [Discord Analysis](https://github.com/micahflee/discord-analysis)
 - [The Intercept: How Right-Wing Extremists Stalk, Dox, and Harass Their Enemies](https://theintercept.com/2017/09/06/how-right-wing-extremists-stalk-dox-and-harass-their-enemies/)
 
-## Appendices
+## Appendixes
 
 ### Appendix A: Using the Windows Subsystem for Linux
 
@@ -135,4 +135,4 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 All of the source code in this repository is licensed [GPLv3](./LICENSE).
 
-All text in this repository is licensed [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+All of the human language text in this repository is licensed [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
