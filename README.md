@@ -4,7 +4,7 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 ## Part 1: Sources and Datasets
 
-### Chapter 1: TBD
+### Chapter 1: Introduction
 
 ### Chapter 2: Protecting Sources and Yourself
 
@@ -127,7 +127,9 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 ### Appendix B: Scraping the Web
 
-### Appendix C: Texas GOP's Website Backup
+- [HTTPX example script](./appendix-b/httpx-example.py)
+- [Beautiful Soup example script](./appendix-b/bs4-example.py)
+- [Selenium example script](./appendix-b/selenium-example.py)
 
 # Licenses
 
