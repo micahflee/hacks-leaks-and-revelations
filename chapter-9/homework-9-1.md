@@ -1,4 +1,4 @@
-# Homework 10-1: Install Spreadsheet Software
+# Homework 9-1: Install Spreadsheet Software
 
 If you already have spreadsheet software you like, you're done. If not, here are some options:
 

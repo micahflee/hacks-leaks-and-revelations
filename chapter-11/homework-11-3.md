@@ -1,8 +1,8 @@
-# Homework 12-3: Update the Script to Filter Videos from January 6, 2021
+# Homework 11-3: Update the Script to Filter Videos from January 6, 2021
 
 **NOTE:** If you're using Windows, I recommend that you follow the instructions in this chapter using your Ubuntu terminal instead of PowerShell, and that you save this data in your Ubuntu home folder, like in `~/datasets`, instead of using your Windows-formatted USB disk, like in `/mnt/d`. I found that working with this data in Linux was significantly faster than in directly in Windows.
 
-In this homework assignment you'll modify the script from [Homework 12-2](./homework-12-2.md) to not only filter Parler videos down to just the ones that include GPS coordinates in their metadata, but also to those filmed on January 6, 2021. Start by copying your solution from [Homework 12-2](./homework-12-2.md) into a new file for homework-12-3.
+In this homework assignment you'll modify the script from [Homework 11-2](./homework-11-2.md) to not only filter Parler videos down to just the ones that include GPS coordinates in their metadata, but also to those filmed on January 6, 2021. Start by copying your solution from [Homework 11-2](./homework-11-2.md) into a new file for homework-11-3.
 
 Here's the code I'm starting with:
 
@@ -79,7 +79,7 @@ print(f"Total videos with GPS coordinates, filmed Jan 6: {count}")
 Here's what it looks like to run this script:
 
 ```
-micah@cloak:~/datasets/homework/chapter-10$ python3 homework-12-3.py ~/datasets/Parler/metadata
+micah@cloak:~/datasets/homework/chapter-11$ python3 homework-11-3.py ~/datasets/Parler/metadata
 GPS + Jan 6: meta-8YA6CeYMxHh4.json
 GPS + Jan 6: meta-91Vga2rHrrID.json
 GPS + Jan 6: meta-a3NbAuIyNM3v.json
@@ -90,4 +90,4 @@ GPS + Jan 6: meta-OUJYa3npW0oE.json
 Total videos with GPS coordinates, filmed Jan 6: 1958
 ```
 
-You can find an implementation of this script in [homework-12-3.py](./homework-12-3.py).
+You can find an implementation of this script in [homework-11-3.py](./homework-11-3.py).

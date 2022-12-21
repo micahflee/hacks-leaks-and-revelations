@@ -1,4 +1,4 @@
-# Homework 9-1: Traverse the Filesystem
+# Homework 8-1: Traverse the Filesystem
 
 ## List the Filenames in a Folder
 

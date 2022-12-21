@@ -1,4 +1,4 @@
-# Homework 9-2: Find the Largest Files in BlueLeaks
+# Homework 8-2: Find the Largest Files in BlueLeaks
 
 Read this script which uses `os.walk()` to find all of the large files in BlueLeaks. You can also find it in [find-big-files.py](./find-big-files.py).
 

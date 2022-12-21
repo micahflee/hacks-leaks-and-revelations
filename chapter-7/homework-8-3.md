@@ -1,1 +1,0 @@
-# Homework 8-3: Practice the Basics

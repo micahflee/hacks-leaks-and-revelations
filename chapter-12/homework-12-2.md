@@ -1,4 +1,4 @@
-# Homework 13-2: Run a MySQL Server Using Docker
+# Homework 12-2: Run a MySQL Server Using Docker
 
 In this homework you'll run a MySQL server on your computer using Docker Compose.
 
@@ -62,7 +62,7 @@ db_1       | Version: '10.8.3-MariaDB-1:10.8.3+maria~jammy'  socket: '/run/mysql
 
 When the containers finish starting, load http://localhost:8080 in your browser to access Adminer, a MySQL client. Login with the `root` user and the password you set in the `docker-compose.yaml` file. Leave the Database field blank.
 
-![The login page of Adminer, a MySQL client](./homework-13-2-adminer-login.png)
+![The login page of Adminer, a MySQL client](./homework-12-2-adminer-login.png)
 
 ## Create a Test Database and Add Test Data
 
@@ -77,7 +77,7 @@ Inside this database, click the "Create table" link and make a new table called 
 
 It should look like this:
 
-![Creating the authors table in Adminer](./homework-13-2-authors-table.png)
+![Creating the authors table in Adminer](./homework-12-2-authors-table.png)
 
 Go back to the `books` table and click the "Create table" link again, this time making a new table called `books`. Give it these columns:
 
@@ -87,7 +87,7 @@ Go back to the `books` table and click the "Create table" link again, this time 
 
 It should look like this:
 
-![Creating the books table in Adminer](./homework-13-2-books-table.png)
+![Creating the books table in Adminer](./homework-12-2-books-table.png)
 
 Click "SQL command" to run SQL commands, and copy and paste these SQL queries to insert the initial data into these two tables:
 
@@ -111,7 +111,7 @@ INNER JOIN authors ON books.author_id = authors.id;
 
 It should look like this:
 
-![Running a SQL query in Adminer](./homework-13-2-adminer-query.png)
+![Running a SQL query in Adminer](./homework-12-2-adminer-query.png)
 
 ## Install and Test the CLI MySQL Client
 

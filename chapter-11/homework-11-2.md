@@ -1,4 +1,4 @@
-# Homework 12-2: Write a Script to Filter Videos with GPS Coordinates
+# Homework 11-2: Write a Script to Filter Videos with GPS Coordinates
 
 **NOTE:** If you're using Windows, I recommend that you follow the instructions in this chapter using your Ubuntu terminal instead of PowerShell, and that you save this data in your Ubuntu home folder, like in `~/datasets`, instead of using your Windows-formatted USB disk, like in `/mnt/d`. I found that working with this data in Linux was significantly faster than in directly in Windows.
 
@@ -44,7 +44,7 @@ for filename in os.listdir(parler_metadata_path):
 An example of running this code so far:
 
 ```
-micah@cloak:~/datasets/homework/chapter-9$ python3 homework-9-2.py ~/datasets/Parler/metadata
+micah@cloak:~/datasets/homework/chapter-11$ python3 homework-11-2.py ~/datasets/Parler/metadata
 /home/micah/datasets/Parler/metadata/meta-ISVeh218verI.json
 /home/micah/datasets/Parler/metadata/meta-BeLykBcFbpEW.json
 /home/micah/datasets/Parler/metadata/meta-qQqSthmGdpSn.json
@@ -80,7 +80,7 @@ Notice that the `open()` function includes the argument `"rb"`. This means we wi
 Running this code so far only displays all of the metadata inside all of the JSON objects, which means it's working:
 
 ```
-micah@cloak:~/datasets/homework/chapter-9$ python3 homework-9-2.py ~/datasets/Parler/metadata
+micah@cloak:~/datasets/homework/chapter-11$ python3 homework-11-2.py ~/datasets/Parler/metadata
 [{'SourceFile': '-', 'ExifToolVersion': 12.0, 'FileType': 'MP4', 'FileTypeExtension': 'mp4', 'MIMEType': 'video/mp4', 'MajorBrand': 'MP4  Base Media v1 [IS0 14496-12:2003]', 'MinorVersion': '0.2.0', 'CompatibleBrands': ['isom', 'iso2', 'avc1', 'mp41'], 'MediaDataSize': 4088795, 'MediaDataOffset': 48, 'MovieHeaderVersion': 0, 'CreateDate': '0000:00:00 00:00:00', 'ModifyDate': '0000:00:00 00:00:00', 'TimeScale': 1000, 'Duration': '0:00:30', 'PreferredRate': 1, 'PreferredVolume': '100.00%', 'PreviewTime': '0 s', 'PreviewDuration': '0 s', 'PosterTime': '0 s', 'SelectionTime': '0 s', 'SelectionDuration': '0 s', 'CurrentTime': '0 s', 'NextTrackID': 3, 'TrackHeaderVersion': 0, 'TrackCreateDate': '0000:00:00 00:00:00', 'TrackModifyDate': '0000:00:00 00:00:00', 'TrackID': 1, 'TrackDuration': '28.03 s', 'TrackLayer': 0, 'TrackVolume': '0.00%', 'ImageWidth': 1280, 'ImageHeight': 720, 'GraphicsMode': 'srcCopy', 'OpColor': '0 0 0', 'CompressorID': 'avc1', 'SourceImageWidth': 1280, 'SourceImageHeight': 720, 'XResolution': 72, 'YResolution': 72, 'BitDepth': 24, 'VideoFrameRate': 23.976, 'MatrixStructure': '1 0 0 0 1 0 0 0 1', 'MediaHeaderVersion': 0, 'MediaCreateDate': '0000:00:00 00:00:00', 'MediaModifyDate': '0000:00:00 00:00:00', 'MediaTimeScale': 48000, 'MediaDuration': '0:00:30', 'MediaLanguageCode': 'eng', 'HandlerDescription': 'SoundHandler', 'Balance': 0, 'AudioFormat': 'mp4a', 'AudioChannels': 2, 'AudioBitsPerSample': 16, 'AudioSampleRate': 48000, 'HandlerType': 'Metadata', 'HandlerVendorID': 'Apple', 'Title': 579413866321053, 'Encoder': 'Lavf57.83.100', 'ImageSize': '1280x720', 'Megapixels': 0.922, 'AvgBitrate': '1.09 Mbps', 'Rotation': 0}]
 --snip--
 ```

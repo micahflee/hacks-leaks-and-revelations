@@ -1,4 +1,4 @@
-# Homework 11-1: Install BlueLeaks Explorer
+# Homework 10-1: Install BlueLeaks Explorer
 
 In this homework assignment you will install BlueLeaks Explorer. You must have Docker and Docker Compose installed. If you don't, go back and follow along in Chapter 6.
 

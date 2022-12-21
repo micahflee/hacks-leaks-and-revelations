@@ -1,4 +1,4 @@
-# Homework 12-1: Download the Parler Video Metadata
+# Homework 11-1: Download the Parler Video Metadata
 
 **NOTE:** If you're using Windows, I recommend that you follow the instructions in this chapter using your Ubuntu terminal instead of PowerShell, and that you save this data in your Ubuntu home folder, like in `~/datasets`, instead of using your Windows-formatted USB disk, like in `/mnt/d`. I found that working with this data in Linux was significantly faster than in directly in Windows.
 
@@ -76,7 +76,7 @@ micah@cloak:~/datasets/Parler$ cat ddosecrets-parler-listing.txt | wc -l
 
 It has 1,031,509 lines. Open _ddosecrets-parler-listing.txt_ in a text editor. Here's what it looks like:
 
-![Viewing filenames in a text editor](./homework-12-1-filenames.png)
+![Viewing filenames in a text editor](./homework-11-1-filenames.png)
 
 The last column of each line is a filename. For example, if you want to download the video with the filename of _0003lx5cSwSB_, you will download `https://s3.wasabisys.com/ddosecrets-parler/0003lx5cSwSB`. Give it a try. In this case, I’m creating a new folder called videos to download the videos into.
 

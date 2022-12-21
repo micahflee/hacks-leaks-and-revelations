@@ -1,4 +1,4 @@
-# Homework 12-5: Plot the Parler Videos on a Map
+# Homework 11-5: Plot the Parler Videos on a Map
 
 **NOTE:** If you're using Windows, I recommend that you follow the instructions in this chapter using your Ubuntu terminal instead of PowerShell, and that you save this data in your Ubuntu home folder, like in `~/datasets`, instead of using your Windows-formatted USB disk, like in `/mnt/d`. I found that working with this data in Linux was significantly faster than in directly in Windows.
 
@@ -100,7 +100,7 @@ print(f"Saved: {output_csv_path}")
 I'm done, right? Let me try running it:
 
 ```
-micah@cloak:~/code/hacks-leaks-and-revelations/chapter-10$ python3 homework-12-5.py ~/datasets/Parler/metadata parler-gps-coordinates.csv
+micah@cloak:~/code/hacks-leaks-and-revelations/chapter-10$ python3 homework-11-5.py ~/datasets/Parler/metadata parler-gps-coordinates.csv
 {'Filename': '27PknKIOwHt6', 'Longitude': -118.4026, 'Latitude': 34.0724}
 {'Filename': 'm3Wq53jjPnpw', 'Longitude': -118.2599, 'Latitude': 34.0473}
 {'Filename': 'kpKT3stt5LXq', 'Longitude': -80.2949, 'Latitude': 26.334}
@@ -109,7 +109,7 @@ micah@cloak:~/code/hacks-leaks-and-revelations/chapter-10$ python3 homework-12-5
 {'Filename': 'KJ8t1qELW1nH', 'Longitude': -117.5453, 'Latitude': 33.814}
 {'Filename': 'bSPOjbdsm2xF', 'Longitude': -71.32379999999999, 'Latitude': 43.7277}
 Traceback (most recent call last):
-  File "/home/micah/code/hacks-leaks-and-revelations/chapter-10/homework-12-5.py", line 66, in <module>
+  File "/home/micah/code/hacks-leaks-and-revelations/chapter-10/homework-11-5.py", line 66, in <module>
     main()
   File "/usr/lib/python3/dist-packages/click/core.py", line 1128, in __call__
     return self.main(*args, **kwargs)
@@ -119,9 +119,9 @@ Traceback (most recent call last):
     return ctx.invoke(self.callback, **ctx.params)
   File "/usr/lib/python3/dist-packages/click/core.py", line 754, in invoke
     return __callback(*args, **kwargs)
-  File "/home/micah/code/hacks-leaks-and-revelations/chapter-10/homework-12-5.py", line 54, in main
+  File "/home/micah/code/hacks-leaks-and-revelations/chapter-10/homework-11-5.py", line 54, in main
     "Longitude": gps_degrees_to_decimal(
-  File "/home/micah/code/hacks-leaks-and-revelations/chapter-10/homework-12-5.py", line 10, in gps_degrees_to_decimal
+  File "/home/micah/code/hacks-leaks-and-revelations/chapter-10/homework-11-5.py", line 10, in gps_degrees_to_decimal
     degrees = float(parts[0])
 IndexError: list index out of range
 ```
@@ -145,7 +145,7 @@ def gps_degrees_to_decimal(gps_coordinate):
 And then I ran it again:
 
 ```
-micah@cloak:~/code/hacks-leaks-and-revelations/chapter-10$ python3 homework-12-5.py ~/datasets/Parler/metadata parler-gps-coordinates.csv
+micah@cloak:~/code/hacks-leaks-and-revelations/chapter-10$ python3 homework-11-5.py ~/datasets/Parler/metadata parler-gps-coordinates.csv
 gps_coordinate: 118 deg 24' 9.36" W
 gps_coordinate: 34 deg 4' 20.64" N
 {'Filename': '27PknKIOwHt6', 'Longitude': -118.4026, 'Latitude': 34.0724}
@@ -155,7 +155,7 @@ gps_coordinate: 43 deg 43' 39.72" N
 {'Filename': 'bSPOjbdsm2xF', 'Longitude': -71.32379999999999, 'Latitude': 43.7277}
 gps_coordinate:
 Traceback (most recent call last):
-  File "/home/micah/code/hacks-leaks-and-revelations/chapter-10/homework-12-5.py", line 66, in <module>
+  File "/home/micah/code/hacks-leaks-and-revelations/chapter-10/homework-11-5.py", line 66, in <module>
     main()
   File "/usr/lib/python3/dist-packages/click/core.py", line 1128, in __call__
     return self.main(*args, **kwargs)
@@ -165,9 +165,9 @@ Traceback (most recent call last):
     return ctx.invoke(self.callback, **ctx.params)
   File "/usr/lib/python3/dist-packages/click/core.py", line 754, in invoke
     return __callback(*args, **kwargs)
-  File "/home/micah/code/hacks-leaks-and-revelations/chapter-10/homework-12-5.py", line 54, in main
+  File "/home/micah/code/hacks-leaks-and-revelations/chapter-10/homework-11-5.py", line 54, in main
     "Longitude": gps_degrees_to_decimal(
-  File "/home/micah/code/hacks-leaks-and-revelations/chapter-10/homework-12-5.py", line 10, in gps_degrees_to_decimal
+  File "/home/micah/code/hacks-leaks-and-revelations/chapter-10/homework-11-5.py", line 10, in gps_degrees_to_decimal
     degrees = float(parts[0])
 IndexError: list index out of range
 ```
@@ -196,7 +196,7 @@ if (
 Then I commented out the `print(f"gps_coordinate: {gps_coordinate}")` line, which I only added for debugging, and ran it again:
 
 ```
-micah@cloak:~/code/hacks-leaks-and-revelations/chapter-10$ python3 homework-12-5.py ~/datasets/Parler/metadata parler-gps-coordinates.csv
+micah@cloak:~/code/hacks-leaks-and-revelations/chapter-10$ python3 homework-11-5.py ~/datasets/Parler/metadata parler-gps-coordinates.csv
 {'Filename': '27PknKIOwHt6', 'Longitude': -118.4026, 'Latitude': 34.0724}
 {'Filename': 'm3Wq53jjPnpw', 'Longitude': -118.2599, 'Latitude': 34.0473}
 {'Filename': 'kpKT3stt5LXq', 'Longitude': -80.2949, 'Latitude': 26.334}
@@ -207,7 +207,7 @@ micah@cloak:~/code/hacks-leaks-and-revelations/chapter-10$ python3 homework-12-5
 Saved: parler-gps-coordinates.csv
 ```
 
-You can find an implementation of this script in [homework-12-5.py](./homework-12-5.py).
+You can find an implementation of this script in [homework-11-5.py](./homework-11-5.py).
 
 ## Visualize the GPS Data Using QGIS
 
