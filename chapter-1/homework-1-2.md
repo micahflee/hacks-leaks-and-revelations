@@ -1,4 +1,4 @@
-# Homework 2-2: Make Sure Your Internal Disk is Encrypted
+# Homework 1-2: Make Sure Your Internal Disk is Encrypted
 
 Here are some different disk encryption technology.
 

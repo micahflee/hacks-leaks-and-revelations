@@ -1,4 +1,4 @@
-# Homework 7-4: Import MBOX Files Into Thunderbird
+# Homework 6-4: Import MBOX Files Into Thunderbird
 
 In this homework you'll import the Oath Keepers email dump into Thunderbird.
 
@@ -14,4 +14,4 @@ In this homework you'll import the Oath Keepers email dump into Thunderbird.
 - Right-click on the `Oath Keepers` feed and choose ImportExportTools NG > Import mbox file.
 - Browse for your `Oath Keepers.sbd` folder and import it.
 
-![Oath Keepers email in Thunderbird](./homework-7-4.png)
+![Oath Keepers email in Thunderbird](./homework-6-4.png)

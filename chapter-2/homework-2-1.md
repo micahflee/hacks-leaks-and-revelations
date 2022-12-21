@@ -1,4 +1,4 @@
-# Homework 3-1: Download BlueLeaks
+# Homework 2-1: Download BlueLeaks
 
 To download BlueLeaks, you'll need a BitTorrent client. I like [Transmission](https://transmissionbt.com).
 

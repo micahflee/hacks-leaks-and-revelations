@@ -1,4 +1,4 @@
-# Homework 5-2: Explore BlueLeaks With the Terminal
+# Homework 4-2: Explore BlueLeaks With the Terminal
 
 ## Mac users, install GNU coreutils
 
@@ -442,7 +442,7 @@ micah@rogue:/media/micah/datasets/BlueLeaks-extracted$ find . -type f > ../BlueL
 ```sh
 code ../BlueLeaks-filenames.txt
 ```
-![Screenshot of VS Code](./homework-5-2-blueleaks-filenames.png)
+![Screenshot of VS Code](./homework-4-2-blueleaks-filenames.png)
 
 ## Count files in BlueLeaks with `wc -l`
 

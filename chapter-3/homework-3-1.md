@@ -1,4 +1,4 @@
-# Homework 4-1 for Windows Users: Install Ubuntu in Windows
+# Homework 3-1 for Windows Users: Install Ubuntu in Windows
 
 Check out [Microsoft's documentation](https://docs.microsoft.com/en-us/windows/wsl/install) for the Windows Subsystem for Linux.
 

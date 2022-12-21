@@ -1,4 +1,4 @@
-# Homework 6-2 for Linux users: Install Docker Engine
+# Homework 5-2 for Linux users: Install Docker Engine
 
 Find instructions for installing Docker Engine in Linux [here](https://docs.docker.com/engine/install/). My Linux computer is running Ubuntu, so I'm going to follow the [Ubuntu instructions](https://docs.docker.com/engine/install/ubuntu/).
 

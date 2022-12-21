@@ -1,4 +1,4 @@
-# Homework 2-4: Play With Dangerzone
+# Homework 1-4: Play With Dangerzone
 
 You can get Dangerzone from [dangerzone.rocks](https://dangerzone.rocks/).
 

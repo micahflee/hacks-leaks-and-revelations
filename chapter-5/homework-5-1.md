@@ -1,4 +1,4 @@
-# Homework 6-1 for Windows and Mac Users: Install Docker Desktop
+# Homework 5-1 for Windows and Mac Users: Install Docker Desktop
 
 Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop) for Windows or Mac.
 
@@ -46,4 +46,4 @@ micah@trapdoor ~ %
 
 If you're using a Mac, make sure that Docker Desktop's Linux VM has enough memory to handle Aleph. Click the Docker icon in your system tray and choose Preferences. Switch to the Resources tab, and make sure that the Memory resource is set to at least 6GB, or more if you have more to spare. Then click Apply & Restart.
 
-![Increase Docker Desktop memory](./homework-6-1-macos-docker-settings.png)
+![Increase Docker Desktop memory](./homework-5-1-macos-docker-settings.png)

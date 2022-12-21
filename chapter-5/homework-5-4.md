@@ -1,4 +1,4 @@
-# Homework 6-4: Run Aleph Locally in Linux Containers
+# Homework 5-4: Run Aleph Locally in Linux Containers
 
 Make a new homework folder just for this assignment. Follow the [production deployment instructions](https://docs.alephdata.org/developers/installation#production-deployment) in the [Aleph documentation](https://docs.alephdata.org/).
 
@@ -44,7 +44,7 @@ micah@trapdoor aleph % openssl rand -hex 24
 f8b1afa480cec3574750d0d2a0f19b9484ea49d42a58c236
 ```
 
-![Editing aleph.env](./homework-6-4-aleph-env.png)
+![Editing aleph.env](./homework-5-4-aleph-env.png)
 
 Save the file.
 
@@ -162,50 +162,50 @@ micah@trapdoor aleph % docker-compose up
    ⠿ 98f8f3825eff Pull complete                                            137.7s
    ⠿ 50fda763c0d6 Pull complete                                            138.4s
 [+] Running 10/10
- ⠿ Network homework-6-4_default               Created                        0.1s
- ⠿ Container homework-6-4-postgres-1          Created                        0.1s
- ⠿ Container homework-6-4-convert-document-1  Created                        0.1s
- ⠿ Container homework-6-4-elasticsearch-1     Created                        0.1s
- ⠿ Container homework-6-4-redis-1             Created                        0.1s
- ⠿ Container homework-6-4-ingest-file-1       Created                        0.0s
- ⠿ Container homework-6-4-worker-1            Created                        0.1s
- ⠿ Container homework-6-4-api-1               Created                        0.1s
- ⠿ Container homework-6-4-shell-1             Created                        0.1s
- ⠿ Container homework-6-4-ui-1                Created                        0.0s
-Attaching to homework-6-4-api-1, homework-6-4-convert-document-1, homework-6-4-elasticsearch-1, homework-6-4-ingest-file-1, homework-6-4-postgres-1, homework-6-4-redis-1, homework-6-4-shell-1, homework-6-4-ui-1, homework-6-4-worker-1
-homework-6-4-redis-1             | 1:C 25 Feb 2022 18:12:53.586 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-homework-6-4-redis-1             | 1:C 25 Feb 2022 18:12:53.587 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=1, just started
-homework-6-4-redis-1             | 1:C 25 Feb 2022 18:12:53.587 # Configuration loaded
-homework-6-4-redis-1             | 1:M 25 Feb 2022 18:12:53.588 * monotonic clock: POSIX clock_gettime
-homework-6-4-redis-1             | 1:M 25 Feb 2022 18:12:53.589 * Running mode=standalone, port=6379.
-homework-6-4-redis-1             | 1:M 25 Feb 2022 18:12:53.589 # Server initialized
-homework-6-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 * Loading RDB produced by version 6.2.6
-homework-6-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 * RDB age 196 seconds
-homework-6-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 * RDB memory usage when created 0.77 Mb
-homework-6-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 # Done loading RDB, keys loaded: 25, keys expired: 0.
-homework-6-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 * DB loaded from disk: 0.001 seconds
-homework-6-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 * Ready to accept connections
-homework-6-4-elasticsearch-1     | create keystore
-homework-6-4-postgres-1          | 2022-02-25 18:12:53.674 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
-homework-6-4-postgres-1          | 2022-02-25 18:12:53.674 UTC [1] LOG:  listening on IPv6 address "::", port 5432
-homework-6-4-postgres-1          | 2022-02-25 18:12:53.676 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
-homework-6-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [1] [INFO] Starting gunicorn 20.1.0
-homework-6-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [1] [INFO] Listening at: http://0.0.0.0:3000 (1)
-homework-6-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [1] [INFO] Using worker: sync
-homework-6-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [10] [INFO] Booting worker with pid: 10
-homework-6-4-postgres-1          | 2022-02-25 18:12:53.693 UTC [29] LOG:  database system was shut down at 2022-02-25 18:09:37 UTC
-homework-6-4-postgres-1          | 2022-02-25 18:12:53.704 UTC [1] LOG:  database system is ready to accept connections
-homework-6-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [11] [INFO] Booting worker with pid: 11
-homework-6-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [12] [INFO] Booting worker with pid: 12
-homework-6-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [13] [INFO] Booting worker with pid: 13
-homework-6-4-elasticsearch-1     | Created elasticsearch keystore in /usr/share/elasticsearch/config/elasticsearch.keystore
-homework-6-4-shell-1 exited with code 0
-homework-6-4-api-1               | [2022-02-25 18:12:56 +0000] [1] [DEBUG] Current configuration:
-homework-6-4-api-1               |   config: ./gunicorn.conf.py
-homework-6-4-api-1               |   wsgi_app: None
-homework-6-4-api-1               |   bind: ['0.0.0.0:8000']
-homework-6-4-api-1               |   backlog: 2048
-homework-6-4-api-1               |   workers: 6
+ ⠿ Network homework-5-4_default               Created                        0.1s
+ ⠿ Container homework-5-4-postgres-1          Created                        0.1s
+ ⠿ Container homework-5-4-convert-document-1  Created                        0.1s
+ ⠿ Container homework-5-4-elasticsearch-1     Created                        0.1s
+ ⠿ Container homework-5-4-redis-1             Created                        0.1s
+ ⠿ Container homework-5-4-ingest-file-1       Created                        0.0s
+ ⠿ Container homework-5-4-worker-1            Created                        0.1s
+ ⠿ Container homework-5-4-api-1               Created                        0.1s
+ ⠿ Container homework-5-4-shell-1             Created                        0.1s
+ ⠿ Container homework-5-4-ui-1                Created                        0.0s
+Attaching to homework-5-4-api-1, homework-5-4-convert-document-1, homework-5-4-elasticsearch-1, homework-5-4-ingest-file-1, homework-5-4-postgres-1, homework-5-4-redis-1, homework-5-4-shell-1, homework-5-4-ui-1, homework-5-4-worker-1
+homework-5-4-redis-1             | 1:C 25 Feb 2022 18:12:53.586 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+homework-5-4-redis-1             | 1:C 25 Feb 2022 18:12:53.587 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=1, just started
+homework-5-4-redis-1             | 1:C 25 Feb 2022 18:12:53.587 # Configuration loaded
+homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.588 * monotonic clock: POSIX clock_gettime
+homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.589 * Running mode=standalone, port=6379.
+homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.589 # Server initialized
+homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 * Loading RDB produced by version 6.2.6
+homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 * RDB age 196 seconds
+homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 * RDB memory usage when created 0.77 Mb
+homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 # Done loading RDB, keys loaded: 25, keys expired: 0.
+homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 * DB loaded from disk: 0.001 seconds
+homework-5-4-redis-1             | 1:M 25 Feb 2022 18:12:53.591 * Ready to accept connections
+homework-5-4-elasticsearch-1     | create keystore
+homework-5-4-postgres-1          | 2022-02-25 18:12:53.674 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+homework-5-4-postgres-1          | 2022-02-25 18:12:53.674 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+homework-5-4-postgres-1          | 2022-02-25 18:12:53.676 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+homework-5-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [1] [INFO] Starting gunicorn 20.1.0
+homework-5-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [1] [INFO] Listening at: http://0.0.0.0:3000 (1)
+homework-5-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [1] [INFO] Using worker: sync
+homework-5-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [10] [INFO] Booting worker with pid: 10
+homework-5-4-postgres-1          | 2022-02-25 18:12:53.693 UTC [29] LOG:  database system was shut down at 2022-02-25 18:09:37 UTC
+homework-5-4-postgres-1          | 2022-02-25 18:12:53.704 UTC [1] LOG:  database system is ready to accept connections
+homework-5-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [11] [INFO] Booting worker with pid: 11
+homework-5-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [12] [INFO] Booting worker with pid: 12
+homework-5-4-convert-document-1  | [2022-02-25 18:12:53 +0000] [13] [INFO] Booting worker with pid: 13
+homework-5-4-elasticsearch-1     | Created elasticsearch keystore in /usr/share/elasticsearch/config/elasticsearch.keystore
+homework-5-4-shell-1 exited with code 0
+homework-5-4-api-1               | [2022-02-25 18:12:56 +0000] [1] [DEBUG] Current configuration:
+homework-5-4-api-1               |   config: ./gunicorn.conf.py
+homework-5-4-api-1               |   wsgi_app: None
+homework-5-4-api-1               |   bind: ['0.0.0.0:8000']
+homework-5-4-api-1               |   backlog: 2048
+homework-5-4-api-1               |   workers: 6
 --snip--
 ```
 
@@ -222,12 +222,12 @@ Example:
 ```
 micah@trapdoor aleph % docker-compose run --rm shell aleph upgrade
 [+] Running 6/0
- ⠿ Container homework-6-4-elasticsearch-1     Running                      0.0s
- ⠿ Container homework-6-4-convert-document-1  Running                      0.0s
- ⠿ Container homework-6-4-redis-1             Running                      0.0s
- ⠿ Container homework-6-4-postgres-1          Running                      0.0s
- ⠿ Container homework-6-4-ingest-file-1       Running                      0.0s
- ⠿ Container homework-6-4-worker-1            Running                      0.0s
+ ⠿ Container homework-5-4-elasticsearch-1     Running                      0.0s
+ ⠿ Container homework-5-4-convert-document-1  Running                      0.0s
+ ⠿ Container homework-5-4-redis-1             Running                      0.0s
+ ⠿ Container homework-5-4-postgres-1          Running                      0.0s
+ ⠿ Container homework-5-4-ingest-file-1       Running                      0.0s
+ ⠿ Container homework-5-4-worker-1            Running                      0.0s
 {"logger": "alembic.runtime.migration", "timestamp": "2022-02-25 18:38:24.240581", "message": "Context impl PostgresqlImpl.", "severity": "INFO"}
 {"logger": "alembic.runtime.migration", "timestamp": "2022-02-25 18:38:24.240763", "message": "Will assume transactional DDL.", "severity": "INFO"}
 {"logger": "servicelayer.archive.file", "timestamp": "2022-02-25 18:38:24.265702", "message": "Archive: /data", "severity": "INFO"}
@@ -300,7 +300,7 @@ micah@trapdoor aleph % docker-compose run --rm shell aleph upgrade
 
 When this command finishes running, load http://127.0.0.1:8080/ to see your Aleph server.
 
-![Aleph server running](./homework-6-4-aleph1.png)
+![Aleph server running](./homework-5-4-aleph1.png)
 
 ## Start an Aleph Shell
 
@@ -313,12 +313,12 @@ Example:
 ```
 micah@trapdoor aleph % docker-compose run --rm shell bash
 [+] Running 6/0
- ⠿ Container homework-6-4-redis-1             Running                      0.0s
- ⠿ Container homework-6-4-convert-document-1  Running                      0.0s
- ⠿ Container homework-6-4-postgres-1          Running                      0.0s
- ⠿ Container homework-6-4-elasticsearch-1     Running                      0.0s
- ⠿ Container homework-6-4-ingest-file-1       Running                      0.0s
- ⠿ Container homework-6-4-worker-1            Running                      0.0s
+ ⠿ Container homework-5-4-redis-1             Running                      0.0s
+ ⠿ Container homework-5-4-convert-document-1  Running                      0.0s
+ ⠿ Container homework-5-4-postgres-1          Running                      0.0s
+ ⠿ Container homework-5-4-elasticsearch-1     Running                      0.0s
+ ⠿ Container homework-5-4-ingest-file-1       Running                      0.0s
+ ⠿ Container homework-5-4-worker-1            Running                      0.0s
 root@39093f0cc006:/aleph# aleph --help
 Usage: aleph [OPTIONS] COMMAND [ARGS]...
 

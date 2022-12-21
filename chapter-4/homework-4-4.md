@@ -1,4 +1,4 @@
-# Homework 5-4: Create a VPS
+# Homework 4-4: Create a VPS
 
 You can use whatever cloud provider you'd like. I used [DigitalOcean](https://www.digitalocean.com/).
 
@@ -52,7 +52,7 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILxYgUq1ePSRSv7LTITG5hecwNBQzs3EZmo4PRzsV4yT
 
 Add it to DigitalOcean:
 
-![Adding an SSH key to DigitalOcean](./homework-5-4-do-ssh.png)
+![Adding an SSH key to DigitalOcean](./homework-4-4-do-ssh.png)
 
 ## Create a VPS
 
@@ -69,7 +69,7 @@ Create a new VPS (a "Droplet", in DigitalOcean) with these settings:
 Wait for it to finish and then copy the IP address. For example, my IP address is 
 When DigitalOcean is done provisioning my VPS, it tells me the IP address is `178.128.22.151`.
 
-![Screenshot from the DigitalOcean console showing test-vps’s IP address](./homework-5-4-do-ip.png)
+![Screenshot from the DigitalOcean console showing test-vps’s IP address](./homework-4-4-do-ip.png)
 
 ## SSH to Your Server
 
@@ -127,7 +127,7 @@ byobu
 
 Example:
 
-![Screenshot of Byoby Session](./homework-5-4-byobu.png)
+![Screenshot of Byoby Session](./homework-4-4-byobu.png)
 
 Press CTRL-A to open a new Byobu window. Check out https://www.byobu.org for further documentation.
 

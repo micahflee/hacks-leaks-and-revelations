@@ -1,4 +1,4 @@
-# Homework 7-1: Download Email Dumps
+# Homework 6-1: Download Email Dumps
 
 In this homework you'll download three email dumps, all using BitTorrent.
 

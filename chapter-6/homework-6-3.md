@@ -1,4 +1,4 @@
-# Homework 7-3: Import EML Files Into Thunderbird
+# Homework 6-3: Import EML Files Into Thunderbird
 
 In this homework you'll import the `iven-notte` folder from the Nauru Police Force email dump into Thunderbird.
 
@@ -16,4 +16,4 @@ In this homework you'll import the `iven-notte` folder from the Nauru Police For
 - Right-click on the `iven-notte` folder and choose ImportExportTools NG > Import all messages from a directory > also from its subdirectories.
 - Browse for your `iven-notte` folder and import it.
 
-![Nauru Police Force email in Thunderbird](./homework-7-3.png)
+![Nauru Police Force email in Thunderbird](./homework-6-3.png)

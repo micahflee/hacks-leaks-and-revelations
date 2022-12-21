@@ -1,4 +1,4 @@
-# Homework 2-3: Encrypt a USB Disk
+# Homework 1-3: Encrypt a USB Disk
 
 Here are some options for disk encryption software for encrypting USB disks:
 

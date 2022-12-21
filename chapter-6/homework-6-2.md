@@ -1,4 +1,4 @@
-# Homework 7-2: Configure Thunderbird for Email Dumps
+# Homework 6-2: Configure Thunderbird for Email Dumps
 
 Download and install Thunderbird from https://www.thunderbird.net.
 

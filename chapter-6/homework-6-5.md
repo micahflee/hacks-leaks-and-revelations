@@ -1,4 +1,4 @@
-# Homework 7-5: Import PST Files Into Thunderbird
+# Homework 6-5: Import PST Files Into Thunderbird
 
 In this homework you'll import the Heritage Foundation email dump into Thunderbird.
 
@@ -198,4 +198,4 @@ All of the emails from the PST have been extracted in EML format in the `Persona
 - Right-click on the `backup.pst` folder and choose ImportExportTools NG > Import all messages from a directory > also from its subdirectories.
 - Browse for your `Personal Folders` folder and import it.
 
-![Heritage Foundation email in Thunderbird](./homework-7-5.png)
+![Heritage Foundation email in Thunderbird](./homework-6-5.png)
