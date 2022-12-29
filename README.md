@@ -87,10 +87,9 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 ### Chapter 11: Parler, January 6, and the JSON File Format
 
 - [Homework 11-1: Download the Parler Video Metadata](./chapter-11/homework-11-1.md)
-- [Homework 11-2: Write a Script to Filter Videos with GPS Coordinates](./chapter-11/homework-11-2.md)
-- [Homework 11-3: Update the Script to Filter Videos from January 6, 2021](./chapter-11/homework-11-3.md)
-- [Homework 11-4: Update the Script to Filter Videos Filmed in Washington, DC](./chapter-11/homework-11-4.md)
-- [Homework 11-5: Plot the Parler Videos on a Map](./chapter-11/homework-11-5.md)
+- [Homework 11-2: Write a Script to Filter for Videos with GPS From January 6, 2021](./chapter-11/homework-11-2.md)
+- [Homework 11-3: Update the Script to Filter for Insurrection Videos](./chapter-11/homework-11-4.md)
+- [Homework 11-4: Update the Script to Create KML Files to Visualize](./chapter-11/homework-11-5.md)
 
 ### Chapter 12: Epik Fail and SQL Databases
 

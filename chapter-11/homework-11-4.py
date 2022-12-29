@@ -2,16 +2,11 @@ import click
 import os
 import json
 import math
+import simplekml
 
 
-def distance(x1, y1, x2, y2):
-    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-
-
-def is_point_in_washington_dc(x, y):
-    washington_dc_x = -77.00667073028771
-    washington_dc_y = 38.894101636006035
-    return distance(washington_dc_x, washington_dc_y, x, y) <= 0.25
+def json_filename_to_parler_id(json_filename):
+    return json_filename.split("-")[1].split(".")[0]
 
 
 def gps_degrees_to_decimal(gps_coordinate):
@@ -26,17 +21,25 @@ def gps_degrees_to_decimal(gps_coordinate):
     return gps_decimal
 
 
-def was_video_filmed_in_washington_dc(metadata):
+def distance(x1, y1, x2, y2):
+    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+
+def was_video_filmed_in_dc(metadata):
+    dc_x = -77.0066
+    dc_y = 38.8941
     x = gps_degrees_to_decimal(metadata[0]["GPSLongitude"])
     y = gps_degrees_to_decimal(metadata[0]["GPSLatitude"])
-    return is_point_in_washington_dc(x, y)
+    return distance(dc_x, dc_y, x, y) <= 0.25
 
 
 @click.command()
 @click.argument("parler_metadata_path")
 def main(parler_metadata_path):
-    """Filter Parler videos that were filmed in Washington DC and on Jan 6, 2021"""
-    count = 0
+    """Create KML files of GPS coordinates from Parler metadata"""
+    kml_all = simplekml.Kml()
+    kml_january6 = simplekml.Kml()
+    kml_insurrection = simplekml.Kml()
 
     for filename in os.listdir(parler_metadata_path):
         abs_filename = os.path.join(parler_metadata_path, filename)
@@ -44,18 +47,43 @@ def main(parler_metadata_path):
             with open(abs_filename, "rb") as f:
                 json_data = f.read()
 
-            metadata = json.loads(json_data)
+            try:
+                metadata = json.loads(json_data)
+            except json.decoder.JSONDecodeError:
+                print(f"Invalid JSON: {filename}")
+                continue
+
             if (
                 "GPSLongitude" in metadata[0]
                 and "GPSLatitude" in metadata[0]
-                and "CreateDate" in metadata[0]
-                and metadata[0]["CreateDate"].startswith("2021:01:06 ")
-                and was_video_filmed_in_washington_dc(metadata)
+                and metadata[0]["GPSLongitude"] != ""
+                and metadata[0]["GPSLatitude"] != ""
             ):
-                print(f"Found an insurrection video: {filename}")
-                count += 1
+                name = json_filename_to_parler_id(filename)
+                url = f"https://s3.wasabisys.com/ddosecrets-parler/{name}"
+                lon = gps_degrees_to_decimal(metadata[0]["GPSLongitude"])
+                lat = gps_degrees_to_decimal(metadata[0]["GPSLatitude"])
 
-    print(f"Total videos filmed in Washington DC on January 6: {count}")
+                print(f"Adding point {name} to kml_all: {lon}, {lat}")
+                kml_all.newpoint(name=name, description=url, coords=[(lon, lat)])
+
+                if "CreateDate" in metadata[0] and metadata[0]["CreateDate"].startswith(
+                    "2021:01:06"
+                ):
+                    print(f"Adding point {name} to kml_january6: {lon}, {lat}")
+                    kml_january6.newpoint(
+                        name=name, description=url, coords=[(lon, lat)]
+                    )
+
+                    if was_video_filmed_in_dc(metadata):
+                        print(f"Adding point {name} to kml_insurrection: {lon}, {lat}")
+                        kml_insurrection.newpoint(
+                            name=name, description=url, coords=[(lon, lat)]
+                        )
+
+    kml_all.save("parler-videos-all.kml")
+    kml_january6.save("parler-videos-january6.kml")
+    kml_insurrection.save("parler-videos-insurrection.kml")
 
 
 if __name__ == "__main__":
