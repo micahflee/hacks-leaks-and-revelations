@@ -93,8 +93,9 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 ### Chapter 12: Epik Fail and SQL Databases
 
-- [Homework 12-1: Download Parts of the Epik Dataset](./chapter-12/homework-12-1.md)
+- [Homework 12-1: Download Part of the Epik Dataset](./chapter-12/homework-12-1.md)
 - [Homework 12-2: Run a MySQL Server Using Docker](./chapter-12/homework-12-2.md)
+- [Homework 12-3: Install and Test the Command Line MySQL Client]()
 - [Homework 12-3: Extract the Epik Data](./chapter-12/homework-12-3.md)
 - [Homework 12-4: Import Epik Data Into MySQL](./chapter-12/homework-12-4.md)
 

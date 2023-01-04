@@ -1,7 +1,6 @@
 import click
 import os
 import json
-import math
 import simplekml
 
 
@@ -21,25 +20,12 @@ def gps_degrees_to_decimal(gps_coordinate):
     return gps_decimal
 
 
-def distance(x1, y1, x2, y2):
-    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-
-
-def was_video_filmed_in_dc(metadata):
-    dc_x = -77.0066
-    dc_y = 38.8941
-    x = gps_degrees_to_decimal(metadata[0]["GPSLongitude"])
-    y = gps_degrees_to_decimal(metadata[0]["GPSLatitude"])
-    return distance(dc_x, dc_y, x, y) <= 0.25
-
-
 @click.command()
 @click.argument("parler_metadata_path")
 def main(parler_metadata_path):
     """Create KML files of GPS coordinates from Parler metadata"""
     kml_all = simplekml.Kml()
     kml_january6 = simplekml.Kml()
-    kml_insurrection = simplekml.Kml()
 
     for filename in os.listdir(parler_metadata_path):
         abs_filename = os.path.join(parler_metadata_path, filename)
@@ -60,30 +46,37 @@ def main(parler_metadata_path):
                 and metadata[0]["GPSLatitude"] != ""
             ):
                 name = json_filename_to_parler_id(filename)
-                url = f"https://s3.wasabisys.com/ddosecrets-parler/{name}"
+                description = (
+                    f"URL: https://s3.wasabisys.com/ddosecrets-parler/{name}<br>"
+                )
+                for key in [
+                    "CreateDate",
+                    "FileTypeExtension",
+                    "Duration",
+                    "Make",
+                    "Model",
+                    "Software",
+                ]:
+                    if key in metadata[0]:
+                        description += f"{key}: {metadata[0][key]}<br>"
                 lon = gps_degrees_to_decimal(metadata[0]["GPSLongitude"])
                 lat = gps_degrees_to_decimal(metadata[0]["GPSLatitude"])
 
                 print(f"Adding point {name} to kml_all: {lon}, {lat}")
-                kml_all.newpoint(name=name, description=url, coords=[(lon, lat)])
+                kml_all.newpoint(
+                    name=name, description=description, coords=[(lon, lat)]
+                )
 
                 if "CreateDate" in metadata[0] and metadata[0]["CreateDate"].startswith(
                     "2021:01:06"
                 ):
                     print(f"Adding point {name} to kml_january6: {lon}, {lat}")
                     kml_january6.newpoint(
-                        name=name, description=url, coords=[(lon, lat)]
+                        name=name, description=description, coords=[(lon, lat)]
                     )
-
-                    if was_video_filmed_in_dc(metadata):
-                        print(f"Adding point {name} to kml_insurrection: {lon}, {lat}")
-                        kml_insurrection.newpoint(
-                            name=name, description=url, coords=[(lon, lat)]
-                        )
 
     kml_all.save("parler-videos-all.kml")
     kml_january6.save("parler-videos-january6.kml")
-    kml_insurrection.save("parler-videos-insurrection.kml")
 
 
 if __name__ == "__main__":
