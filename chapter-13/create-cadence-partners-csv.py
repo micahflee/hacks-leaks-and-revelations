@@ -70,4 +70,5 @@ def main():
         writer.writerows(partner_rows)
 
 
-main()
+if __name__ == "__main__":
+    main()

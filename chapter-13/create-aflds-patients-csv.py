@@ -2,7 +2,6 @@ import json
 import csv
 import os
 
-
 # Turn a JSON file into a Python dict or list
 def data_from_json(filename):
     with open(filename) as f:
@@ -43,7 +42,9 @@ def main():
                 patient_rows.append(
                     {
                         "user_id": data["provider"]["user_id"],
-                        "created_at": patient_ids_to_created_at[data["provider"]["user_id"]],
+                        "created_at": patient_ids_to_created_at[
+                            data["provider"]["user_id"]
+                        ],
                         "fname": data["provider"]["fname"],
                         "lname": data["provider"]["lname"],
                         "email": data["provider"]["email"],
@@ -75,4 +76,5 @@ def main():
         writer.writerows(patient_rows)
 
 
-main()
+if __name__ == "__main__":
+    main()

@@ -1,7 +1,4 @@
 import csv
-import json
-import time
-
 
 # Export a CSV that adds up prescriptions and their costs for each category of drug
 def main():
@@ -47,10 +44,13 @@ def main():
             writer.writerow(
                 {
                     "drug_category": category,
-                    "prescription_count": drug_categories[category]["prescription_count"],
+                    "prescription_count": drug_categories[category][
+                        "prescription_count"
+                    ],
                     "total_cost": int(drug_categories[category]["total_cost"]),
                 }
             )
 
 
-main()
+if __name__ == "__main__":
+    main()

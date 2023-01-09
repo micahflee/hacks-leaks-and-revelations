@@ -50,4 +50,5 @@ def main():
     print(f"Total cost: ${int(total_cost):,}")
 
 
-main()
+if __name__ == "__main__":
+    main()
