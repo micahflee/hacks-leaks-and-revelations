@@ -60,7 +60,7 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 - [Homework 7-1: Install Python](./chapter-7/homework-7-1.md)
 - [Homework 7-2: Your First Python Script](./chapter-7/homework-7-2.md)
 - [Homework 7-3: Practice the Basics](./chapter-7/homework-7-3.md)
-- [Homework 7-4: Practice Loops](./chapter-7/homework-7-4.md)
+- [Homework 7-4: Practice Loops and Control Flow](./chapter-7/homework-7-4.md)
 - [Homework 7-5: Practice Writing Functions](./chapter-7/homework-7-5.py)
 
 ### Chapter 8: Working With Data in Python
@@ -76,7 +76,7 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 ### Chapter 9: BlueLeaks and the CSV File Format
 
 - [Homework 9-1: Install Spreadsheet Software](./chapter-9/homework-9-1.md)
-- [Homework 9-2: Make SARs Readable](./chapter-9/homework-9-2.md)
+- [Homework 9-2: Make BlueLeaks CSVs More Readable](./chapter-9/homework-9-2.md)
 - [Homework 9-3: Make Bulk Emails Readable](./chapter-9/homework-9-3.md)
 - [Homework 9-4: Make a CSV of BlueLeaks Sites](./chapter-9/homework-9-4.md)
 
@@ -96,9 +96,9 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 - [Homework 12-1: Download Part of the Epik Dataset](./chapter-12/homework-12-1.md)
 - [Homework 12-2: Run a MySQL Server Using Docker](./chapter-12/homework-12-2.md)
-- [Homework 12-3: Install and Test the Command Line MySQL Client]()
-- [Homework 12-3: Extract the Epik Data](./chapter-12/homework-12-3.md)
-- [Homework 12-4: Import Epik Data Into MySQL](./chapter-12/homework-12-4.md)
+- [Homework 12-3: Install and Test the Command Line MySQL Client](./chapter-12/homework-12-3.md)
+- [Homework 12-4: Extract the Epik Data](./chapter-12/homework-12-4.md)
+- [Homework 12-5: Import Epik Data Into MySQL](./chapter-12/homework-12-5.md)
 
 ## Part 5: Case Studies
 
