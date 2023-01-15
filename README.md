@@ -7,14 +7,15 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 ### Chapter 1: Protecting Sources and Yourself
 
 - [Homework 1-1: Start Using a Password Manager](./chapter-1/homework-1-1.md)
-- [Homework 1-2: Make Sure Your Internal Disk is Encrypted](./chapter-1/homework-1-2.md)
+- [Homework 1-2: Encrypt Your Internal Disk](./chapter-1/homework-1-2.md)
 - [Homework 1-3: Encrypt a USB Disk](./chapter-1/homework-1-3.md)
 - [Homework 1-4: Play With Dangerzone](./chapter-1/homework-1-4.md)
 
 ### Chapter 2: Acquiring Datasets
 
 - [Homework 2-1: Download BlueLeaks](./chapter-2/homework-2-1.md)
-- [Homework 2-3: Play with Tor and OnionShare](./chapter-2/homework-2-2.md)
+- [Homework 2-2: Installing and Using Signal](./chapter-2/homework-2-2.md)
+- [Homework 2-3: Play with Tor and OnionShare](./chapter-2/homework-2-3.md)
 
 ## Part 2: Tools of the Trade
 
@@ -23,24 +24,24 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 - [Homework 3-1 for Windows Users: Install Ubuntu in Windows](./chapter-3/homework-3-1.md)
 - [Homework 3-2 for Mac Users: Manage Packages with Homebrew](./chapter-3/homework-3-2.md)
 - [Homework 3-3 for Windows and Linux Users: Manage Packages with Apt](./chapter-3/homework-3-3.md)
-- [Homework 3-4: Play With Curl](./chapter-3/homework-3-4.md)
+- [Homework 3-4: Practice Using the CLI with cURL](./chapter-3/homework-3-4.md)
 - [Homework 3-5: Install a Text Editor](./chapter-3/homework-3-5.md)
-- [Homework 3-6: Your First Shell Script](./chapter-3/homework-3-6.md)
+- [Homework 3-6: Write Your First Shell Script](./chapter-3/homework-3-6.md)
 - [Homework 3-7: Clone the Book's Git Repository](./chapter-3/homework-3-7.md)
 
 ### Chapter 4: Exploring Datasets in the Terminal
 
-- [Homework 4-1: Unzip BlueLeaks](./chapter-4/homework-4-1.md)
-- [Homework 4-2: Explore BlueLeaks With the Terminal](./chapter-4/homework-4-2.md)
-- [Homework 4-3: Grepping for Revelations](./chapter-4/homework-4-3.md)
-- [Homework 4-4: Create a VPS](./chapter-4/homework-4-4.md)
-- [Homework 4-5: Download and Explore a Dataset Remotely](./chapter-4/homework-4-5.md)
+- [Homework 4-1: Accessing the BlueLeaks Dataset](./chapter-4/homework-4-1.md)
+- [Homework 4-2: Exploring BlueLeaks on the Command Line](./chapter-4/homework-4-2.md)
+- [Homework 4-3: Finding Revelations with Grep](./chapter-4/homework-4-3.md)
+- [Homework 4-4: Setting Up Your First VPS](./chapter-4/homework-4-4.md)
+- [Homework 4-5: Exploring the Oath Keepers Dataset Remotely](./chapter-4/homework-4-5.md)
 
 ### Chapter 5: Docker, Aleph, and Making Datasets Searchable
 
 - [Homework 5-1 for Windows and Mac users: Install Docker Desktop](./chapter-5/homework-5-1.md)
 - [Homework 5-2 for Linux users: Install Docker CE](./chapter-5/homework-5-2.md)
-- [Homework 5-3: Quickly Run a WordPress Site With Docker Compose](./chapter-5/homework-5-3.md)
+- [Homework 5-3: Run a WordPress Site with Docker Compose](./chapter-5/homework-5-3.md)
 - [Homework 5-4: Run Aleph Locally in Linux Containers](./chapter-5/homework-5-4.md)
 - [Homework 5-5: Add Part of BlueLeaks to Aleph](./chapter-5/homework-5-5.md)
 
@@ -113,9 +114,9 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 ### Chapter 14: Neo-Nazis and Their Chat Rooms
 
-- [Unicorn Riot's Discord Leaks](https://discordleaks.unicornriot.ninja/)
 - [Discord Analysis](https://github.com/micahflee/discord-analysis)
 - [The Intercept: How Right-Wing Extremists Stalk, Dox, and Harass Their Enemies](https://theintercept.com/2017/09/06/how-right-wing-extremists-stalk-dox-and-harass-their-enemies/)
+- [Unicorn Riot's Discord Leaks](https://discordleaks.unicornriot.ninja/)
 
 ## Appendixes
 

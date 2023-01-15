@@ -1,4 +1,4 @@
-# Homework 4-5: Download and Explore a Dataset Remotely
+# Homework 4-5: Exploring the Oath Keepers Dataset Remotely
 
 ## Use BitTorrent From the CLI
 

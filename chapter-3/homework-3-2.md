@@ -1,4 +1,4 @@
-# Homework 4-2 for Mac Users: Manage Packages with Homebrew
+# Homework 3-2 for Mac Users: Manage Packages with Homebrew
 
 🍺 Install the [Homebrew](https://brew.sh/) package manager.
 

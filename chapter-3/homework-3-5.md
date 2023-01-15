@@ -1,4 +1,4 @@
-# Homework 4-5: Install a Text Editor
+# Homework 3-5: Install a Text Editor
 
 You can use whatever text editor you prefer. I like one called [Visual Studio Code](https://code.visualstudio.com/).
 

@@ -1,4 +1,4 @@
-# Homework 4-2: Explore BlueLeaks With the Terminal
+# Homework 4-2: Exploring BlueLeaks on the Command Line
 
 ## Mac users, install GNU coreutils
 

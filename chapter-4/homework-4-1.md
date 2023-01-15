@@ -1,4 +1,4 @@
-# Homework 4-1: Unzip BlueLeaks
+# Homework 4-1: Accessing the BlueLeaks Dataset
 
 ## macOS and Linux Users
 

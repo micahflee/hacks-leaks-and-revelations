@@ -1,4 +1,4 @@
-# Homework 4-4: Create a VPS
+# Homework 4-4: Setting Up Your First VPS
 
 You can use whatever cloud provider you'd like. I used [DigitalOcean](https://www.digitalocean.com/).
 

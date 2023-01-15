@@ -1,9 +1,6 @@
-# Homework 4-3 for Windows and Linux Users: Manage Packages with Apt
+# Homework 3-3 for Windows and Linux Users: Manage Packages with Apt
 
-Different Linux distributions come with different [package managers](https://en.wikipedia.org/wiki/Package_manager).
-
-Assuming you're using Debian, Ubuntu, or a distribution based on these, you'll use [apt](Install [neofetch](https://github.com/dylanaraps/neofetch):
-).
+Different Linux distributions come with different [package managers](https://en.wikipedia.org/wiki/Package_manager). Assuming you're using Ubuntu or Windows with WSL, you'll use `apt` to install neofetch.
 
 Update available packages:
 

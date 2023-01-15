@@ -1,4 +1,4 @@
-# Homework 4-3: Grepping for Revelations
+# Homework 4-3: Finding Revelations with Grep
 
 The homework teaches you to use `grep`.
 
