@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 
 def main():
-    for page_number in range(1, 5):
+    for page_number in range(1, 6):
         print(f"LOADING PAGE {page_number}")
         r = httpx.get(f"https://news.ycombinator.com/?p={page_number}")
         print("")
