@@ -1,8 +1,8 @@
-# Homework 8-3: Develop CLI Programs With Click
+# Homework 8-3: Find the Largest Files in Any Dataset
 
 This homework teaches you to use the [Click])(https://click.palletsprojects.com/) module to make CLI programs in Python.
 
-You can find my solution for this homework assignment in [homework-8-4.py](./homework-8-4py).
+You can find my solution for this homework assignment in [homework-8-3.py](./homework-8-3py).
 
 If you haven't installed click yet, install it with pip:
 

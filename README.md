@@ -2,6 +2,8 @@
 
 This git repository contains the code that goes along with the book Hacks, Leaks, and Revelations.
 
+_If you find any errors in this repo, please let me know. You can contact me at micah@micahflee.com._
+
 ## Part 1: Sources and Datasets
 
 ### Chapter 1: Protecting Sources and Yourself
@@ -67,7 +69,7 @@ This git repository contains the code that goes along with the book Hacks, Leaks
 
 - [Homework 8-1: Traverse the Filesystem](./chapter-8/homework-8-1.md)
 - [Homework 8-2: Find the Largest Files in BlueLeaks](./chapter-8/homework-8-2.md)
-- [Homework 8-3: Develop CLI Programs With Click](./chapter-8/homework-8-3.md)
+- [Homework 8-3: Find the Largest Files in Any Dataset](./chapter-8/homework-8-3.md)
 - [Homework 8-4: Map Out the CSVs in BlueLeaks](./chapter-8/homework-8-4.md)
 - [Homework 8-5: Practice Reading and Writing Files](./chapter-8/homework-8-5.md)
 
