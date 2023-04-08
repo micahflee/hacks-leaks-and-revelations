@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  app:
+    image: micahflee/blueleaks-explorer:latest
+    ports:
+      - "8000:80"
+    volumes:
+      - /Users/user/datasets/BlueLeaks-extracted:/data/blueleaks
+      - ./databases:/data/databases
+      - ./structures:/data/structures
