@@ -10,8 +10,8 @@ Open a terminal, change to your datasets USB disk (or, in Windows, create a `~/d
 cd ~/datasets
 mkdir Parler
 cd Parler
-wget https://s3.wasabisys.com/ddosecrets-parler/ddosecrets-parler-listing.txt.gz
-wget https://s3.wasabisys.com/ddosecrets-parler/metadata.tar.gz
+wget https://data.ddosecrets.com/Parler/Videos/ddosecrets-parler-listing.txt.gz
+wget https://data.ddosecrets.com/Parler/Videos/metadata.tar.gz
 ```
 
 For example:
@@ -21,29 +21,29 @@ micah@cloak:~$ cd ~/datasets
 micah@cloak:~/datasets$ mkdir Parler
 micah@cloak:~/datasets$ cd Parler/
 micah@cloak:~/datasets/Parler$
-micah@cloak:~/datasets/Parler$ wget https://s3.wasabisys.com/ddosecrets-parler/ddosecrets-parler-listing.txt.gz
---2022-04-22 14:41:45--  https://s3.wasabisys.com/ddosecrets-parler/ddosecrets-parler-listing.txt.gz
-Resolving s3.wasabisys.com (s3.wasabisys.com)... 38.27.106.51, 38.27.106.53
-Connecting to s3.wasabisys.com (s3.wasabisys.com)|38.27.106.51|:443... connected.
+micah@cloak:~/datasets/Parler$ wget https://data.ddosecrets.com/Parler/Videos/ddosecrets-parler-listing.txt.gz
+--2023-04-09 17:34:36--  https://data.ddosecrets.com/Parler/Videos/ddosecrets-parler-listing.txt.gz
+Resolving data.ddosecrets.com (data.ddosecrets.com)... 172.67.75.15, 104.26.3.199, 104.26.2.199
+Connecting to data.ddosecrets.com (data.ddosecrets.com)|172.67.75.15|:443... connected.
 HTTP request sent, awaiting response... 200 OK
-Length: 17790173 (17M) [application/x-gzip]
+Length: 17790173 (17M) [application/octet-stream]
 Saving to: ‘ddosecrets-parler-listing.txt.gz’
 
-ddosecrets-parler-listing.txt.gz       100%[============================================================================>]  16.97M  1.45MB/s    in 14s
+ddosecrets-parler-listin 100%[================================>]  16.97M  13.5MB/s    in 1.3s    
 
-2022-04-22 14:42:00 (1.24 MB/s) - ‘ddosecrets-parler-listing.txt.gz’ saved [17790173/17790173]
+2023-04-09 17:34:38 (13.5 MB/s) - ‘ddosecrets-parler-listing.txt.gz’ saved [17790173/17790173]
 
-micah@cloak:~/datasets/Parler$ wget https://s3.wasabisys.com/ddosecrets-parler/metadata.tar.gz
---2022-04-22 14:42:09--  https://s3.wasabisys.com/ddosecrets-parler/metadata.tar.gz
-Resolving s3.wasabisys.com (s3.wasabisys.com)... 38.27.106.51, 38.27.106.53
-Connecting to s3.wasabisys.com (s3.wasabisys.com)|38.27.106.51|:443... connected.
+micah@cloak:~/datasets/Parler$ wget https://data.ddosecrets.com/Parler/Videos/metadata.tar.gz
+--2023-04-09 17:34:55--  https://data.ddosecrets.com/Parler/Videos/metadata.tar.gz
+Resolving data.ddosecrets.com (data.ddosecrets.com)... 172.67.75.15, 104.26.3.199, 104.26.2.199
+Connecting to data.ddosecrets.com (data.ddosecrets.com)|172.67.75.15|:443... connected.
 HTTP request sent, awaiting response... 200 OK
-Length: 212461278 (203M) [application/x-tar]
+Length: 212461278 (203M) [application/octet-stream]
 Saving to: ‘metadata.tar.gz’
 
-metadata.tar.gz                        100%[============================================================================>] 202.62M  2.45MB/s    in 48s
+metadata.tar.gz          100%[================================>] 202.62M  21.3MB/s    in 9.6s    
 
-2022-04-22 14:42:58 (4.20 MB/s) - ‘metadata.tar.gz’ saved [212461278/212461278]
+2023-04-09 17:35:06 (21.0 MB/s) - ‘metadata.tar.gz’ saved [212461278/212461278]
 
 micah@cloak:~/datasets/Parler$ ls -lh
 total 220M
@@ -78,12 +78,12 @@ It has 1,031,509 lines. Open _ddosecrets-parler-listing.txt_ in a text editor. H
 
 ![Viewing filenames in a text editor](./homework-11-1-filenames.png)
 
-The last column of each line is a filename. For example, if you want to download the video with the filename of _0003lx5cSwSB_, you will download `https://s3.wasabisys.com/ddosecrets-parler/0003lx5cSwSB`. Give it a try. In this case, I’m creating a new folder called videos to download the videos into.
+The last column of each line is a filename. For example, if you want to download the video with the filename of _0003lx5cSwSB_, you will download `https://data.ddosecrets.com/Parler/Videos/0003lx5cSwSB`. Give it a try. In this case, I’m creating a new folder called videos to download the videos into.
 
 ```sh
 mkdir videos
 cd videos
-wget https://s3.wasabisys.com/ddosecrets-parler/0003lx5cSwSB
+wget https://data.ddosecrets.com/Parler/Videos/0003lx5cSwSB
 ```
 
 For example:
@@ -91,17 +91,18 @@ For example:
 ```
 micah@cloak:~/datasets/Parler$ mkdir videos
 micah@cloak:~/datasets/Parler$ cd videos/
-micah@cloak:~/datasets/Parler/videos$ wget https://s3.wasabisys.com/ddosecrets-parler/0003lx5cSwSB
---2022-04-22 14:54:51--  https://s3.wasabisys.com/ddosecrets-parler/0003lx5cSwSB
-Resolving s3.wasabisys.com (s3.wasabisys.com)... 38.27.106.51, 38.27.106.53
-Connecting to s3.wasabisys.com (s3.wasabisys.com)|38.27.106.51|:443... connected.
+micah@cloak:~/datasets/Parler/videos$ wget https://data.ddosecrets.com/Parler/Videos/0003lx5cSwSB
+--2022-04-22 14:54:51--  https://data.ddosecrets.com/Parler/Videos/0003lx5cSwSB
+--2023-04-09 17:35:29--  https://data.ddosecrets.com/Parler/Videos/0003lx5cSwSB
+Resolving data.ddosecrets.com (data.ddosecrets.com)... 104.26.2.199, 172.67.75.15, 104.26.3.199
+Connecting to data.ddosecrets.com (data.ddosecrets.com)|104.26.2.199|:443... connected.
 HTTP request sent, awaiting response... 200 OK
-Length: 14586730 (14M) [binary/octet-stream]
+Length: 14586730 (14M) [application/octet-stream]
 Saving to: ‘0003lx5cSwSB’
 
-0003lx5cSwSB                           100%[============================================================================>]  13.91M  1.26MB/s    in 14s
+0003lx5cSwSB             100%[================================>]  13.91M  9.64MB/s    in 1.4s    
 
-2022-04-22 14:55:05 (1.03 MB/s) - ‘0003lx5cSwSB’ saved [14586730/14586730]
+2023-04-09 17:35:32 (9.64 MB/s) - ‘0003lx5cSwSB’ saved [14586730/14586730]
 ```
 
 To watch the videos, you must rename them to have the file extension _.mp4_. You can rename this file like:
