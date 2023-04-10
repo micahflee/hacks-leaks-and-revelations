@@ -4,6 +4,7 @@ services:
     image: mariadb:10.9
     environment:
       MARIADB_ROOT_PASSWORD: this-is-your-root-password
+      MARIADB_ROOT_HOST: "%"
     ports:
       - 3306:3306
     volumes:

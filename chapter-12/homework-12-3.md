@@ -1,35 +1,15 @@
-# Homework 12-3: Install and Test the Command Line MySQL Client
+# Homework 12-3: Download Part of the Epik Dataset
 
-## Install the Command Line MySQL Client
+You can read about the Epik dataset, and find links to the torrents to download it, at https://ddosecrets.com/wiki/Epik.
 
-If you're using macOS: `brew install mariadb`
+This dataset is split into three parts and it's very large: Part one is 180GB, part two is 72GB, and part three is 104GB. For this homework assignment you'll only need to download pieces of part one and part three, about 25GB total.
 
-If you're using Linux or Windows with WSL: `sudo apt install mariadb-client`
+## Download the SQL Databases
 
-## Connect to MySQL
+Open the torrent for **part one** in your BitTorrent client: https://ddosecrets.com/images/1/13/EpikFail.torrent
 
-Make sure you MySQL server is from [Homework 12-2](./homework-12-2.md) is running, and then connect to it with:
+Open it in your BitTorrent client, like Transmission. Make sure to save it somewhere with enough disk space, like your datasets USB disk. When you're downloading it, only select these files to download:
 
-```sh
-mysql -h localhost --protocol=tcp -u root -p
-```
-
-You'll need to type the root database password. For example:
-
-```
-user@chaos chapter-12 % mysql -h localhost --protocol=tcp -u root -p                                                                                    (git)-[main] 
-Enter password: 
-Welcome to the MariaDB monitor.  Commands end with ; or \g.
-Your MariaDB connection id is 3
-Server version: 10.9.4-MariaDB-1:10.9.4+maria~ubu2204 mariadb.org binary distribution
-
-Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
-
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-MariaDB [(none)]> 
-```
-
-## Practice Queries
-
-Practice the MySQL-specific queries described in the book.
+- `!README.txt`
+- `sql` (folder)
+  - `api_system.sql.gz`
