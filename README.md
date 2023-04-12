@@ -98,9 +98,8 @@ _If you find any errors in this repo, please let me know. You can contact me at 
 
 - [Homework 12-1: Create and Test a MySQL Server Using Docker and Adminer](./chapter-12/homework-12-1.md)
 - [Homework 12-2: Install and Test the Command Line MySQL Client](./chapter-12/homework-12-2.md)
-- [Homework 12-3: Download Part of the Epik Dataset](./chapter-12/homework-12-3.md)
-- [Homework 12-4: Extract the Epik Data](./chapter-12/homework-12-4.md)
-- [Homework 12-5: Import Epik Data Into MySQL](./chapter-12/homework-12-5.md)
+- [Homework 12-3: Download and Extract Part of the Epik Dataset](./chapter-12/homework-12-3.md)
+- [Homework 12-4: Import Epik Data Into MySQL](./chapter-12/homework-12-4.md)
 
 ## Part 5: Case Studies
 
