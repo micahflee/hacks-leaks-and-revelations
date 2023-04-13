@@ -1,0 +1,16 @@
+<li{% if message.id == active_message_id %} class="active"{% endif %}>
+  {% if message.id == active_message_id %}<a name="msg"></a>{% endif %}
+  <p>
+    <span class="user-name"><a href="{{ message.user.permalink() }}">{{ message.user.name }}</a></span>
+    <span class="channel-name">#{{ message.channel.name }}</span>
+    <span class="server-name">[server: {{ message.server.name }}]</span>
+    <span class="permalink"><a href="{{ message.permalink() }}{% if q %}?q={{q}}{% endif %}#msg">view</a></span>
+  </p>
+  <p>
+    <span class="timestamp">{{ message.formatted_timestamp() }}</span>
+  </p>
+  <p class="message">{{ message.highlight(q)|safe }}</p>
+  {% for a in message.attachments() %}
+    <p class="attachments"><img src="{{ a.url }}" /></p>
+  {% endfor %}
+</li>

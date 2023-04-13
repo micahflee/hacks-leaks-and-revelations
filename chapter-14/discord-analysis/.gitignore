@@ -1,0 +1,51 @@
+*.py[cod]
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+*.eggs
+dist
+deb_dist
+build
+eggs
+parts
+var
+sdist
+develop-eggs
+.installed.cfg
+MANIFEST
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# vim
+*.swp
+
+# tags
+ctags
+tags
+
+# OSX
+.DS_Store
+
+# Project-specific
+app.cfg
+database.sqlite3
+database.sqlite3-journal
+venv

@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>List of users</h2>
+
+<ul>
+  {% for user in users %}
+  <li><a href="{{ user.permalink() }}">{{ user.name }}</a> <span class="message-count">[{{ "{0:,}".format(user.message_count() | int) }}]</span></li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

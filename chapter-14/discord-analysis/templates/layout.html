@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Discord Analysis</title>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="sidebar">
+      {% for server in servers %}
+      <div class="server">
+        <p><strong>{{ server.name }}</strong></p>
+        <ul>
+          {% for c in server.channels %}
+          <li{% if channel %}{% if c.id==channel.id %} class="active" {% endif %}{% endif %}><a
+              href="{{ c.permalink() }}">#{{ c.name }}</a> <span class="message-count">[{{
+              "{0:,}".format(c.message_count() | int) }}]</span></li>
+            {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+
+      <p><a href="/users">Users</a></p>
+    </div>
+
+    <div class="content">
+      <div class="search">
+        <form method="get" action="/search">
+          <input type="text" name="q" class="q" placeholder="Search query" {% if q %} value="{{q}}" {% endif %} />
+          <select name="s">
+            <option value="">[all servers]</option>
+            {% for server in servers %}
+            <option value="{{ server.id }}" {% if server.id==s %} selected="selected" {% endif %}>
+              {{ server.name }}
+            </option>
+            {% endfor %}
+          </select>
+          <input type="submit" value="Search" />
+        </form>
+      </div>
+
+      <div class="messages">
+        {% for message in get_flashed_messages() %}
+        <div class=flash>{{ message }}</div>
+        {% endfor %}
+      </div>
+
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</body>
+
+</html>

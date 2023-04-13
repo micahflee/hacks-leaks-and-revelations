@@ -1,0 +1,147 @@
+body {
+  font-family: sans-serif;
+}
+
+.wrapper {
+  margin: 10px;
+  display: table;
+}
+
+.sidebar {
+  display: table-cell;
+  min-width: 300px;
+  padding-right: 20px;
+}
+
+.sidebar h3 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.sidebar .server p {
+  margin: 0;
+}
+
+.sidebar .server a {
+  color: #660c5d;
+  text-decoration: none;
+}
+
+.sidebar .server ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.sidebar .server ul li {
+  padding: 3px;
+}
+
+.sidebar .server ul li.active {
+  background-color: #f7c8f1;
+}
+
+.content {
+  display: table-cell;
+  width: 100%;
+}
+
+.content img {
+  max-width: 900px;
+}
+
+.content .message {
+  word-break: break-all;
+}
+
+.content .search {
+    margin-bottom: 20px;
+}
+
+.content .search .q {
+  width: 400px;
+}
+
+.content .stats table {
+    border: 1px solid #000000;
+}
+
+.content .stats table tr {
+    padding: 10px;
+}
+
+.content .stats table th {
+    padding: 10px 20px;
+    border-bottom: 1px solid #AAAAAA;
+}
+
+.content .stats table td {
+    padding: 10px 20px;
+}
+
+.content .results {
+  border: 1px solid #999999;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.content .results .results-header {
+  color: #666666;
+  font-weight: bold;
+}
+
+.content .results ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.content .results ul li {
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.content .results ul li.active {
+  background-color: #ffd6f9;
+  padding: 20px;
+  font-size: 1.1em;
+}
+
+.content .results ul p {
+  margin: 0;
+  padding: 0;
+}
+
+.content .results .channel-name {
+  color: #560b4d;
+  margin-right: 10px;
+}
+
+.content .results .server-name {
+  color: #999999;
+  font-size: 0.8em;
+}
+
+.content .results .user-name {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.content .results .timestamp {
+  color: #999999;
+  font-size: 0.8em;
+}
+
+.content .results .message {
+  margin-top: 10px;
+}
+
+.content .results .message .highlight {
+  background-color: #ff8ef1;
+}
+
+.message-count {
+  font-size: 10px;
+  color: #666666;
+}

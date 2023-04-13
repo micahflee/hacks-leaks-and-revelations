@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>{{ description }}</h2>
+
+<div class="results">
+  <ul>
+    {% for message in prev_messages %}
+      {% include 'message.html' %}
+    {% endfor %}
+    {% include 'message.html' %}
+    {% for message in next_messages %}
+      {% include 'message.html' %}
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}

@@ -115,7 +115,7 @@ _If you find any errors in this repo, please let me know. You can contact me at 
 
 ### Chapter 14: Neo-Nazis and Their Chat Rooms
 
-- [Discord Analysis](https://github.com/micahflee/discord-analysis)
+- [Discord Analysis](./chapter-14/discord-analysis)
 - [The Intercept: How Right-Wing Extremists Stalk, Dox, and Harass Their Enemies](https://theintercept.com/2017/09/06/how-right-wing-extremists-stalk-dox-and-harass-their-enemies/)
 - [Unicorn Riot's Discord Leaks](https://discordleaks.unicornriot.ninja/)
 
