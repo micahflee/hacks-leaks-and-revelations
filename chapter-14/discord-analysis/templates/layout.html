@@ -28,11 +28,13 @@
     <div class="content">
       <div class="search">
         <form method="get" action="/search">
-          <input type="text" name="q" class="q" placeholder="Search query" {% if q %} value="{{q}}" {% endif %} />
+          <input type="text" name="q" class="q" placeholder="Search query" {% if q %}
+            value="{{q}}" {% endif %} />
           <select name="s">
             <option value="">[all servers]</option>
             {% for server in servers %}
-            <option value="{{ server.id }}" {% if server.id==s %} selected="selected" {% endif %}>
+            <option value="{{ server.id }}" {% if server.id==s %} selected="selected" {% endif
+              %}>
               {{ server.name }}
             </option>
             {% endfor %}
