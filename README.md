@@ -123,7 +123,7 @@ _If you find any errors in this repo, please let me know. You can contact me at 
 
 ### Appendix A: Using the Windows Subsystem for Linux
 
-- [Use an Encrypted Linux Disk in Windows with WSL](./appendix-a/README.md)
+- [Official WSL Documentation](https://learn.microsoft.com/en-us/windows/wsl/)
 
 ### Appendix B: Scraping the Web
 
