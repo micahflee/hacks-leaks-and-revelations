@@ -1,0 +1,45 @@
+name: Check for Aleph Updates
+
+on:
+  schedule:
+    - cron: "0 0 * * 0" # This will run the workflow at 00:00 UTC every Sunday
+
+jobs:
+  check_aleph:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyYAML requests
+
+      - name: Download and edit Aleph docker-compose.yml
+        run: python .github/workflows/download_and_edit_aleph.py
+
+      - name: Install and authenticate GitHub CLI
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          sudo apt-get install -y gh
+          echo "github.com:" $GH_TOKEN | gh auth login --with-token
+
+      - name: Check for changes and commit to main branch
+        run: |
+          git config --global user.email "micah+ci@micahflee.com"
+          git config --global user.name "micahbot"
+
+          git checkout main
+          cp temp_docker-compose.yml chapter-5/aleph/docker-compose.yml
+          git add chapter-5/aleph/docker-compose.yml
+
+          git diff-index --quiet HEAD || git commit -m "Updating Aleph"
+          git push origin main
