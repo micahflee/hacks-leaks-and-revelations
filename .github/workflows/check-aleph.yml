@@ -2,7 +2,7 @@ name: Check for Aleph Updates
 
 on:
   schedule:
-    - cron: "0 23 * * 2" # This will run the workflow at 4:00 PM Pacific Time every Tuesday
+    - cron: "10 23 * * 2" # This will run the workflow at 4:00 PM Pacific Time every Tuesday
 
 jobs:
   check_aleph:
@@ -30,7 +30,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           sudo apt-get install -y gh
-          echo "github.com:" $GH_TOKEN | gh auth login --with-token
+          echo "export GITHUB_TOKEN=$GH_TOKEN" >> $GITHUB_ENV
 
       - name: Check for changes and commit to main branch
         run: |
