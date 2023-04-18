@@ -2,7 +2,7 @@ name: Check for Aleph Updates
 
 on:
   schedule:
-    - cron: "0 0 * * 0" # This will run the workflow at 00:00 UTC every Sunday
+    - cron: "0 23 * * 2" # This will run the workflow at 4:00 PM Pacific Time every Tuesday
 
 jobs:
   check_aleph:
