@@ -5,7 +5,7 @@ response = requests.get(
 )
 edited_content = (
     "# https://github.com/alephdata/aleph/blob/main/docker-compose.yml\n"
-    + response.text.replace("- ~:/host", "#- ~:/host")
+    + response.text.replace('- "~:/host"', '#- "~:/host"')
 )
 
 with open("temp_docker-compose.yml", "w") as f:
