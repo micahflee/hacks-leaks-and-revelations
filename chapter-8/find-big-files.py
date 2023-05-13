@@ -3,7 +3,7 @@ import os
 
 def main():
     blueleaks_path = "/Volumes/datasets/BlueLeaks-extracted"
-    for dirname, dirnames, filenames in os.walk(blueleaks_path):
+    for dirname, subdirnames, filenames in os.walk(blueleaks_path):
         for filename in filenames:
             absolute_filename = os.path.join(dirname, filename)
             size_in_bytes = os.path.getsize(absolute_filename)

@@ -7,7 +7,7 @@ import click
 @click.argument("min_file_size", type=click.INT)
 def main(path, min_file_size):
     """Find files in PATH that are at least MIN_FILE_SIZE MB big"""
-    for dirname, dirnames, filenames in os.walk(path):
+    for dirname, subdirnames, filenames in os.walk(path):
         for filename in filenames:
             absolute_filename = os.path.join(dirname, filename)
             size_in_bytes = os.path.getsize(absolute_filename)
