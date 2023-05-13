@@ -69,9 +69,10 @@ _If you find any errors in this repo, please let me know. You can contact me at 
 
 - [Homework 8-1: Traverse the Filesystem](./chapter-8/homework-8-1.md)
 - [Homework 8-2: Find the Largest Files in BlueLeaks](./chapter-8/homework-8-2.md)
-- [Homework 8-3: Find the Largest Files in Any Dataset](./chapter-8/homework-8-3.md)
-- [Homework 8-4: Map Out the CSVs in BlueLeaks](./chapter-8/homework-8-4.md)
-- [Homework 8-5: Practice Reading and Writing Files](./chapter-8/homework-8-5.md)
+- [Homework 8-3: Practice Command Line Arguments with Click](./chapter-8/homework-8-3.md)
+- [Homework 8-4: Find the Largest Files in Any Dataset](./chapter-8/homework-8-4.md)
+- [Homework 8-5: Map Out the CSVs in BlueLeaks](./chapter-8/homework-8-5.md)
+- [Homework 8-6: Practice Reading and Writing Files](./chapter-8/homework-8-6.md)
 
 ## Part 4: Structured Data
 

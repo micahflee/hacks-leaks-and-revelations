@@ -1,32 +1,34 @@
+import os
 import click
 
 
-def alternating_caps(text):
-    """Returns an aLtErNaTiNg cApS version of text"""
-    alternating_caps_text = ""
-    should_be_capital = True
-
-    for character in text:
-        if should_be_capital:
-            alternating_caps_text += character.upper()
-            should_be_capital = False
-        else:
-            alternating_caps_text += character.lower()
-            should_be_capital = True
-
-    return alternating_caps_text
-
-
 @click.command()
-@click.argument("input_filename")
-@click.argument("output_filename")
-def main(input_filename, output_filename):
-    """Converts a text file to an aLtErNaTiNg cApS version"""
-    with open(input_filename, "r") as f:
-        text = f.read()
+@click.argument("blueleaks_path")
+def main(blueleaks_path):
+    """Map out the CSVs in BlueLeaks"""
+    # A dictionary where the keys are CSV filenames and the values are BlueLeaks folders
+    csv_to_folders = {}
 
-    with open(output_filename, "w") as f:
-        f.write(alternating_caps(text))
+    # Loops through all of the folders in BlueLeaks
+    for folder in os.listdir(blueleaks_path):
+        blueleaks_folder_path = os.path.join(blueleaks_path, folder)
+
+        # Only proceed if this is actually a folder
+        if os.path.isdir(blueleaks_folder_path):
+            # Loop through the files in this folder
+            for filename in os.listdir(blueleaks_folder_path):
+                # Is this a CSV file?
+                if filename.lower().endswith(".csv"):
+                    # If this CSV file isn't in the dict, make it an empty list
+                    if filename not in csv_to_folders:
+                        csv_to_folders[filename] = []
+
+                    # Add this folder to the list
+                    csv_to_folders[filename].append(folder)
+
+    # Display the output
+    for filename in csv_to_folders:
+        print(f"{len(csv_to_folders[filename])} folders | {filename}")
 
 
 if __name__ == "__main__":

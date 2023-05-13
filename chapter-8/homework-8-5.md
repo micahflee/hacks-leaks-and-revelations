@@ -1,3 +1,3 @@
-# Homework 8-5: Practice Reading and Writing Files
+# Homework 8-5: Map Out the CSVs in BlueLeaks
 
-You can find the version described in the book in [homework-8-5.py](./homework-8-5.py).
+There are multiple ways to write this script, but you can find the version described in the book (except with comments) in [homework-8-5.py](./homework-8-5.py).

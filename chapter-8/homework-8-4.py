@@ -3,32 +3,17 @@ import click
 
 
 @click.command()
-@click.argument("blueleaks_path")
-def main(blueleaks_path):
-    """Map out the CSVs in BlueLeaks"""
-    # A dictionary where the keys are CSV filenames and the values are BlueLeaks folders
-    csv_to_folders = {}
-
-    # Loops through all of the folders in BlueLeaks
-    for folder in os.listdir(blueleaks_path):
-        blueleaks_folder_path = os.path.join(blueleaks_path, folder)
-
-        # Only proceed if this is actually a folder
-        if os.path.isdir(blueleaks_folder_path):
-            # Loop through the files in this folder
-            for filename in os.listdir(blueleaks_folder_path):
-                # Is this a CSV file?
-                if filename.lower().endswith(".csv"):
-                    # If this CSV file isn't in the dict, make it an empty list
-                    if filename not in csv_to_folders:
-                        csv_to_folders[filename] = []
-
-                    # Add this folder to the list
-                    csv_to_folders[filename].append(folder)
-
-    # Display the output
-    for filename in csv_to_folders:
-        print(f"{len(csv_to_folders[filename])} folders | {filename}")
+@click.argument("path")
+@click.argument("min_file_size", type=click.INT)
+def main(path, min_file_size):
+    """Find files in PATH that are at least MIN_FILE_SIZE MB big"""
+    for dirname, dirnames, filenames in os.walk(path):
+        for filename in filenames:
+            absolute_filename = os.path.join(dirname, filename)
+            size_in_bytes = os.path.getsize(absolute_filename)
+            size_in_mb = int(size_in_bytes / 1024 / 1024)
+            if size_in_mb >= min_file_size:
+                print(f"{absolute_filename} is {size_in_mb}MB")
 
 
 if __name__ == "__main__":
