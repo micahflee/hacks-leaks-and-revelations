@@ -10,7 +10,7 @@ services:
       - MYSQL_USER=wordpress
       - MYSQL_PASSWORD=yourefired
   wordpress:
-    image: wordpress:6
+    image: wordpress:latest
     volumes:
       - wordpress_data:/var/www/html
     ports:
