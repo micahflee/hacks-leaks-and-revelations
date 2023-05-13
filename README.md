@@ -78,10 +78,9 @@ _If you find any errors in this repo, please let me know. You can contact me at 
 
 ### Chapter 9: BlueLeaks and the CSV File Format
 
-- [Homework 9-1: Install Spreadsheet Software](./chapter-9/homework-9-1.md)
-- [Homework 9-2: Make BlueLeaks CSVs More Readable](./chapter-9/homework-9-2.md)
-- [Homework 9-3: Make Bulk Emails Readable](./chapter-9/homework-9-3.md)
-- [Homework 9-4: Make a CSV of BlueLeaks Sites](./chapter-9/homework-9-4.md)
+- [Homework 9-1: Make BlueLeaks CSVs More Readable](./chapter-9/homework-9-1.md)
+- [Homework 9-2: Make Bulk Emails Readable](./chapter-9/homework-9-2.md)
+- [Homework 9-3: Make a CSV of BlueLeaks Sites](./chapter-9/homework-9-3.md)
 
 ### Chapter 10: BlueLeaks Explorer
 
