@@ -1,35 +1,69 @@
-# Homework 12-2: Install and Test the Command Line MySQL Client
+# Homework 12-2: Query Your SQL Database
 
-## Install the Command Line MySQL Client
+Following the instructions in this book, practice running SQL queries.
 
-If you're using macOS: `brew install mariadb`
+After creating the books and authors tables in Homework 12-1, use INSERT statements to insert data into them with these queries:
 
-If you're using Linux or Windows with WSL: `sudo apt install mariadb-client`
-
-## Connect to MySQL
-
-Make sure you MySQL server is from [Homework 12-2](./homework-12-2.md) is running, and then connect to it with:
-
-```sh
-mysql -h localhost --protocol=tcp -u root -p
+```sql
+INSERT INTO authors (name) VALUES ('Micah Lee');
+INSERT INTO authors (name) VALUES ('Carl Sagan');
+INSERT INTO books (title, author_id) VALUES ('Hacks, Leaks, and Revelations', 1);
+INSERT INTO books (title, author_id) VALUES ('Pale Blue Dot', 2);
+INSERT INTO books (title, author_id) VALUES ('Contact: A Novel', 2);
 ```
 
-You'll need to type the root database password. For example:
+And try running some SELECT statements:
 
-```
-user@chaos chapter-12 % mysql -h localhost --protocol=tcp -u root -p                                                                                    (git)-[main] 
-Enter password: 
-Welcome to the MariaDB monitor.  Commands end with ; or \g.
-Your MariaDB connection id is 3
-Server version: 10.9.4-MariaDB-1:10.9.4+maria~ubu2204 mariadb.org binary distribution
-
-Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
-
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-MariaDB [(none)]> 
+```sql
+SELECT * FROM books;
+SELECT title FROM books;
+SELECT * FROM books ORDER BY title;
+SELECT * from books ORDER BY title DESC;
+SELECT * from books ORDER BY author_id, title;
+SELECT COUNT(*) FROM books;
 ```
 
-## Practice Queries
+Filter results of SELECT statements with WHERE clauses:
 
-Practice the MySQL-specific queries described in the book.
+```sql
+SELECT title FROM books WHERE author_id=1;
+SELECT * FROM books WHERE id >= 10 AND id < 100;
+SELECT * FROM authors WHERE name='Carl Sagan';
+SELECT * FROM authors WHERE name LIKE 'carl sagan';
+SELECT * FROM authors WHERE name LIKE '%lee%';
+SELECT * FROM authors WHERE name LIKE '% lee';
+SELECT * FROM books WHERE author_id=2 AND title LIKE '%blue%';
+
+SELECT *
+FROM books
+WHERE 
+    author_id=2 AND 
+    (
+        title LIKE '%red%' OR 
+        title LIKE '%green%' OR
+        title LIKE '%blue%'
+    );
+```
+
+Select from multiple tables at once with JOIN clauses:
+
+```sql
+SELECT
+    books.title,
+    authors.name
+FROM books
+JOIN authors ON books.author_id = authors.id;
+
+SELECT books.title
+FROM books
+LEFT JOIN authors ON books.author_id = authors.id
+WHERE authors.name = 'Carl Sagan';
+```
+
+Update data with UPDATE statements:
+
+```sql
+UPDATE books 
+SET title='Hacks, Leaks, and Revelations: The Art of Analyzing Hacked and Leaked Data' 
+WHERE id=1;
+```
