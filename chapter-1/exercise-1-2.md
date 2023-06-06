@@ -1,14 +1,11 @@
-# Exercise 1-2: Encrypt Your Internal Disk
+# Exercise 1-2: Encrypt a USB Disk
 
-Here are some different disk encryption technology.
+Here are some options for disk encryption software for encrypting USB disks:
 
-For Windows:
-- [BitLocker](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview): Built-in disk encryption for Windows Pro edition.
-- Device encryption: Built-in disk encryption for Windows Home edition.
-- [VeraCrypt](https://veracrypt.fr/en/Home.html): Open source disk encryption for Windows, if you have Windows Home and an older computer that doesn't support BitLocker or device encryption.
+**Windows:** [BitLocker](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview): Built-in disk encryption for Windows Pro that allows you to encrypt USB disks with a password.
 
-For macOS:
-- [FileVault](https://support.apple.com/en-us/HT204837): Built-in disk encryption for macOS.
+**macOS:** [Disk Utility](https://support.apple.com/guide/disk-utility/welcome/mac): Built-in macOS software that allows you to create encrypted USB disks for Macs.
 
-For Linux:
-- LUKS is the built-in disk encryption for Linux. This [Ubuntu Desktop tutorial](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview) has instructions on [enabling encryption](https://ubuntu.com/tutorials/install-ubuntu-desktop#7-optional-enable-encryption).
+**Linux:** [GNOME Disks](https://wiki.gnome.org/Apps/Disks): Linux software that allows you to create encrypted USB disks for Linux.
+
+**Cross-platform:** [VeraCrypt](https://veracrypt.fr/): Cross-platform disk encryption software. This is a good choice if you will use your USB disk in different operating systems, or if you're using a version of Windows that doesn't come with BitLocker.

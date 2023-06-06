@@ -1,11 +1,5 @@
-# Exercise 1-3: Encrypt a USB Disk
+# Exercise 1-3: Play With Dangerzone
 
-Here are some options for disk encryption software for encrypting USB disks:
+You can get Dangerzone from [dangerzone.rocks](https://dangerzone.rocks/).
 
-**Windows:** [BitLocker](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview): Built-in disk encryption for Windows Pro that allows you to encrypt USB disks with a password.
-
-**macOS:** [Disk Utility](https://support.apple.com/guide/disk-utility/welcome/mac): Built-in macOS software that allows you to create encrypted USB disks for Macs.
-
-**Linux:** [GNOME Disks](https://wiki.gnome.org/Apps/Disks): Linux software that allows you to create encrypted USB disks for Linux.
-
-**Cross-platform:** [VeraCrypt](https://veracrypt.fr/): Cross-platform disk encryption software. This is a good choice if you will use your USB disk in different operating systems, or if you're using a version of Windows that doesn't come with BitLocker.
+If you're running it in Windows or macOS, you'll also need [Docker Desktop](https://www.docker.com/products/docker-desktop).
