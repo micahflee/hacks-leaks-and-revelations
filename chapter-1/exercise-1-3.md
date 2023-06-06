@@ -1,4 +1,4 @@
-# Exercise 1-3: Play With Dangerzone
+# Exercise 1-3: Install and Use Dangerzone
 
 You can get Dangerzone from [dangerzone.rocks](https://dangerzone.rocks/).
 

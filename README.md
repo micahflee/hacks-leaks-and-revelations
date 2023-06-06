@@ -10,7 +10,7 @@ _If you find any errors in this repo, please let me know. You can contact me at 
 
 - [Exercise 1-1: Encrypt Your Internal Disk](./chapter-1/exercise-1-1.md)
 - [Exercise 1-2: Encrypt a USB Disk](./chapter-1/exercise-1-2.md)
-- [Exercise 1-3: Play With Dangerzone](./chapter-1/exercise-1-3.md)
+- [Exercise 1-3: Install and Use Dangerzone](./chapter-1/exercise-1-3.md)
 
 ### Chapter 2: Acquiring Datasets
 
