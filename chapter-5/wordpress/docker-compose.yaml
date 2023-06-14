@@ -1,14 +1,4 @@
 services:
-  db:
-    image: mariadb:10.9
-    volumes:
-      - db_data:/var/lib/mysql
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=supersecurepassword
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wordpress
-      - MYSQL_PASSWORD=yourefired
   wordpress:
     image: wordpress:latest
     volumes:
@@ -21,6 +11,16 @@ services:
       - WORDPRESS_DB_USER=wordpress
       - WORDPRESS_DB_PASSWORD=yourefired
       - WORDPRESS_DB_NAME=wordpress
+  db:
+    image: mariadb:10.9
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=supersecurepassword
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=yourefired
 
 volumes:
   db_data:
