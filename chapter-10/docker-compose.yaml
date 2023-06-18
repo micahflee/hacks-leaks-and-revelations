@@ -6,6 +6,6 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - /Users/user/datasets/BlueLeaks-extracted:/data/blueleaks
+      - /Volumes/datasets/BlueLeaks-extracted:/data/blueleaks
       - ./databases:/data/databases
       - ./structures:/data/structures
