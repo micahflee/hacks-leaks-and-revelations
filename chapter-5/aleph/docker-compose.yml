@@ -25,13 +25,6 @@ services:
     volumes:
       - redis-data:/data
 
-  convert-document:
-    image: ghcr.io/alephdata/convert-document:3.17.1
-    read_only: true
-    restart: on-failure
-    user: app
-    tmpfs: /tmp
-
   ingest-file:
     image: ghcr.io/alephdata/ingest-file:3.18.4
     tmpfs:
@@ -41,13 +34,12 @@ services:
     depends_on:
       - postgres
       - redis
-      - convert-document
     restart: on-failure
     env_file:
       - aleph.env
 
   worker:
-    image: ghcr.io/alephdata/aleph:${ALEPH_TAG:-3.14.1}
+    image: ghcr.io/alephdata/aleph:${ALEPH_TAG:-3.14.3}
     command: aleph worker
     restart: on-failure
     depends_on:
@@ -63,7 +55,7 @@ services:
       - aleph.env
 
   shell:
-    image: ghcr.io/alephdata/aleph:${ALEPH_TAG:-3.14.1}
+    image: ghcr.io/alephdata/aleph:${ALEPH_TAG:-3.14.3}
     command: /bin/bash
     depends_on:
       - postgres
@@ -81,7 +73,7 @@ services:
       - aleph.env
 
   api:
-    image: ghcr.io/alephdata/aleph:${ALEPH_TAG:-3.14.1}
+    image: ghcr.io/alephdata/aleph:${ALEPH_TAG:-3.14.3}
     command: gunicorn -w 6 -b 0.0.0.0:8000 --timeout 3600 --log-level debug --log-file - aleph.wsgi:app
     expose:
       - 8000
@@ -99,7 +91,7 @@ services:
       - aleph.env
 
   ui:
-    image: ghcr.io/alephdata/aleph-ui-production:${ALEPH_TAG:-3.14.1}
+    image: ghcr.io/alephdata/aleph-ui-production:${ALEPH_TAG:-3.14.3}
     depends_on:
       - api
     ports:
