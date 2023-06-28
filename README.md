@@ -1,6 +1,6 @@
 # Hacks, Leaks, and Revelations
 
-This git repository contains the code that goes along with the book Hacks, Leaks, and Revelations.
+This git repository contains the code that goes along with the book [Hacks, Leaks, and Revelations](https://hacksandleaks.com/).
 
 _If you find any errors in this repo, please let me know. You can contact me at micah@micahflee.com._
 
