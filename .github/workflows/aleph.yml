@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: "3.x"
+          python-version: 3.11
 
       - name: Install dependencies
         run: |
@@ -23,7 +23,7 @@ jobs:
           pip install PyYAML requests
 
       - name: Download and edit Aleph docker-compose.yml
-        run: python .github/workflows/download_and_edit_aleph.py
+        run: python .github/workflows/aleph/download_and_edit_aleph.py
 
       - name: Install and authenticate GitHub CLI
         env:
