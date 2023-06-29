@@ -44,13 +44,7 @@ try:
         with open("downloads.csv", "wb") as f:
             f.write(downloads_csv_response.content)
 except Exception as e:
-    print(
-        f"Could not download 'downloads.csv' artifact from previous workflow run: {e}"
-    )
-    # Create a new 'downloads.csv' file if it could not be downloaded
-    with open("downloads.csv", "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["Date", "Downloads"])
+    print("Could not download 'downloads.csv' artifact from previous workflow run")
 
 # Open the spreadsheet and add the new download count
 with open("downloads.csv", "a", newline="") as f:
