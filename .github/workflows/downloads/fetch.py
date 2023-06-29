@@ -30,6 +30,9 @@ def main():
         headers={"Authorization": f"token {os.getenv('GH_TOKEN')}"},
     )
     workflow_runs_data = workflow_runs_response.json()
+    print("workflow_runs_data:")
+    print(json.dumps(workflow_runs_data, indent=4))
+    print()
 
     if workflow_runs_data["total_count"] > 0:
         # Find the download-csv artifact URL
@@ -39,7 +42,10 @@ def main():
             headers={"Authorization": f"token {os.getenv('GH_TOKEN')}"},
         )
         artifacts_data = artifacts_response.json()
+        print("artifacts_data:")
         print(json.dumps(artifacts_data, indent=4))
+        print()
+
         downloads_csv_url = None
         for artifact in artifacts_data["artifacts"]:
             if artifact["name"] == "downloads-csv":
@@ -57,6 +63,7 @@ def main():
                 f.write(downloads_csv_response.content)
         else:
             print("No 'downloads.csv' artifact found")
+            print()
 
     # Open the spreadsheet and add the new download count
     with open("downloads.csv", "a", newline="") as f:
