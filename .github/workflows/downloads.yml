@@ -30,10 +30,14 @@ jobs:
       - name: Plot download data
         run: python .github/workflows/downloads/plot.py
 
-      - name: Upload artifacts
+      - name: Upload CSV artifact
         uses: actions/upload-artifact@v2
         with:
-          name: artifacts
-          path: |
-            downloads.csv
-            downloads.png
+          name: downloads-csv
+          path: downloads.csv
+
+      - name: Upload PNG artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: downloads-png
+          path: downloads.png
