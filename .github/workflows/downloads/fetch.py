@@ -32,25 +32,27 @@ def main():
     workflow_runs_data = workflow_runs_response.json()
 
     if workflow_runs_data["total_count"] > 0:
-        # Download the 'downloads.csv' artifact from the last run
+        # Find the download-csv artifact URL
         last_run_id = workflow_runs_data["workflow_runs"][0]["id"]
         artifacts_response = requests.get(
             f"https://api.github.com/repos/micahflee/hacks-leaks-and-revelations/actions/runs/{last_run_id}/artifacts",
             headers={"Authorization": f"token {os.getenv('GH_TOKEN')}"},
         )
         artifacts_data = artifacts_response.json()
-        downloads_csv_artifact = next(
-            artifact
-            for artifact in artifacts_data["artifacts"]
-            if artifact["name"] == "downloads-csv"
-        )
-        downloads_csv_url = downloads_csv_artifact["archive_download_url"]
-        downloads_csv_response = requests.get(
-            downloads_csv_url,
-            headers={"Authorization": f"token {os.getenv('GH_TOKEN')}"},
-        )
-        with open("downloads.csv", "wb") as f:
-            f.write(downloads_csv_response.content)
+        downloads_csv_url = None
+        for artifact in artifacts_data["artifacts"]:
+            if artifact["name"] == "downloads-csv":
+                downloads_csv_url = artifact["archive_download_url"]
+                break
+
+        # If the 'downloads.csv' artifact was found, download it
+        if downloads_csv_url:
+            downloads_csv_response = requests.get(
+                downloads_csv_url,
+                headers={"Authorization": f"token {os.getenv('GH_TOKEN')}"},
+            )
+            with open("downloads.csv", "wb") as f:
+                f.write(downloads_csv_response.content)
 
     # Open the spreadsheet and add the new download count
     with open("downloads.csv", "a", newline="") as f:
