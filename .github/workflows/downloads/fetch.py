@@ -43,7 +43,7 @@ def main():
             downloads_csv_artifact = next(
                 artifact
                 for artifact in artifacts_data["artifacts"]
-                if artifact["name"] == "downloads.csv"
+                if artifact["name"] == "downloads-csv"
             )
             downloads_csv_url = downloads_csv_artifact["archive_download_url"]
             downloads_csv_response = requests.get(
