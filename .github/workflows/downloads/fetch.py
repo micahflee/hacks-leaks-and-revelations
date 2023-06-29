@@ -43,9 +43,6 @@ def main():
             # Find the download-csv artifact URL
             artifacts_response = requests.get(artifacts_url)
             artifacts_data = artifacts_response.json()
-            print(artifacts_url)
-            print(json.dumps(artifacts_data, indent=4))
-            print()
 
             downloads_csv_url = None
             for artifact in artifacts_data["artifacts"]:
@@ -63,6 +60,9 @@ def main():
                 z.extractall()
             else:
                 print("No downloads.csv artifact found\n")
+                print(artifacts_url)
+                print(json.dumps(artifacts_data, indent=4))
+                print()
         else:
             print("No completed workflow runs found\n")
     else:
