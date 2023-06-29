@@ -23,6 +23,8 @@ jobs:
           pip install pandas matplotlib requests python-dateutil
 
       - name: Fetch download count
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: python .github/workflows/downloads/fetch.py
 
       - name: Plot download data

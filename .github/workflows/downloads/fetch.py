@@ -53,7 +53,10 @@ def main():
 
             # If the downloads.csv artifact was found, download it
             if downloads_csv_url:
-                downloads_csv_response = requests.get(downloads_csv_url)
+                downloads_csv_response = requests.get(
+                    downloads_csv_url,
+                    headers={"Authorization": f"token {os.getenv('GH_TOKEN')}"},
+                )
                 print(downloads_csv_response.content)
                 with open("downloads.csv", "wb") as f:
                     f.write(downloads_csv_response.content)
