@@ -39,6 +39,7 @@ def main():
             headers={"Authorization": f"token {os.getenv('GH_TOKEN')}"},
         )
         artifacts_data = artifacts_response.json()
+        print(json.dumps(artifacts_data, indent=4))
         downloads_csv_url = None
         for artifact in artifacts_data["artifacts"]:
             if artifact["name"] == "downloads-csv":
