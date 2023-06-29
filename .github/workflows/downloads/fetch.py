@@ -30,19 +30,17 @@ def main():
         headers={"Authorization": f"token {os.getenv('GH_TOKEN')}"},
     )
     workflow_runs_data = workflow_runs_response.json()
-    print("workflow_runs_data:")
-    print(json.dumps(workflow_runs_data, indent=4))
-    print()
 
     if workflow_runs_data["total_count"] > 0:
         # Find the download-csv artifact URL
         last_run_id = workflow_runs_data["workflow_runs"][0]["id"]
+        url = f"https://api.github.com/repos/micahflee/hacks-leaks-and-revelations/actions/runs/{last_run_id}/artifacts"
         artifacts_response = requests.get(
-            f"https://api.github.com/repos/micahflee/hacks-leaks-and-revelations/actions/runs/{last_run_id}/artifacts",
+            url,
             headers={"Authorization": f"token {os.getenv('GH_TOKEN')}"},
         )
         artifacts_data = artifacts_response.json()
-        print("artifacts_data:")
+        print(f"artifacts_data {url}:")
         print(json.dumps(artifacts_data, indent=4))
         print()
 
