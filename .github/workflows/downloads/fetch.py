@@ -2,6 +2,8 @@ import os
 import csv
 import json
 import requests
+import zipfile
+import io
 from datetime import datetime
 
 tag = "prerelease1"
@@ -57,9 +59,8 @@ def main():
                     downloads_csv_url,
                     headers={"Authorization": f"token {os.getenv('GH_TOKEN')}"},
                 )
-                print(downloads_csv_response.content)
-                with open("downloads.csv", "wb") as f:
-                    f.write(downloads_csv_response.content)
+                z = zipfile.ZipFile(io.BytesIO(downloads_csv_response.content))
+                z.extractall()
             else:
                 print("No downloads.csv artifact found\n")
         else:
