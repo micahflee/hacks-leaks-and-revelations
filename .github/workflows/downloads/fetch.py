@@ -51,8 +51,11 @@ def main():
                 downloads_csv_url,
                 headers={"Authorization": f"token {os.getenv('GH_TOKEN')}"},
             )
+            print(downloads_csv_response.content)
             with open("downloads.csv", "wb") as f:
                 f.write(downloads_csv_response.content)
+        else:
+            print("No 'downloads.csv' artifact found")
 
     # Open the spreadsheet and add the new download count
     with open("downloads.csv", "a", newline="") as f:
@@ -60,6 +63,7 @@ def main():
         writer.writerow([datetime.now().date(), download_count])
 
     # Display the contents of downloads.csv
+    print("downloads.csv:")
     with open("downloads.csv", "r") as f:
         print(f.read())
 
