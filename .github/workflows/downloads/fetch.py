@@ -30,33 +30,39 @@ def main():
     )
     workflow_runs_data = workflow_runs_response.json()
     if workflow_runs_data["total_count"] > 0:
-        # Find the download-csv artifact URL
-        last_run_id = workflow_runs_data["workflow_runs"][0]["id"]
-        url = f"https://api.github.com/repos/micahflee/hacks-leaks-and-revelations/actions/runs/{last_run_id}/artifacts"
-        artifacts_response = requests.get(url)
-        artifacts_data = artifacts_response.json()
-        print(url)
-        print(json.dumps(artifacts_data, indent=4))
-        print()
-
-        downloads_csv_url = None
-        for artifact in artifacts_data["artifacts"]:
-            if artifact["name"] == "downloads-csv":
-                downloads_csv_url = artifact["archive_download_url"]
+        # Find the artifacts URL of the last completed workflow run
+        artifacts_url = None
+        for workflow_run in workflow_runs_data["workflow_runs"]:
+            if workflow_run["status"] == "completed":
+                artifacts_url = workflow_run["artifacts_url"]
                 break
 
-        # If the 'downloads.csv' artifact was found, download it
-        if downloads_csv_url:
-            downloads_csv_response = requests.get(downloads_csv_url)
-            print(downloads_csv_response.content)
-            with open("downloads.csv", "wb") as f:
-                f.write(downloads_csv_response.content)
-        else:
-            print("No 'downloads.csv' artifact found")
+        if artifacts_url:
+            # Find the download-csv artifact URL
+            artifacts_response = requests.get(artifacts_url)
+            artifacts_data = artifacts_response.json()
+            print(artifacts_url)
+            print(json.dumps(artifacts_data, indent=4))
             print()
+
+            downloads_csv_url = None
+            for artifact in artifacts_data["artifacts"]:
+                if artifact["name"] == "downloads-csv":
+                    downloads_csv_url = artifact["archive_download_url"]
+                    break
+
+            # If the downloads.csv artifact was found, download it
+            if downloads_csv_url:
+                downloads_csv_response = requests.get(downloads_csv_url)
+                print(downloads_csv_response.content)
+                with open("downloads.csv", "wb") as f:
+                    f.write(downloads_csv_response.content)
+            else:
+                print("No downloads.csv artifact found\n")
+        else:
+            print("No completed workflow runs found\n")
     else:
-        print("No previous workflow runs found")
-        print()
+        print("No previous workflow runs found\n")
 
     # Open the spreadsheet and add the new download count
     with open("downloads.csv", "a", newline="") as f:
