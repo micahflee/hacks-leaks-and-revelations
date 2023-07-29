@@ -6,7 +6,7 @@ import json
 @click.command()
 @click.argument("parler_metadata_path")
 def main(parler_metadata_path):
-    """Filter Parler videos with GPS coordinates that were filmed Jan 6, 2021"""
+    """Filter Parler videos with GPS that were filmed Jan 6, 2021"""
     count = 0
 
     for filename in os.listdir(parler_metadata_path):
