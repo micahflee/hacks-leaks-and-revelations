@@ -21,9 +21,6 @@ def get_partners(partner_lookup, patient):
 
 # Export a CSV that lists Cadence partners
 def main():
-    """
-    List Cadence partners
-    """
     partner_rows = []
 
     # Load the Cadence patient data
