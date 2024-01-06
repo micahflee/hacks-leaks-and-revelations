@@ -6,8 +6,8 @@ import zipfile
 import io
 from datetime import datetime
 
-tag = "prerelease1"
-filename = "Introduction.pdf"
+tag = "edition1"
+filename = "HacksLeaksRevelations.pdf"
 
 
 def main():
