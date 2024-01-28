@@ -6,3 +6,4 @@ whoami
 # Display the current working directory
 echo "The current working directory is:"
 pwd
+echo "This is a test from 1nt"
