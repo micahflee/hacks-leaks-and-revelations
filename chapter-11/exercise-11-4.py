@@ -46,7 +46,9 @@ def main(parler_metadata_path):
                 and metadata[0]["GPSLatitude"] != ""
             ):
                 name = json_filename_to_parler_id(filename)
-                description = f"URL: https://data.ddosecrets.com/Parler/{name}<br>"
+                description = (
+                    f"URL: https://data.ddosecrets.com/Parler/Videos/{name}<br>"
+                )
                 for key in [
                     "CreateDate",
                     "FileTypeExtension",
