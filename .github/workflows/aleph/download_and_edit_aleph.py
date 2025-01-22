@@ -13,7 +13,7 @@ def main():
 
     # Find the default ALEPH_TAG version
     match = re.search(
-        r"image: ghcr\.io/alephdata/aleph:\${ALEPH_TAG:-ALEPH_TAG:-([^}]+)}", content
+        r"image: ghcr\.io/alephdata/aleph:\${ALEPH_TAG:-([^}]+)}", content
     )
     if match:
         default_version = match.group(1)
@@ -22,12 +22,12 @@ def main():
 
     # Replace ALEPH_TAG with the default version
     content = re.sub(
-        r"image: ghcr\.io/alephdata/aleph:\${ALEPH_TAG:-ALEPH_TAG:-[^}]+}",
+        r"image: ghcr\.io/alephdata/aleph:\${ALEPH_TAG:-[^}]+}",
         f"image: ghcr.io/alephdata/aleph:{default_version}",
         content,
     )
     content = re.sub(
-        r"image: ghcr\.io/alephdata/aleph-ui-production:\${ALEPH_TAG:-ALEPH_TAG:-[^}]+}",
+        r"image: ghcr\.io/alephdata/aleph-ui-production:\${ALEPH_TAG:-[^}]+}",
         f"image: ghcr.io/alephdata/aleph-ui-production:{default_version}",
         content,
     )
